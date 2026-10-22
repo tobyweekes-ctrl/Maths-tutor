@@ -200,8 +200,9 @@ const Fig = (() => {
 
   /* Graph of y = f(x). fns: [{f, label}], ticks as [value, text]. */
   let graphId = 0;
-  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], segs = [], xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
+  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], segs = [], circles = [], equal = false, xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
     const L = 44, Rr = 16, T = 14, B = 34;
+    if (equal) h = Math.round(T + B + (y1 - y0) * (w - L - Rr) / (x1 - x0));   // same scale on both axes, so circles look round
     const X = x => L + (x - x0) / (x1 - x0) * (w - L - Rr), Y = y => T + (y1 - y) / (y1 - y0) * (h - T - B);
     let body = ''; const cid = 'gc' + (++graphId);
     const clampY = v => Math.min(Math.max(v, y0 - (y1 - y0)), y1 + (y1 - y0));
@@ -235,6 +236,7 @@ const Fig = (() => {
       body += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" clip-path="url(#${cid})"${fn.dash ? ' stroke-dasharray="6 5"' : ''}/>`;
       if (fn.label) body += text(X(fn.lx != null ? fn.lx : x1) - 4, Math.max(T + 8, Y(fn.ly != null ? fn.ly : fn.f(x1)) - 12), fn.label, { col, anchor: 'end', size: 12 });
     });
+    circles.forEach(cc => { body += `<ellipse cx="${n2(X(cc.x))}" cy="${n2(Y(cc.y))}" rx="${n2(cc.r * (w - L - Rr) / (x1 - x0))}" ry="${n2(cc.r * (h - T - B) / (y1 - y0))}" fill="none" stroke="${cc.col || FORCE}" stroke-width="2.2" clip-path="url(#${cid})"${cc.dash ? ' stroke-dasharray="6 5"' : ''}/>`; });
     segs.forEach(sg => { body += line(X(sg.x1), Y(sg.y1), X(sg.x2), Y(sg.y2), { col: sg.col || MUTE, w: sg.w || 1.6, dash: sg.dash ? '5 4' : '' }); });
     texts.forEach(tx => { body += text(X(tx.x), Y(tx.y), tx.label, { col: tx.col || INK, size: tx.size || 12, anchor: tx.anchor || 'middle' }); });
     points.forEach(p => { body += `<circle cx="${n2(X(p.x))}" cy="${n2(Y(p.y))}" r="4" fill="${INK}"/>` + (p.label ? text(X(p.x) + (p.dx || 0), Y(p.y) + (p.dy || -14), p.label, { size: 12 }) : ''); });
