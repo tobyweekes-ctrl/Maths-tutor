@@ -199,24 +199,43 @@ const Fig = (() => {
   }
 
   /* Graph of y = f(x). fns: [{f, label}], ticks as [value, text]. */
-  function graph({ fns, x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], points = [], xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
+  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
     const L = 44, Rr = 16, T = 14, B = 34;
     const X = x => L + (x - x0) / (x1 - x0) * (w - L - Rr), Y = y => T + (y1 - y) / (y1 - y0) * (h - T - B);
     let body = '';
+    const clampY = v => Math.min(Math.max(v, y0 - (y1 - y0)), y1 + (y1 - y0));
+    // Shaded regions between two boundary functions (or the plot edges) over [from, to].
+    regions.forEach(rg => {
+      const a = rg.from != null ? rg.from : x0, b = rg.to != null ? rg.to : x1, N = 160;
+      const lo = rg.lo || (() => y0), hi = rg.hi || (() => y1);
+      let d = '';
+      for (let k = 0; k <= N; k++){ const xx = a + (b - a) * k / N; d += (k ? 'L' : 'M') + n2(X(xx)) + ',' + n2(Y(Math.max(y0, Math.min(y1, hi(xx))))); }
+      for (let k = N; k >= 0; k--){ const xx = a + (b - a) * k / N; d += 'L' + n2(X(xx)) + ',' + n2(Y(Math.max(y0, Math.min(y1, lo(xx))))); }
+      body += `<path d="${d}Z" fill="var(--accent)" fill-opacity="0.18" stroke="none"/>`;
+      if (rg.label) body += text(X(rg.lx), Y(rg.ly), rg.label, { col: FORCE, size: 13, weight: 'bold' });
+    });
     yticks.forEach(([v, s]) => { body += line(L, Y(v), w - Rr, Y(v), { col: 'var(--line)', w: 1 }) + text(L - 6, Y(v), s, { col: MUTE, anchor: 'end', size: 11 }); });
     xticks.forEach(([v, s]) => { body += line(X(v), T, X(v), h - B, { col: 'var(--line)', w: 1 }) + text(X(v), h - B + 14, s, { col: MUTE, size: 11 }); });
     const zy = Math.min(Math.max(Y(0), T), h - B), zx = Math.min(Math.max(X(0), L), w - Rr);
     body += line(L, zy, w - Rr, zy, { col: INK, w: 1.3 }) + line(zx, T, zx, h - B, { col: INK, w: 1.3 });
     body += text(w - Rr, zy - 10, xlab, { col: MUTE, anchor: 'end', size: 12, italic: true }) + text(zx + 8, T + 4, ylab, { col: MUTE, anchor: 'start', size: 12, italic: true });
     hlines.forEach(hl => { body += line(L, Y(hl.y), w - Rr, Y(hl.y), { col: WEIGHT, w: 1.3, dash: '5 4' }) + (hl.label ? text(w - Rr - 2, Y(hl.y) - 9, hl.label, { col: WEIGHT, anchor: 'end', size: 11 }) : ''); });
+    vlines.forEach(vl => { body += line(X(vl.x), T, X(vl.x), h - B, { col: vl.col || WEIGHT, w: 1.6, dash: vl.dash ? '5 4' : '' }) + (vl.label ? text(X(vl.x) + 4, T + 8, vl.label, { col: vl.col || WEIGHT, anchor: 'start', size: 11 }) : ''); });
     fns.forEach((fn, i) => {
-      let d = '';
-      for (let k = 0; k <= 240; k++){ const x = x0 + (x1 - x0) * k / 240, y = fn.f(x); d += (k ? 'L' : 'M') + n2(X(x)) + ',' + n2(Y(y)); }
-      body += `<path d="${d}" fill="none" stroke="${i ? WEIGHT : FORCE}" stroke-width="2.2"/>`;
-      if (fn.label) body += text(X(fn.lx != null ? fn.lx : x1) - 4, Math.max(T + 8, Y(fn.ly != null ? fn.ly : fn.f(x1)) - 12), fn.label, { col: i ? WEIGHT : FORCE, anchor: 'end', size: 12 });
+      let d = '', pen = false;
+      const a = fn.from != null ? fn.from : x0, b = fn.to != null ? fn.to : x1;
+      for (let k = 0; k <= 400; k++){
+        const x = a + (b - a) * k / 400, y = fn.f(x);
+        if (!isFinite(y) || y < y0 - (y1 - y0) || y > y1 + (y1 - y0)){ pen = false; continue; }
+        d += (pen ? 'L' : 'M') + n2(X(x)) + ',' + n2(Y(y)); pen = true;
+      }
+      const col = fn.col || (i ? WEIGHT : FORCE);
+      body += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2"${fn.dash ? ' stroke-dasharray="6 5"' : ''}/>`;
+      if (fn.label) body += text(X(fn.lx != null ? fn.lx : x1) - 4, Math.max(T + 8, Y(fn.ly != null ? fn.ly : fn.f(x1)) - 12), fn.label, { col, anchor: 'end', size: 12 });
     });
+    texts.forEach(tx => { body += text(X(tx.x), Y(tx.y), tx.label, { col: tx.col || INK, size: tx.size || 12, anchor: tx.anchor || 'middle' }); });
     points.forEach(p => { body += `<circle cx="${n2(X(p.x))}" cy="${n2(Y(p.y))}" r="4" fill="${INK}"/>` + (p.label ? text(X(p.x) + (p.dx || 0), Y(p.y) + (p.dy || -14), p.label, { size: 12 }) : ''); });
-    return wrap(w, h, body, label);
+    return wrap(w, h, `<defs><clipPath id="gclip"><rect x="${L}" y="${T}" width="${w - L - Rr}" height="${h - T - B}"/></clipPath></defs><g>${body}</g>`, label);
   }
 
   return { particle, hanging, slope, ground, geo, graph };
