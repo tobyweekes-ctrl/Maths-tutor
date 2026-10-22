@@ -1,5 +1,5 @@
 /* 5.2 Inclined planes */
-FIGS['5.2-weight'] = Fig.slope({ deg: 30, angleLabel: 'α', label: 'Weight split into components on a slope', forces: [{ dir: 'weight', label: 'mg', len: 70 }, { dir: 'down', label: 'mg sin α', len: 58 }, { dir: { rel: -90 }, label: 'mg cos α', len: 52 }, { dir: 'normal', label: 'R', len: 52 }] });
+FIGS['5.2-weight'] = Fig.slope({ deg: 30, angleLabel: 'α', label: 'Weight split into components along and into the slope', forces: [{ dir: 'weight', label: 'mg', len: 74 }, { dir: 'normal', label: 'R', len: 52 }] });
 FIGS['5.2-ex1'] = Fig.slope({ deg: 22.6, angleLabel: 'α', label: 'Particle sliding down a smooth slope', forces: [{ dir: 'weight', label: '2g' }, { dir: 'normal', label: 'R' }], motion: 'slides down' });
 FIGS['5.2-ex2'] = Fig.slope({ deg: 30, label: 'Particle held on a smooth slope by a horizontal force P', forces: [{ dir: 'weight', label: '3g' }, { dir: 'normal', label: 'R' }, { dir: 'horiz', label: 'P', len: 62 }] });
 

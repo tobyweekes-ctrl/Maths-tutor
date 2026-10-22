@@ -265,11 +265,11 @@ const Fig = (() => {
     return `<line x1="${n2(x1)}" y1="${n2(y1)}" x2="${n2(x2)}" y2="${n2(y2)}" stroke="${col}" stroke-width="${w}"${dash ? ` stroke-dasharray="${dash}"` : ''} stroke-linecap="round"/>`;
   }
   // Arrow in SVG coordinates, with a filled head at (x2, y2).
-  function arrow(x1, y1, x2, y2, col = FORCE, w = 2.2){
+  function arrow(x1, y1, x2, y2, col = FORCE, w = 2.2, dash = ''){
     const a = Math.atan2(y2 - y1, x2 - x1), hl = 10, hw = 5;
     const bx = x2 - hl * Math.cos(a), by = y2 - hl * Math.sin(a);
     const p1 = [bx + hw * Math.sin(a), by - hw * Math.cos(a)], p2 = [bx - hw * Math.sin(a), by + hw * Math.cos(a)];
-    return line(x1, y1, bx, by, { col, w }) + `<polygon points="${n2(x2)},${n2(y2)} ${n2(p1[0])},${n2(p1[1])} ${n2(p2[0])},${n2(p2[1])}" fill="${col}"/>`;
+    return line(x1, y1, bx, by, { col, w, dash }) + `<polygon points="${n2(x2)},${n2(y2)} ${n2(p1[0])},${n2(p1[1])} ${n2(p2[0])},${n2(p2[1])}" fill="${col}"/>`;
   }
   // Arc for an angle at (cx, cy) between directions a1 and a2 (degrees, anticlockwise from +x, maths sense).
   function arc(cx, cy, r, a1, a2, label, { col = MUTE, lr = r + 14 } = {}){
@@ -279,6 +279,15 @@ const Fig = (() => {
     const mid = (a1 + a2) / 2;
     return `<path d="M${n2(x1)},${n2(y1)} A${r},${r} 0 ${large} ${sweep} ${n2(x2)},${n2(y2)}" fill="none" stroke="${col}" stroke-width="1.4"/>`
       + (label ? text(cx + lr * Math.cos(rad(mid)), cy - lr * Math.sin(rad(mid)), label, { col, size: 13 }) : '');
+  }
+  // Label for a resolved component: "30 N" at 20° gives "30 cos 20°"; "mg" on slope α gives "mg sin α".
+  const compLabel = (lab, fn, ang) => `${String(lab).replace(/\s*N$/, '')} ${fn} ${ang}`;
+  // Dashed component arrow with a label placed off to one side of its middle.
+  function comp(x1, y1, x2, y2, lab, side, col){
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, L = Math.hypot(x2 - x1, y2 - y1) || 1;
+    const ox = -(y2 - y1) / L * side, oy = (x2 - x1) / L * side;
+    const dx = String(lab).length * 3.1 * Math.abs(ox / Math.abs(side || 1));
+    return arrow(x1, y1, x2, y2, col, 1.6, '5 4') + text(mx + ox + Math.sign(ox) * dx, my + oy, lab, { col, size: 12 });
   }
   function rightAngle(x, y, d1, d2, s = 10){
     const ax = x + s * Math.cos(rad(d1)), ay = y - s * Math.sin(rad(d1));
@@ -333,7 +342,7 @@ const Fig = (() => {
 
   /* Inclined plane rising to the right at deg. forces use dir: 'up' | 'down' | 'normal' | 'weight' | 'horiz' | {rel: β} (β above the slope).
      pulley: {label, weightLabel} hangs a second particle over a pulley at the top. */
-  function slope({ deg = 30, angleLabel, forces = [], pulley = null, label = 'Particle on an inclined plane', motion = '' } = {}){
+  function slope({ deg = 30, angleLabel, forces = [], pulley = null, label = 'Particle on an inclined plane', motion = '', components = true } = {}){
     const L = 300, A = [24, 0];
     const w = 360, hgt = L * Math.sin(rad(deg));
     const h = Math.max(150, hgt + (pulley ? 120 : 70));
@@ -348,9 +357,23 @@ const Fig = (() => {
     const B = [P[0] + 13 * nx, P[1] - 13 * ny]; // block centre, sitting on the surface
     body += `<rect x="${n2(B[0] - 20)}" y="${n2(B[1] - 13)}" width="40" height="26" rx="3" fill="var(--paper)" stroke="${INK}" stroke-width="1.6" transform="rotate(${-deg} ${n2(B[0])} ${n2(B[1])})"/>`;
     const dirDeg = d => d === 'up' ? deg : d === 'down' ? deg + 180 : d === 'normal' ? deg + 90 : d === 'weight' ? 270 : d === 'horiz' ? 0 : d === 'horizL' ? 180 : (d && d.rel != null) ? deg + d.rel : Number(d);
+    const ang = angleLabel || (deg + '°');
     forces.forEach(fc => {
       const dd = dirDeg(fc.dir);
-      body += force(B[0], B[1], dd, fc.len || (fc.dir === 'weight' ? 62 : 58), fc.label, fc.dir === 'weight' ? WEIGHT : FORCE);
+      const len = fc.len || (fc.dir === 'weight' ? 62 : 58);
+      if (components && fc.dir === 'weight' && fc.label){
+        // weight = (component into the plane) + (component down the slope): draw them as a dashed triangle
+        const c1 = len * Math.cos(rad(deg)), qx = B[0] + c1 * Math.sin(rad(deg)), qy = B[1] + c1 * Math.cos(rad(deg));
+        body += comp(B[0], B[1], qx, qy, compLabel(fc.label, 'cos', ang), -14, WEIGHT);
+        body += comp(qx, qy, B[0], B[1] + len, compLabel(fc.label, 'sin', ang), -14, WEIGHT);
+      }
+      if (components && fc.dir === 'horiz' && fc.label){
+        // a horizontal push = (up the slope) + (into the plane)
+        const c1 = len * Math.cos(rad(deg)), qx = B[0] + c1 * Math.cos(rad(deg)), qy = B[1] - c1 * Math.sin(rad(deg));
+        body += comp(B[0], B[1], qx, qy, compLabel(fc.label, 'cos', ang), -18, FORCE);
+        body += comp(qx, qy, B[0] + len, B[1], compLabel(fc.label, 'sin', ang), -16, FORCE);
+      }
+      body += force(B[0], B[1], dd, len, fc.label, fc.dir === 'weight' ? WEIGHT : FORCE);
       if (fc.dir && fc.dir.rel && fc.relLabel){
         body += line(B[0], B[1], B[0] + 70 * Math.cos(rad(deg)), B[1] - 70 * Math.sin(rad(deg)), { col: MUTE, w: 1, dash: '4 4' });
         body += arc(B[0], B[1], 30, deg, deg + fc.dir.rel, fc.relLabel, { lr: 44 });
@@ -375,7 +398,7 @@ const Fig = (() => {
 
   /* Flat ground with a block; forces as in particle(). */
   function ground({ forces = [], angles = [], label = 'Block on horizontal ground', rough = false, motion = '' } = {}){
-    const w = 340, h = 210, gy = 150, bx = 170, by = gy - 16;
+    const w = 360, h = 210, gy = 150, bx = 150, by = gy - 16;
     let body = line(20, gy, w - 20, gy, { col: INK, w: 2 });
     if (rough) for (let x = 26; x < w - 20; x += 12) body += line(x, gy, x - 8, gy + 8, { col: MUTE, w: 1 });
     body += `<rect x="${bx - 26}" y="${gy - 32}" width="52" height="32" rx="3" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>`;
@@ -383,7 +406,17 @@ const Fig = (() => {
       body += line(bx, by, bx + 70, by, { col: MUTE, w: 1, dash: '4 4' });
       body += arc(bx, by, a.r || 34, a.from, a.to, a.label);
     });
-    forces.forEach(f => { body += force(bx, by, f.deg, f.len || 64, f.label, f.weight ? WEIGHT : FORCE); });
+    forces.forEach(f => {
+      const angled = !f.weight && f.label && f.deg % 90 !== 0 && f.components !== false;
+      const len = f.len || 64;
+      if (angled){
+        const ang = (angles[0] && angles[0].label) || (Math.abs(f.deg) + '°');
+        const hx = bx + len * Math.cos(rad(f.deg)), ty = by - len * Math.sin(rad(f.deg));
+        body += arrow(bx, by, hx, by, FORCE, 1.6, '5 4') + text(hx + 4, by + 13, compLabel(f.label, 'cos', ang), { col: FORCE, size: 12, anchor: 'start' });
+        body += arrow(hx, by, hx, ty, FORCE, 1.6, '5 4') + text(hx + 8, (by + ty) / 2 + 2, compLabel(f.label, 'sin', ang), { col: FORCE, size: 12, anchor: 'start' });
+      }
+      body += force(bx, by, f.deg, len, f.label, f.weight ? WEIGHT : FORCE);
+    });
     if (motion) body += arrow(28, 26, 88, 26, MUTE, 1.4) + text(96, 26, motion, { col: MUTE, size: 12, anchor: 'start' });
     return wrap(w, h, body, label);
   }
@@ -3810,7 +3843,7 @@ sol: R`
 };
 
 /* 5.2 Inclined planes */
-FIGS['5.2-weight'] = Fig.slope({ deg: 30, angleLabel: 'α', label: 'Weight split into components on a slope', forces: [{ dir: 'weight', label: 'mg', len: 70 }, { dir: 'down', label: 'mg sin α', len: 58 }, { dir: { rel: -90 }, label: 'mg cos α', len: 52 }, { dir: 'normal', label: 'R', len: 52 }] });
+FIGS['5.2-weight'] = Fig.slope({ deg: 30, angleLabel: 'α', label: 'Weight split into components along and into the slope', forces: [{ dir: 'weight', label: 'mg', len: 74 }, { dir: 'normal', label: 'R', len: 52 }] });
 FIGS['5.2-ex1'] = Fig.slope({ deg: 22.6, angleLabel: 'α', label: 'Particle sliding down a smooth slope', forces: [{ dir: 'weight', label: '2g' }, { dir: 'normal', label: 'R' }], motion: 'slides down' });
 FIGS['5.2-ex2'] = Fig.slope({ deg: 30, label: 'Particle held on a smooth slope by a horizontal force P', forces: [{ dir: 'weight', label: '3g' }, { dir: 'normal', label: 'R' }, { dir: 'horiz', label: 'P', len: 62 }] });
 
