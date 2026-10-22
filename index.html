@@ -2569,9 +2569,9 @@ Q('P3.4-15', 5, R`The integers $a$ and $b$ satisfy $2 \le a \le 5$ and $-3 \le b
 /* Pure Mathematics Year 1 · Chapter 3 Equations and inequalities (sections 3.5 to 3.7) */
 FIGS['P3.5-sketch'] = Fig.graph({ label: 'y = x squared minus x minus 6, below the x-axis between x = -2 and x = 3', fns: [{ f: x => x * x - x - 6, label: 'y = x² − x − 6', lx: 4.4, ly: 7 }], x0: -3.5, x1: 4.5, y0: -7, y1: 8,
   regions: [{ lo: x => x * x - x - 6, hi: () => 0, from: -2, to: 3 }], xticks: [[-2, '−2'], [3, '3']], yticks: [[-6, '−6']], texts: [{ x: 0.5, y: -2.5, label: 'y < 0 here', col: 'var(--accent)' }] });
-FIGS['P3.6-above'] = Fig.graph({ label: 'Curve y = x squared and line y = x + 2: the curve is below the line between x = -1 and x = 2', fns: [{ f: x => x * x, label: 'y = x²', lx: 3, ly: 8.6 }, { f: x => x + 2, label: 'y = x + 2', lx: 3, ly: 5.6 }],
+FIGS['P3.6-above'] = Fig.graph({ label: 'Curve y = x squared and line y = x + 2: the curve is below the line between x = -1 and x = 2', fns: [{ f: x => x * x, label: 'y = x²', lx: 3, ly: 8.6 }, { f: x => x + 2, label: 'y = x + 2', lx: 3, ly: 2.6 }],
   x0: -2.5, x1: 3, y0: -1, y1: 9, regions: [{ lo: x => x * x, hi: x => x + 2, from: -1, to: 2 }], xticks: [[-1, '−1'], [2, '2']], points: [{ x: -1, y: 1 }, { x: 2, y: 4 }] });
-FIGS['P3.7-region'] = Fig.graph({ label: 'The region satisfying y ≥ x squared minus 4 and y ≤ 2x + 4, shaded', fns: [{ f: x => x * x - 4, label: 'y = x² − 4', lx: 4.6, ly: 14 }, { f: x => 2 * x + 4, label: 'y = 2x + 4', lx: 1.8, ly: 11.5 }],
+FIGS['P3.7-region'] = Fig.graph({ label: 'The region satisfying y ≥ x squared minus 4 and y ≤ 2x + 4, shaded', fns: [{ f: x => x * x - 4, label: 'y = x² − 4', lx: 4.6, ly: 2 }, { f: x => 2 * x + 4, label: 'y = 2x + 4', lx: 1.8, ly: 11.5 }],
   x0: -3.5, x1: 4.8, y0: -5, y1: 15, regions: [{ lo: x => x * x - 4, hi: x => 2 * x + 4, from: -2, to: 4 }], xticks: [[-2, '−2'], [4, '4']], yticks: [[12, '12'], [-4, '−4']], texts: [{ x: 1.2, y: 2.5, label: 'R', col: 'var(--accent)', size: 15 }] });
 
 CONTENT['P3.5'] = {
