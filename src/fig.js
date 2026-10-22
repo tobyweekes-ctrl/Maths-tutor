@@ -200,7 +200,7 @@ const Fig = (() => {
 
   /* Graph of y = f(x). fns: [{f, label}], ticks as [value, text]. */
   let graphId = 0;
-  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
+  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], segs = [], xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
     const L = 44, Rr = 16, T = 14, B = 34;
     const X = x => L + (x - x0) / (x1 - x0) * (w - L - Rr), Y = y => T + (y1 - y) / (y1 - y0) * (h - T - B);
     let body = ''; const cid = 'gc' + (++graphId);
@@ -235,6 +235,7 @@ const Fig = (() => {
       body += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" clip-path="url(#${cid})"${fn.dash ? ' stroke-dasharray="6 5"' : ''}/>`;
       if (fn.label) body += text(X(fn.lx != null ? fn.lx : x1) - 4, Math.max(T + 8, Y(fn.ly != null ? fn.ly : fn.f(x1)) - 12), fn.label, { col, anchor: 'end', size: 12 });
     });
+    segs.forEach(sg => { body += line(X(sg.x1), Y(sg.y1), X(sg.x2), Y(sg.y2), { col: sg.col || MUTE, w: sg.w || 1.6, dash: sg.dash ? '5 4' : '' }); });
     texts.forEach(tx => { body += text(X(tx.x), Y(tx.y), tx.label, { col: tx.col || INK, size: tx.size || 12, anchor: tx.anchor || 'middle' }); });
     points.forEach(p => { body += `<circle cx="${n2(X(p.x))}" cy="${n2(Y(p.y))}" r="4" fill="${INK}"/>` + (p.label ? text(X(p.x) + (p.dx || 0), Y(p.y) + (p.dy || -14), p.label, { size: 12 }) : ''); });
     return wrap(w, h, `<defs><clipPath id="${cid}"><rect x="${L}" y="${T}" width="${w - L - Rr}" height="${h - T - B}"/></clipPath></defs><g>${body}</g>`, label);
