@@ -76,7 +76,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Home */
 .intro{display:grid;gap:10px;margin-bottom:28px}
 .intro p{color:var(--muted);max-width:62ch}
-.chapters{display:grid;gap:22px}
+.chapters{display:grid;gap:10px}
 .chapter{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
 .eyebrow{font:500 .74rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -90,6 +90,16 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bar i{display:block;height:100%;background:var(--ok)}
 .sec-acts{display:flex;gap:6px}
 @media (max-width:560px){.sec-row{grid-template-columns:2.6rem minmax(0,1fr)}.sec-acts{grid-column:2}.sec-prog{grid-column:2}}
+.books{display:grid;gap:30px}
+.book{display:grid;gap:12px}
+.book-title{font-size:1.15rem;color:var(--muted)}
+details.chapter > summary{list-style:none;cursor:pointer}
+details.chapter > summary::-webkit-details-marker{display:none}
+details.chapter > summary::after{content:"Show sections ▾";font:500 .75rem var(--f-mono);color:var(--accent);white-space:nowrap}
+details.chapter[open] > summary::after{content:"Hide ▴"}
+details.chapter:not([open]) > summary{border-bottom:0}
+.ch-head h3{font-size:1.1rem}
+.ch-tools{padding:10px 20px;border-bottom:1px solid var(--line)}
 .ask-cta{margin-top:22px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:18px 20px;border:1px dashed var(--accent);border-radius:var(--r);background:var(--accent-soft)}
 .ask-cta p{color:var(--muted);max-width:52ch}
 
@@ -227,7 +237,7 @@ label.chip input{accent-color:var(--accent)}
 
 <header class="top">
   <div class="wrap">
-    <button class="brand" id="brand" type="button"><b>Edexcel Maths Tutor</b><small>Pure 2 · Ch 7 &nbsp;/&nbsp; Applied 2 · Ch 5</small></button>
+    <button class="brand" id="brand" type="button"><b>Edexcel Maths Tutor</b><small>A level · Year 1 and Year 2</small></button>
     <nav class="nav" aria-label="Main">
       <button type="button" data-go="home">Topics</button>
       <button type="button" data-go="ask">Ask the tutor</button>
@@ -472,6 +482,791 @@ const Fig = (() => {
 
 const CONTENT = {};
 const FIGS = {};
+const BOOK_CHAPTERS = [];
+// Compact question builder used by the Year 1 files. Scheme lines can be written "part|code|text" (part may be empty).
+function Q(id, stars, q, hints, scheme, answer, sol, extra){
+  const line = r => { if (typeof r !== 'string') return r; const i = r.indexOf('|'), j = r.indexOf('|', i + 1); return [r.slice(0, i), r.slice(i + 1, j), r.slice(j + 1)]; };
+  return Object.assign({ id, stars, q, hints, scheme: scheme.map(line), answer, sol }, extra || {});
+}
+/* Pure Mathematics Year 1 · Chapter 1 Algebraic expressions (sections 1.1 to 1.3) */
+BOOK_CHAPTERS.push({ id:'P01', book:'Pure Mathematics Year 1', label:'Chapter 1', title:'Algebraic expressions', sections:[
+  { id:'P1.1', num:'1.1', title:'Index laws' },
+  { id:'P1.2', num:'1.2', title:'Expanding brackets' },
+  { id:'P1.3', num:'1.3', title:'Factorising' },
+  { id:'P1.4', num:'1.4', title:'Negative and fractional indices' },
+  { id:'P1.5', num:'1.5', title:'Surds' },
+  { id:'P1.6', num:'1.6', title:'Rationalising denominators' }
+]});
+
+CONTENT['P1.1'] = {
+notes: R`
+### The index laws
+> $$a^m \times a^n = a^{m+n} \qquad a^m \div a^n = a^{m-n} \qquad (a^m)^n = a^{mn} \qquad (ab)^n = a^nb^n$$
+
+- **Multiplying** the same base: **add** the powers.
+- **Dividing**: **subtract** the powers.
+- **A power of a power**: **multiply** the powers.
+- A bracket raised to a power: raise **every** factor inside, numbers included.
+
+Numbers and letters are dealt with separately: $3x^2 \times 4x^5 = (3 \times 4)(x^2 \times x^5) = 12x^7$.
+
+::: booklet
+**Not in the formula booklet:** the index laws. You must know them.
+:::
+
+### Worked example 1
+Simplify $\dfrac{10x^6y^3}{2x^2y}$.
+1. Numbers: $10 \div 2 = 5$.
+2. $x$: $x^{6-2} = x^4$. $y$: $y^{3-1} = y^2$ (remember $y = y^1$).
+3. Answer: $5x^4y^2$.
+
+### Worked example 2: the bracket trap
+Simplify $(2x^3)^2$.
+- Every factor inside is squared: $2^2 \times (x^3)^2 = 4x^6$.
+
+**The trap:** writing $2x^6$ (forgetting to square the $2$) or $4x^5$ (adding instead of multiplying the powers).
+
+### Watch out
+- $x^3 + x^2$ can't be simplified: the index laws are for multiplying and dividing, not adding.
+- A letter on its own has power $1$.
+`,
+questions: [
+Q('P1.1-1', 1, R`Simplify $x^5 \times x^3$. [[1]]`,
+  [R`Multiplying the same base: add the powers.`, R`$5 + 3 = 8$.`],
+  [R`|B1|$x^8$`], R`$x^8$`,
+  R`Same base, multiplying, so add the powers: $x^{5+3} = x^8$.`),
+Q('P1.1-2', 1, R`Simplify $(y^4)^3$. [[1]]`,
+  [R`A power of a power: multiply the powers.`, R`$4 \times 3 = 12$.`],
+  [R`|B1|$y^{12}$`], R`$y^{12}$`,
+  R`A power of a power, so multiply: $y^{4 \times 3} = y^{12}$.`),
+Q('P1.1-3', 1, R`Simplify $12p^7 \div 3p^2$. [[2]]`,
+  [R`Deal with the numbers and the letters separately.`, R`$12 \div 3$, then subtract the powers of $p$.`],
+  [R`|B1|Coefficient $4$`, R`|B1|$p^5$`], R`$4p^5$`,
+  R`1. **Numbers:** $12 \div 3 = 4$.
+2. **Powers:** $p^{7-2} = p^5$.
+3. So $12p^7 \div 3p^2 = 4p^5$.`),
+Q('P1.1-4', 2, R`Simplify $(3a^2b)^3$. [[2]]`,
+  [R`Every factor inside the bracket is cubed, including the $3$.`, R`$3^3 = 27$, $(a^2)^3 = a^6$, $b^3$.`],
+  [R`|M1|Cubes each factor`, R`|A1|$27a^6b^3$`], R`$27a^6b^3$`,
+  R`Cube every factor: $3^3 \times (a^2)^3 \times b^3 = 27a^6b^3$.`),
+Q('P1.1-5', 2, R`Simplify $\dfrac{4x^5y^2}{2x^2y} \times 3xy^3$. [[3]]`,
+  [R`Simplify the fraction first.`, R`$\dfrac{4x^5y^2}{2x^2y} = 2x^3y$. Then multiply by $3xy^3$, adding powers.`],
+  [R`|M1|Divides correctly to get $2x^3y$`, R`|M1|Multiplies by $3xy^3$, adding powers`, R`|A1|$6x^4y^4$`], R`$6x^4y^4$`,
+  R`1. **Fraction:** $\dfrac{4x^5y^2}{2x^2y} = 2x^{5-2}y^{2-1} = 2x^3y$
+2. **Multiply:** $2x^3y \times 3xy^3 = 6x^{3+1}y^{1+3} = 6x^4y^4$`),
+Q('P1.1-6', 2, R`Expand and simplify $x^2(3x^4 - 2x)$. [[2]]`,
+  [R`Multiply each term in the bracket by $x^2$.`, R`$x^2 \times 3x^4 = 3x^6$ and $x^2 \times 2x = 2x^3$.`],
+  [R`|M1|Multiplies both terms by $x^2$`, R`|A1|$3x^6 - 2x^3$`], R`$3x^6 - 2x^3$`,
+  R`$x^2 \times 3x^4 - x^2 \times 2x = 3x^6 - 2x^3$. The two terms have different powers, so they don't combine.`),
+Q('P1.1-7', 2, R`Simplify $(2x^3)^2 \times 5x$. [[2]]`,
+  [R`$(2x^3)^2 = 4x^6$, squaring the $2$ as well.`, R`Then multiply by $5x$.`],
+  [R`|M1|$(2x^3)^2 = 4x^6$`, R`|A1|$20x^7$`], R`$20x^7$`,
+  R`1. $(2x^3)^2 = 2^2 \times x^6 = 4x^6$
+2. $4x^6 \times 5x = 20x^7$`),
+Q('P1.1-8', 3, R`Simplify fully $\dfrac{6x^5 + 9x^3}{3x^2}$. [[3]]`,
+  [R`Split the fraction: divide **each** term on top by $3x^2$.`, R`$\dfrac{6x^5}{3x^2} + \dfrac{9x^3}{3x^2}$.`],
+  [R`|M1|Divides each term by $3x^2$`, R`|A1|$2x^3$`, R`|A1|$+3x$`], R`$2x^3 + 3x$`,
+  R`1. **Split:** $\dfrac{6x^5}{3x^2} + \dfrac{9x^3}{3x^2}$
+2. **Each term:** $2x^3 + 3x$
+
+**Trap:** cancelling only one term, e.g. $\dfrac{6x^5 + 9x^3}{3x^2} = 2x^3 + 9x^3$.`),
+Q('P1.1-9', 3, R`The integers $a$ and $b$ satisfy $2^a \times 2^b = 2^{10}$ and $\dfrac{(2^a)^2}{2^b} = 2^8$. Find $a$ and $b$. [[4]]`,
+  [R`Turn each equation into an equation in the powers.`, R`$a + b = 10$ and $2a - b = 8$.`, R`Add the equations.`],
+  [R`|M1|$a + b = 10$`, R`|M1|$2a - b = 8$`, R`|M1|Solves simultaneously`, R`|A1|$a = 6$, $b = 4$`], R`$a = 6$, $b = 4$`,
+  R`1. $2^a \times 2^b = 2^{a+b}$, so $a + b = 10$.
+2. $\dfrac{(2^a)^2}{2^b} = \dfrac{2^{2a}}{2^b} = 2^{2a - b}$, so $2a - b = 8$.
+3. **Add:** $3a = 18$, so $a = 6$ and $b = 4$.`),
+Q('P1.1-10', 3, R`Write $8^x \times 4^{x+1}$ as a single power of $2$. [[3]]`,
+  [R`$8 = 2^3$ and $4 = 2^2$.`, R`$8^x = 2^{3x}$ and $4^{x+1} = 2^{2(x+1)}$.`],
+  [R`|M1|Writes $8^x = 2^{3x}$ or $4^{x+1} = 2^{2x+2}$`, R`|M1|Adds the powers`, R`|A1|$2^{5x+2}$`], R`$2^{5x+2}$`,
+  R`1. $8^x = (2^3)^x = 2^{3x}$ and $4^{x+1} = (2^2)^{x+1} = 2^{2x+2}$.
+2. **Multiply, adding the powers:** $2^{3x + 2x + 2} = 2^{5x+2}$`),
+Q('P1.1-11', 3, R`Solve $3^{2x} \times 9 = 27^x$. [[3]]`,
+  [R`Write everything as a power of $3$.`, R`$9 = 3^2$ and $27^x = 3^{3x}$.`],
+  [R`|M1|Writes each term as a power of $3$`, R`|M1|$2x + 2 = 3x$`, R`|A1|$x = 2$`], R`$x = 2$`,
+  R`1. **Same base:** $3^{2x} \times 3^2 = 3^{3x}$, so $3^{2x+2} = 3^{3x}$.
+2. **Equate powers:** $2x + 2 = 3x$, so $x = 2$.
+
+Check: $3^4 \times 9 = 729 = 27^2$ ✓`),
+Q('P1.1-12', 4, R`**(a)** Write $4^x$ as a power of $2$. [[1]]
+
+**(b)** Hence solve $2^{x+1} = 4^{x-1}$. [[3]]
+
+**(c)** Solve $8^y = 2^{y+4}$. [[2]]`,
+  [R`$4 = 2^2$.`, R`For (b): $4^{x-1} = 2^{2x-2}$. Equal powers of $2$ means equal indices.`, R`For (c): $8^y = 2^{3y}$.`],
+  [R`(a)|B1|$2^{2x}$`, R`(b)|M1|$4^{x-1} = 2^{2(x-1)}$`, R`(b)|M1|$x + 1 = 2x - 2$`, R`(b)|A1|$x = 3$`, R`(c)|M1|$3y = y + 4$`, R`(c)|A1|$y = 2$`],
+  R`(a) $2^{2x}$ (b) $x = 3$ (c) $y = 2$`,
+  R`**(a)** $4^x = (2^2)^x = 2^{2x}$
+
+**(b)** $4^{x-1} = 2^{2x-2}$, so $2^{x+1} = 2^{2x-2}$ and $x + 1 = 2x - 2$, giving $x = 3$.
+
+**(c)** $8^y = 2^{3y}$, so $3y = y + 4$ and $y = 2$.`),
+Q('P1.1-13', 4, R`Simplify fully $\dfrac{(3x^2y)^3 \times 2xy^2}{9x^4y^3}$. [[4]]`,
+  [R`Expand the bracket first: $(3x^2y)^3 = 27x^6y^3$.`, R`Multiply the top together, then divide numbers and powers separately.`],
+  [R`|M1|$(3x^2y)^3 = 27x^6y^3$`, R`|M1|Numerator $54x^7y^5$`, R`|M1|Divides coefficients and subtracts powers`, R`|A1|$6x^3y^2$`], R`$6x^3y^2$`,
+  R`1. **Bracket:** $(3x^2y)^3 = 27x^6y^3$
+2. **Numerator:** $27x^6y^3 \times 2xy^2 = 54x^7y^5$
+3. **Divide:** $\dfrac{54x^7y^5}{9x^4y^3} = 6x^3y^2$`),
+Q('P1.1-14', 4, R`Given that $y = 2x^3$:
+
+**(a)** express $y^2$ in terms of $x$ [[1]]
+
+**(b)** express $\dfrac{y^3}{4x^2}$ in terms of $x$, in its simplest form [[2]]
+
+**(c)** given also that $y^2 = 16x^2$ and $x > 0$, find the exact value of $x$. [[3]]`,
+  [R`$y^2 = (2x^3)^2$.`, R`$y^3 = 8x^9$.`, R`For (c): $4x^6 = 16x^2$. Divide by $4x^2$ (allowed because $x > 0$).`],
+  [R`(a)|B1|$4x^6$`, R`(b)|M1|$y^3 = 8x^9$`, R`(b)|A1|$2x^7$`, R`(c)|M1|$4x^6 = 16x^2$`, R`(c)|M1|$x^4 = 4$`, R`(c)|A1|$x = \sqrt2$`],
+  R`(a) $4x^6$ (b) $2x^7$ (c) $x = \sqrt2$`,
+  R`**(a)** $y^2 = (2x^3)^2 = 4x^6$
+
+**(b)** $y^3 = 8x^9$, so $\dfrac{8x^9}{4x^2} = 2x^7$.
+
+**(c)** $4x^6 = 16x^2$. Since $x > 0$, divide by $4x^2$: $x^4 = 4$, so $x^2 = 2$ and $x = \sqrt2$.`),
+Q('P1.1-15', 5, R`**(a)** Show that $2^{n+2} - 2^n = 3 \times 2^n$. [[2]]
+
+**(b)** Hence solve $2^{x+2} - 2^x = 96$. [[3]]
+
+**(c)** Prove that $3^{n+1} + 3^n$ is a multiple of $4$ for every positive integer $n$. [[2]]`,
+  [R`$2^{n+2} = 2^n \times 2^2$. Take out the common factor $2^n$.`, R`For (b): $3 \times 2^x = 96$.`, R`For (c): $3^{n+1} = 3 \times 3^n$. Factorise.`],
+  [R`(a)|M1|$2^{n+2} = 4 \times 2^n$`, R`(a)|A1|$4 \times 2^n - 2^n = 3 \times 2^n$ (cso)`, R`(b)|M1|$3 \times 2^x = 96$`, R`(b)|M1|$2^x = 32$`, R`(b)|A1|$x = 5$`, R`(c)|M1|$3^n(3 + 1)$`, R`(c)|A1|$= 4 \times 3^n$, a multiple of $4$ (conclusion)`],
+  R`(b) $x = 5$ (c) $3^{n+1} + 3^n = 4 \times 3^n$`,
+  R`**(a)** $2^{n+2} = 2^n \times 2^2 = 4 \times 2^n$, so $2^{n+2} - 2^n = 4 \times 2^n - 2^n = 3 \times 2^n$. $\blacksquare$
+
+**(b)** By (a), $3 \times 2^x = 96$, so $2^x = 32 = 2^5$ and $x = 5$.
+
+**(c)** $3^{n+1} + 3^n = 3 \times 3^n + 3^n = 3^n(3 + 1) = 4 \times 3^n$. Since $3^n$ is an integer, this is a multiple of $4$. $\blacksquare$`)
+]
+};
+
+CONTENT['P1.2'] = {
+notes: R`
+### Single brackets
+Multiply **every** term inside by the term outside: $3x(2x - 5) = 6x^2 - 15x$.
+
+### Two brackets
+Multiply each term in the first bracket by each term in the second:
+> $$(a + b)(c + d) = ac + ad + bc + bd$$
+
+Then collect like terms. For example $(x + 3)(x - 5) = x^2 - 5x + 3x - 15 = x^2 - 2x - 15$.
+
+### Three brackets
+Multiply two of them first, then multiply the answer by the third.
+
+### Useful results
+> $$(a + b)^2 = a^2 + 2ab + b^2 \qquad (a - b)^2 = a^2 - 2ab + b^2 \qquad (a + b)(a - b) = a^2 - b^2$$
+
+::: booklet
+**Not in the formula booklet:** these expansions. Learn them, especially the difference of two squares.
+:::
+
+### Worked example 1
+Expand $(2x - 1)(x + 4)$.
+1. $2x \cdot x + 2x \cdot 4 - 1 \cdot x - 1 \cdot 4 = 2x^2 + 8x - x - 4$
+2. Collect: $2x^2 + 7x - 4$.
+
+### Worked example 2: squaring a bracket
+Expand $(x - 3)^2$.
+- $(x - 3)(x - 3) = x^2 - 3x - 3x + 9 = x^2 - 6x + 9$
+
+**The trap:** writing $x^2 - 9$ or $x^2 + 9$. Squaring a bracket always gives a middle term.
+
+### Watch out
+- Negative times negative is positive: $(-3)(-5) = +15$.
+- When a minus sign is in front of a bracket, it changes every sign inside: $-(x - 4) = -x + 4$.
+`,
+questions: [
+Q('P1.2-1', 1, R`Expand $4x(3x - 2)$. [[2]]`,
+  [R`Multiply each term inside by $4x$.`, R`$4x \times 3x$ and $4x \times (-2)$.`],
+  [R`|M1|Multiplies both terms`, R`|A1|$12x^2 - 8x$`], R`$12x^2 - 8x$`,
+  R`$4x \times 3x = 12x^2$ and $4x \times (-2) = -8x$, so $4x(3x - 2) = 12x^2 - 8x$.`),
+Q('P1.2-2', 1, R`Expand and simplify $(x + 4)(x + 6)$. [[2]]`,
+  [R`Four multiplications: $x \cdot x$, $x \cdot 6$, $4 \cdot x$, $4 \cdot 6$.`, R`Collect the $x$ terms.`],
+  [R`|M1|Four correct terms`, R`|A1|$x^2 + 10x + 24$`], R`$x^2 + 10x + 24$`,
+  R`$x^2 + 6x + 4x + 24 = x^2 + 10x + 24$`),
+Q('P1.2-3', 1, R`Expand and simplify $3(x - 2) - 2(x - 5)$. [[2]]`,
+  [R`Be careful: $-2 \times (-5) = +10$.`, R`$3x - 6 - 2x + 10$.`],
+  [R`|M1|Expands both brackets with correct signs`, R`|A1|$x + 4$`], R`$x + 4$`,
+  R`1. $3(x - 2) = 3x - 6$ and $-2(x - 5) = -2x + 10$.
+2. Collect: $3x - 2x - 6 + 10 = x + 4$.`),
+Q('P1.2-4', 2, R`Expand and simplify $(2x - 3)(x + 5)$. [[2]]`,
+  [R`$2x \cdot x$, $2x \cdot 5$, $-3 \cdot x$, $-3 \cdot 5$.`, R`$10x - 3x = 7x$.`],
+  [R`|M1|Four terms, at least three correct`, R`|A1|$2x^2 + 7x - 15$`], R`$2x^2 + 7x - 15$`,
+  R`$2x^2 + 10x - 3x - 15 = 2x^2 + 7x - 15$`),
+Q('P1.2-5', 2, R`Expand and simplify $(3x - 2)^2$. [[2]]`,
+  [R`$(3x - 2)^2 = (3x - 2)(3x - 2)$.`, R`The middle term is $2 \times 3x \times (-2)$.`],
+  [R`|M1|Writes as two brackets or uses $(a - b)^2$`, R`|A1|$9x^2 - 12x + 4$`], R`$9x^2 - 12x + 4$`,
+  R`$(3x - 2)(3x - 2) = 9x^2 - 6x - 6x + 4 = 9x^2 - 12x + 4$`),
+Q('P1.2-6', 2, R`Expand and simplify $(x + 7)(x - 7)$. [[1]]`,
+  [R`This is a difference of two squares.`, R`The $x$ terms cancel.`],
+  [R`|B1|$x^2 - 49$`], R`$x^2 - 49$`,
+  R`$x^2 - 7x + 7x - 49 = x^2 - 49$. This is the pattern $(a + b)(a - b) = a^2 - b^2$.`),
+Q('P1.2-7', 2, R`Expand and simplify $(x + 2)(x^2 - 3x + 4)$. [[3]]`,
+  [R`Multiply each of $x$ and $2$ by every term in the second bracket: six terms.`, R`Then collect the $x^2$ terms and the $x$ terms.`],
+  [R`|M1|Six terms, at least five correct`, R`|A1|Collects terms correctly`, R`|A1|$x^3 - x^2 - 2x + 8$`], R`$x^3 - x^2 - 2x + 8$`,
+  R`1. $x(x^2 - 3x + 4) = x^3 - 3x^2 + 4x$
+2. $2(x^2 - 3x + 4) = 2x^2 - 6x + 8$
+3. Add: $x^3 - x^2 - 2x + 8$`),
+Q('P1.2-8', 3, R`Expand and simplify $(x + 1)(x - 2)(x + 3)$. [[3]]`,
+  [R`Multiply two of the brackets first.`, R`$(x + 1)(x - 2) = x^2 - x - 2$. Now multiply by $(x + 3)$.`],
+  [R`|M1|Multiplies two brackets correctly`, R`|M1|Multiplies by the third`, R`|A1|$x^3 + 2x^2 - 5x - 6$`], R`$x^3 + 2x^2 - 5x - 6$`,
+  R`1. $(x + 1)(x - 2) = x^2 - x - 2$
+2. $(x^2 - x - 2)(x + 3) = x^3 + 3x^2 - x^2 - 3x - 2x - 6 = x^3 + 2x^2 - 5x - 6$`),
+Q('P1.2-9', 3, R`Show that $(2x + 1)^2 - (x - 3)^2 \equiv 3x^2 + 10x - 8$. [[3]]`,
+  [R`Expand each square separately.`, R`$(2x + 1)^2 = 4x^2 + 4x + 1$ and $(x - 3)^2 = x^2 - 6x + 9$. Subtract the whole of the second.`],
+  [R`|M1|Expands $(2x + 1)^2$`, R`|M1|Expands $(x - 3)^2$ and subtracts with brackets`, R`|A1|$3x^2 + 10x - 8$ (cso)`], R`$3x^2 + 10x - 8$`,
+  R`$(4x^2 + 4x + 1) - (x^2 - 6x + 9) = 3x^2 + 10x - 8$ $\blacksquare$
+
+Watch the signs: $-(x^2 - 6x + 9) = -x^2 + 6x - 9$.`),
+Q('P1.2-10', 3, R`Given that $(x + a)(x + 5) \equiv x^2 + bx - 15$, find the values of the constants $a$ and $b$. [[3]]`,
+  [R`Expand the left side: $x^2 + (a + 5)x + 5a$.`, R`Compare the constant terms first.`],
+  [R`|M1|Expands to $x^2 + (5 + a)x + 5a$`, R`|A1|$a = -3$`, R`|A1|$b = 2$`], R`$a = -3$, $b = 2$`,
+  R`1. **Expand:** $x^2 + 5x + ax + 5a = x^2 + (5 + a)x + 5a$
+2. **Constants:** $5a = -15$, so $a = -3$.
+3. **$x$ terms:** $b = 5 + a = 2$.`),
+Q('P1.2-11', 3, R`A rectangle has length $(2x + 3)$ cm and width $(x - 1)$ cm. A square of side $x$ cm is removed from it. Show that the area left is $(x^2 + x - 3)$ cm². [[3]]`,
+  [R`Area of rectangle $= (2x + 3)(x - 1)$.`, R`Subtract the square's area, $x^2$.`],
+  [R`|M1|$(2x + 3)(x - 1)$`, R`|A1|$2x^2 + x - 3$`, R`|A1|Subtracts $x^2$ to get $x^2 + x - 3$ (cso)`], R`$x^2 + x - 3$`,
+  R`1. Rectangle: $(2x + 3)(x - 1) = 2x^2 - 2x + 3x - 3 = 2x^2 + x - 3$
+2. Remove the square: $2x^2 + x - 3 - x^2 = x^2 + x - 3$ cm² $\blacksquare$`),
+Q('P1.2-12', 4, R`**(a)** Expand and simplify $(x - 2)^3$. [[3]]
+
+**(b)** Hence find the coefficient of $x^2$ in the expansion of $(x - 2)^3(x + 1)$. [[2]]`,
+  [R`$(x - 2)^3 = (x - 2)^2(x - 2)$ with $(x - 2)^2 = x^2 - 4x + 4$.`, R`For (b) you don't need the whole expansion. Which products give $x^2$?`],
+  [R`(a)|M1|$(x - 2)^2 = x^2 - 4x + 4$`, R`(a)|M1|Multiplies by $(x - 2)$`, R`(a)|A1|$x^3 - 6x^2 + 12x - 8$`, R`(b)|M1|$-6x^2 \times 1 + 12x \times x$`, R`(b)|A1|$6$`],
+  R`(a) $x^3 - 6x^2 + 12x - 8$ (b) $6$`,
+  R`**(a)** $(x - 2)^2 = x^2 - 4x + 4$, then $(x^2 - 4x + 4)(x - 2) = x^3 - 2x^2 - 4x^2 + 8x + 4x - 8 = x^3 - 6x^2 + 12x - 8$.
+
+**(b)** $(x^3 - 6x^2 + 12x - 8)(x + 1)$. The $x^2$ terms come from $-6x^2 \times 1$ and $12x \times x$: $-6x^2 + 12x^2 = 6x^2$. The coefficient is $6$.`),
+Q('P1.2-13', 4, R`Given that $(ax - 3)(2x + b) \equiv 6x^2 + cx - 15$, find the values of the constants $a$, $b$ and $c$. [[4]]`,
+  [R`Expand: $2ax^2 + abx - 6x - 3b$.`, R`Compare the $x^2$ terms and the constants first.`, R`Then $c = ab - 6$.`],
+  [R`|M1|Expands to $2ax^2 + (ab - 6)x - 3b$`, R`|A1|$a = 3$`, R`|A1|$b = 5$`, R`|A1|$c = 9$`],
+  R`$a = 3$, $b = 5$, $c = 9$`,
+  R`1. **Expand:** $(ax - 3)(2x + b) = 2ax^2 + abx - 6x - 3b = 2ax^2 + (ab - 6)x - 3b$
+2. **$x^2$ terms:** $2a = 6$, so $a = 3$.
+3. **Constants:** $-3b = -15$, so $b = 5$.
+4. **$x$ terms:** $c = ab - 6 = 15 - 6 = 9$.`),
+Q('P1.2-14', 4, R`Show that $(n + 1)^2 - (n - 1)^2 = 4n$, and hence show that the difference between the squares of two consecutive **odd** numbers is always a multiple of $8$. [[5]]`,
+  [R`Expand both squares and subtract.`, R`Two consecutive odd numbers can be written $2k - 1$ and $2k + 1$. Use the result with $n = 2k$.`],
+  [R`|M1|Expands both squares`, R`|A1|$4n$ (cso)`, R`|M1|Writes consecutive odd numbers as $2k - 1$ and $2k + 1$`, R`|M1|Uses the result with $n = 2k$`, R`|A1|$8k$, a multiple of $8$ (conclusion)`],
+  R`$(2k+1)^2 - (2k-1)^2 = 8k$`,
+  R`1. $(n^2 + 2n + 1) - (n^2 - 2n + 1) = 4n$ $\blacksquare$
+2. Two consecutive odd numbers are $2k - 1$ and $2k + 1$ for some integer $k$. With $n = 2k$:
+$(2k + 1)^2 - (2k - 1)^2 = 4(2k) = 8k$, which is a multiple of $8$. $\blacksquare$`),
+Q('P1.2-15', 5, R`The expression $(x^2 + px + 2)(x^2 - 3x + q)$ has no $x^3$ term and no $x$ term when expanded.
+
+**(a)** Find the values of $p$ and $q$. [[5]]
+
+**(b)** Hence find the coefficient of $x^2$. [[2]]`,
+  [R`You only need the terms that make $x^3$ and $x$.`, R`$x^3$: $x^2 \cdot (-3x) + px \cdot x^2$. $x$: $px \cdot q + 2 \cdot (-3x)$.`, R`Set each coefficient to zero.`],
+  [R`(a)|M1|$x^3$ coefficient $p - 3$`, R`(a)|A1|$p = 3$`, R`(a)|M1|$x$ coefficient $pq - 6$`, R`(a)|M1|Sets $pq - 6 = 0$ with their $p$`, R`(a)|A1|$q = 2$`, R`(b)|M1|$x^2$ terms: $q - 3p + 2$`, R`(b)|A1|$-5$`],
+  R`(a) $p = 3$, $q = 2$ (b) $-5$`,
+  R`**(a)**
+1. **$x^3$ terms:** $x^2(-3x) + px(x^2) = (p - 3)x^3$. No $x^3$ term, so $p = 3$.
+2. **$x$ terms:** $px(q) + 2(-3x) = (pq - 6)x$. No $x$ term, so $3q = 6$ and $q = 2$.
+
+**(b)** **$x^2$ terms:** $x^2(q) + px(-3x) + 2(x^2) = (q - 3p + 2)x^2 = (2 - 9 + 2)x^2 = -5x^2$. The coefficient is $-5$.`)
+]
+};
+
+CONTENT['P1.3'] = {
+notes: R`
+### What factorising means
+Factorising is the reverse of expanding: write an expression as a product.
+1. **Take out the highest common factor** first: $6x^2 + 9x = 3x(2x + 3)$.
+2. Then look for a pattern.
+
+### Quadratics $x^2 + bx + c$
+Find two numbers that **multiply** to $c$ and **add** to $b$: $x^2 + 7x + 12 = (x + 3)(x + 4)$.
+
+### Quadratics $ax^2 + bx + c$
+Find two numbers that multiply to $ac$ and add to $b$, split the middle term, then factorise in pairs. For $2x^2 + 7x + 3$: $ac = 6$, numbers $6$ and $1$:
+$2x^2 + 6x + x + 3 = 2x(x + 3) + 1(x + 3) = (2x + 1)(x + 3)$.
+
+### Difference of two squares
+> $$a^2 - b^2 = (a + b)(a - b)$$
+
+For example $9x^2 - 25 = (3x + 5)(3x - 5)$.
+
+::: booklet
+**Not in the formula booklet:** any factorising methods.
+:::
+
+### Worked example 1
+Factorise $x^2 - 2x - 15$: multiply to $-15$, add to $-2$: $-5$ and $3$. So $(x - 5)(x + 3)$.
+
+### Worked example 2: factorise fully
+Factorise fully $2x^3 - 18x$.
+1. Common factor: $2x(x^2 - 9)$.
+2. Difference of two squares: $2x(x + 3)(x - 3)$.
+
+**The trap:** stopping at $2x(x^2 - 9)$. "Fully" means keep going until nothing more factorises.
+
+### Watch out
+- Always check by expanding your answer.
+- $x^2 + 9$ does **not** factorise (it's a sum of squares).
+`,
+questions: [
+Q('P1.3-1', 1, R`Factorise $5x^2 - 15x$. [[1]]`,
+  [R`Find the highest common factor of both terms.`, R`Both terms contain $5$ and $x$.`],
+  [R`|B1|$5x(x - 3)$`], R`$5x(x - 3)$`,
+  R`The HCF is $5x$: $5x^2 - 15x = 5x(x - 3)$. Check: $5x \cdot x - 5x \cdot 3$ ✓`),
+Q('P1.3-2', 1, R`Factorise $x^2 + 8x + 15$. [[2]]`,
+  [R`Two numbers that multiply to $15$ and add to $8$.`, R`$3$ and $5$.`],
+  [R`|M1|$(x \pm 3)(x \pm 5)$`, R`|A1|$(x + 3)(x + 5)$`], R`$(x + 3)(x + 5)$`,
+  R`$3 \times 5 = 15$ and $3 + 5 = 8$, so $x^2 + 8x + 15 = (x + 3)(x + 5)$.`),
+Q('P1.3-3', 1, R`Factorise $x^2 - 64$. [[1]]`,
+  [R`It's a difference of two squares.`, R`$64 = 8^2$.`],
+  [R`|B1|$(x + 8)(x - 8)$`], R`$(x + 8)(x - 8)$`,
+  R`$x^2 - 8^2 = (x + 8)(x - 8)$.`),
+Q('P1.3-4', 2, R`Factorise $x^2 - x - 20$. [[2]]`,
+  [R`Multiply to $-20$, add to $-1$.`, R`$-5$ and $4$.`],
+  [R`|M1|Correct pair of numbers`, R`|A1|$(x - 5)(x + 4)$`], R`$(x - 5)(x + 4)$`,
+  R`$-5 \times 4 = -20$ and $-5 + 4 = -1$, so $(x - 5)(x + 4)$.`),
+Q('P1.3-5', 2, R`Factorise $3x^2 + 10x - 8$. [[2]]`,
+  [R`$ac = 3 \times (-8) = -24$. Two numbers that multiply to $-24$ and add to $10$.`, R`$12$ and $-2$: split $10x$ into $12x - 2x$.`],
+  [R`|M1|Splits the middle term or uses a correct method`, R`|A1|$(3x - 2)(x + 4)$`], R`$(3x - 2)(x + 4)$`,
+  R`1. $ac = -24$; $12 \times (-2) = -24$ and $12 - 2 = 10$.
+2. $3x^2 + 12x - 2x - 8 = 3x(x + 4) - 2(x + 4) = (3x - 2)(x + 4)$`),
+Q('P1.3-6', 2, R`Factorise $16x^2 - 49y^2$. [[2]]`,
+  [R`Both terms are squares.`, R`$16x^2 = (4x)^2$ and $49y^2 = (7y)^2$.`],
+  [R`|M1|Recognises $(4x)^2 - (7y)^2$`, R`|A1|$(4x + 7y)(4x - 7y)$`], R`$(4x + 7y)(4x - 7y)$`,
+  R`$(4x)^2 - (7y)^2 = (4x + 7y)(4x - 7y)$`),
+Q('P1.3-7', 2, R`Factorise fully $3x^2 - 12$. [[2]]`,
+  [R`Take out the common factor $3$ first.`, R`$x^2 - 4$ is a difference of two squares.`],
+  [R`|M1|$3(x^2 - 4)$`, R`|A1|$3(x + 2)(x - 2)$`], R`$3(x + 2)(x - 2)$`,
+  R`$3x^2 - 12 = 3(x^2 - 4) = 3(x + 2)(x - 2)$.`),
+Q('P1.3-8', 3, R`Factorise fully $x^3 - 5x^2 + 6x$. [[3]]`,
+  [R`Every term has a factor $x$.`, R`$x(x^2 - 5x + 6)$, then factorise the quadratic.`],
+  [R`|M1|$x(x^2 - 5x + 6)$`, R`|M1|Factorises the quadratic`, R`|A1|$x(x - 2)(x - 3)$`], R`$x(x - 2)(x - 3)$`,
+  R`1. $x^3 - 5x^2 + 6x = x(x^2 - 5x + 6)$
+2. $x^2 - 5x + 6 = (x - 2)(x - 3)$, so the answer is $x(x - 2)(x - 3)$.`),
+Q('P1.3-9', 3, R`Factorise fully $2x^4 - 32$. [[3]]`,
+  [R`Common factor $2$: $2(x^4 - 16)$.`, R`$x^4 - 16 = (x^2)^2 - 4^2$, a difference of two squares. Then one of the factors factorises again.`],
+  [R`|M1|$2(x^4 - 16)$`, R`|M1|$(x^2 + 4)(x^2 - 4)$`, R`|A1|$2(x^2 + 4)(x + 2)(x - 2)$`], R`$2(x^2 + 4)(x + 2)(x - 2)$`,
+  R`1. $2x^4 - 32 = 2(x^4 - 16)$
+2. $x^4 - 16 = (x^2 + 4)(x^2 - 4)$
+3. $x^2 - 4 = (x + 2)(x - 2)$, but $x^2 + 4$ doesn't factorise.
+
+So $2x^4 - 32 = 2(x^2 + 4)(x + 2)(x - 2)$.`),
+Q('P1.3-10', 3, R`Factorise $6x^2 - 7x - 3$. [[2]]`,
+  [R`$ac = -18$. Multiply to $-18$, add to $-7$.`, R`$-9$ and $2$.`],
+  [R`|M1|Correct method`, R`|A1|$(3x + 1)(2x - 3)$`], R`$(3x + 1)(2x - 3)$`,
+  R`1. $ac = -18$: $-9 \times 2 = -18$ and $-9 + 2 = -7$.
+2. $6x^2 - 9x + 2x - 3 = 3x(2x - 3) + 1(2x - 3) = (3x + 1)(2x - 3)$`),
+Q('P1.3-11', 3, R`Factorise $x^4 - 10x^2 + 9$ completely. [[3]]`,
+  [R`Treat it as a quadratic in $x^2$: let $u = x^2$.`, R`$u^2 - 10u + 9 = (u - 1)(u - 9)$.`, R`Each factor is a difference of two squares.`],
+  [R`|M1|$(x^2 - 1)(x^2 - 9)$`, R`|M1|Factorises each difference of two squares`, R`|A1|$(x + 1)(x - 1)(x + 3)(x - 3)$`], R`$(x + 1)(x - 1)(x + 3)(x - 3)$`,
+  R`1. With $u = x^2$: $u^2 - 10u + 9 = (u - 1)(u - 9)$, so $(x^2 - 1)(x^2 - 9)$.
+2. Each is a difference of two squares: $(x + 1)(x - 1)(x + 3)(x - 3)$.`),
+Q('P1.3-12', 4, R`**(a)** Factorise $x^2 - 4x - 21$. [[1]]
+
+**(b)** Hence factorise fully $3x^3 - 12x^2 - 63x$. [[2]]
+
+**(c)** Hence simplify $\dfrac{3x^3 - 12x^2 - 63x}{x^2 - 49}$. [[2]]`,
+  [R`Multiply to $-21$, add to $-4$.`, R`For (b), take out $3x$ first.`, R`For (c), factorise the denominator and cancel the common factor.`],
+  [R`(a)|B1|$(x - 7)(x + 3)$`, R`(b)|M1|$3x(x^2 - 4x - 21)$`, R`(b)|A1|$3x(x - 7)(x + 3)$`, R`(c)|M1|$x^2 - 49 = (x + 7)(x - 7)$ and cancels $(x - 7)$`, R`(c)|A1|$\dfrac{3x(x + 3)}{x + 7}$`],
+  R`(a) $(x - 7)(x + 3)$ (b) $3x(x - 7)(x + 3)$ (c) $\dfrac{3x(x + 3)}{x + 7}$`,
+  R`**(a)** $-7 \times 3 = -21$ and $-7 + 3 = -4$: $(x - 7)(x + 3)$.
+
+**(b)** $3x^3 - 12x^2 - 63x = 3x(x^2 - 4x - 21) = 3x(x - 7)(x + 3)$.
+
+**(c)** $\dfrac{3x(x - 7)(x + 3)}{(x + 7)(x - 7)} = \dfrac{3x(x + 3)}{x + 7}$`),
+Q('P1.3-13', 4, R`Without a calculator, use factorising to work out
+
+**(a)** $87^2 - 13^2$ [[2]]
+
+**(b)** $\dfrac{2023^2 - 2021^2}{4}$ [[3]]`,
+  [R`$a^2 - b^2 = (a + b)(a - b)$.`, R`$87 + 13 = 100$ and $87 - 13 = 74$.`],
+  [R`(a)|M1|$(87 + 13)(87 - 13)$`, R`(a)|A1|$7400$`, R`(b)|M1|$(2023 + 2021)(2023 - 2021)$`, R`(b)|A1|$4044 \times 2$`, R`(b)|A1|$2022$`],
+  R`(a) $7400$ (b) $2022$`,
+  R`**(a)** $87^2 - 13^2 = (87 + 13)(87 - 13) = 100 \times 74 = 7400$
+
+**(b)** $2023^2 - 2021^2 = (4044)(2) = 8088$, and $\dfrac{8088}{4} = 2022$.`),
+Q('P1.3-14', 4, R`**(a)** Factorise $n^3 - n$ completely. [[2]]
+
+**(b)** Hence explain why $n^3 - n$ is always a multiple of $6$ for every integer $n$. [[3]]`,
+  [R`$n(n^2 - 1)$, then a difference of two squares.`, R`$(n - 1)n(n + 1)$ is the product of three consecutive integers.`, R`Among three consecutive integers, one is a multiple of $3$ and at least one is even.`],
+  [R`(a)|M1|$n(n^2 - 1)$`, R`(a)|A1|$(n - 1)n(n + 1)$`, R`(b)|B1|Three consecutive integers`, R`(b)|B1|One is a multiple of $3$ and one is even`, R`(b)|B1|So the product is a multiple of $2 \times 3 = 6$`],
+  R`(a) $(n - 1)n(n + 1)$`,
+  R`**(a)** $n^3 - n = n(n^2 - 1) = n(n - 1)(n + 1)$
+
+**(b)** $(n - 1)n(n + 1)$ is the product of three consecutive integers. One of any three consecutive integers is a multiple of $3$, and at least one of them is even. So the product has factors $2$ and $3$, and is a multiple of $6$.`),
+Q('P1.3-15', 5, R`**(a)** Show that $x^2 + 2xy + y^2 - 9$ can be written as a difference of two squares, and hence factorise it. [[3]]
+
+**(b)** Hence, or otherwise, factorise $a^2 - b^2 + 4b - 4$. [[4]]`,
+  [R`$x^2 + 2xy + y^2 = (x + y)^2$.`, R`For (b), group $-b^2 + 4b - 4 = -(b^2 - 4b + 4) = -(b - 2)^2$.`, R`Then $a^2 - (b - 2)^2$.`],
+  [R`(a)|M1|$(x + y)^2 - 9$`, R`(a)|M1|$(x + y)^2 - 3^2$`, R`(a)|A1|$(x + y + 3)(x + y - 3)$`, R`(b)|M1|Groups as $a^2 - (b^2 - 4b + 4)$`, R`(b)|M1|$b^2 - 4b + 4 = (b - 2)^2$`, R`(b)|M1|Difference of two squares`, R`(b)|A1|$(a + b - 2)(a - b + 2)$`],
+  R`(a) $(x + y + 3)(x + y - 3)$ (b) $(a + b - 2)(a - b + 2)$`,
+  R`**(a)** $x^2 + 2xy + y^2 = (x + y)^2$, so the expression is $(x + y)^2 - 3^2 = (x + y + 3)(x + y - 3)$.
+
+**(b)**
+1. **Group:** $a^2 - (b^2 - 4b + 4) = a^2 - (b - 2)^2$
+2. **Difference of two squares:** $\big(a + (b - 2)\big)\big(a - (b - 2)\big) = (a + b - 2)(a - b + 2)$
+
+Check with $a = 3$, $b = 1$: $9 - 1 + 4 - 4 = 8$ and $(2)(4) = 8$ ✓`)
+]
+};
+
+/* Pure Mathematics Year 1 · Chapter 1 Algebraic expressions (sections 1.4 to 1.6) */
+CONTENT['P1.4'] = {
+notes: R`
+### Negative and fractional indices
+> $$a^0 = 1 \qquad a^{-m} = \frac{1}{a^m} \qquad a^{\frac1n} = \sqrt[n]{a} \qquad a^{\frac mn} = \left(\sqrt[n]{a}\right)^m$$
+
+The same index laws as section 1.1 still apply.
+
+### Working out $a^{\frac mn}$
+Take the **root first**, then the power: the numbers stay small.
+$27^{\frac23} = \left(\sqrt[3]{27}\right)^2 = 3^2 = 9$.
+
+### Writing expressions as $ax^n$
+This is vital for differentiation and integration later.
+- $\dfrac{3}{x^2} = 3x^{-2}$
+- $\sqrt x = x^{\frac12}$, and $\dfrac{1}{\sqrt x} = x^{-\frac12}$
+- $\dfrac{x^2 + 4}{\sqrt x} = x^{\frac32} + 4x^{-\frac12}$ (split the fraction first)
+
+::: booklet
+**Not in the formula booklet:** the meaning of negative and fractional indices.
+:::
+
+### Worked example 1
+Evaluate $\left(\dfrac{16}{81}\right)^{-\frac34}$.
+1. Negative power: flip the fraction: $\left(\dfrac{81}{16}\right)^{\frac34}$.
+2. Fourth root: $\dfrac{3}{2}$. Then cube: $\dfrac{27}{8}$.
+
+### Worked example 2: where the coefficient goes
+Write $\dfrac{1}{4x^3}$ in the form $ax^n$.
+- $\dfrac{1}{4x^3} = \dfrac14 x^{-3}$
+
+**The trap:** writing $4x^{-3}$. Only the $x^3$ moves up and becomes $x^{-3}$. The $4$ stays in the denominator as $\frac14$.
+
+### Watch out
+- $x^{-2}$ is not negative: it's $\dfrac{1}{x^2}$.
+- $(2x)^{-1} = \dfrac{1}{2x}$, but $2x^{-1} = \dfrac{2}{x}$.
+`,
+questions: [
+Q('P1.4-1', 1, R`Evaluate $25^{\frac12}$. [[1]]`,
+  [R`A power of $\frac12$ means square root.`, R`$\sqrt{25}$.`],
+  [R`|B1|$5$`], R`$5$`,
+  R`$25^{\frac12} = \sqrt{25} = 5$.`),
+Q('P1.4-2', 1, R`Evaluate $2^{-3}$. [[1]]`,
+  [R`A negative power means one over.`, R`$2^{-3} = \dfrac{1}{2^3}$.`],
+  [R`|B1|$\frac18$`], R`$\frac18$`,
+  R`$2^{-3} = \dfrac{1}{2^3} = \dfrac18$.`),
+Q('P1.4-3', 1, R`Write $\dfrac{5}{x^2}$ in the form $ax^n$. [[1]]`,
+  [R`$\dfrac{1}{x^2} = x^{-2}$.`, R`The $5$ stays as the coefficient.`],
+  [R`|B1|$5x^{-2}$`], R`$5x^{-2}$`,
+  R`$\dfrac{5}{x^2} = 5 \times \dfrac{1}{x^2} = 5x^{-2}$.`),
+Q('P1.4-4', 2, R`Evaluate $8^{\frac23}$. [[2]]`,
+  [R`Cube root first, then square.`, R`$\sqrt[3]{8} = 2$.`],
+  [R`|M1|$\left(\sqrt[3]{8}\right)^2$`, R`|A1|$4$`], R`$4$`,
+  R`$8^{\frac23} = \left(\sqrt[3]{8}\right)^2 = 2^2 = 4$.`),
+Q('P1.4-5', 2, R`Evaluate $\left(\dfrac{9}{4}\right)^{-\frac12}$. [[2]]`,
+  [R`Negative power: flip the fraction.`, R`$\left(\dfrac49\right)^{\frac12}$.`],
+  [R`|M1|Flips the fraction or takes the square root`, R`|A1|$\frac23$`], R`$\frac23$`,
+  R`$\left(\dfrac94\right)^{-\frac12} = \left(\dfrac49\right)^{\frac12} = \dfrac{2}{3}$.`),
+Q('P1.4-6', 2, R`Write $\dfrac{1}{3\sqrt x}$ in the form $ax^n$. [[2]]`,
+  [R`$\sqrt x = x^{\frac12}$.`, R`The $3$ stays in the denominator: $\dfrac13 \times \dfrac{1}{x^{1/2}}$.`],
+  [R`|B1|$a = \frac13$`, R`|B1|$n = -\frac12$`], R`$\frac13x^{-\frac12}$`,
+  R`$\dfrac{1}{3\sqrt x} = \dfrac13 \times \dfrac{1}{x^{\frac12}} = \dfrac13x^{-\frac12}$.`),
+Q('P1.4-7', 2, R`Simplify $(64x^6)^{\frac13}$. [[2]]`,
+  [R`Apply the power to both factors.`, R`$64^{\frac13} = 4$ and $(x^6)^{\frac13} = x^2$.`],
+  [R`|B1|$4$`, R`|B1|$x^2$`], R`$4x^2$`,
+  R`$(64x^6)^{\frac13} = 64^{\frac13} \times x^{6 \times \frac13} = 4x^2$.`),
+Q('P1.4-8', 3, R`Write $\dfrac{x^3 - 4}{2\sqrt x}$ in the form $ax^p + bx^q$. [[3]]`,
+  [R`Split into two fractions: $\dfrac{x^3}{2x^{1/2}} - \dfrac{4}{2x^{1/2}}$.`, R`Subtract powers in each.`],
+  [R`|M1|Splits into two terms`, R`|A1|$\frac12x^{\frac52}$`, R`|A1|$-2x^{-\frac12}$`], R`$\frac12x^{\frac52} - 2x^{-\frac12}$`,
+  R`1. **Split:** $\dfrac{x^3}{2x^{\frac12}} - \dfrac{4}{2x^{\frac12}}$
+2. **First term:** $\frac12x^{3 - \frac12} = \frac12x^{\frac52}$. **Second:** $2x^{-\frac12}$.
+3. So $\dfrac12x^{\frac52} - 2x^{-\frac12}$.`),
+Q('P1.4-9', 3, R`Solve $x^{\frac32} = 27$. [[2]]`,
+  [R`Raise both sides to the power $\frac23$.`, R`$27^{\frac23} = 9$.`],
+  [R`|M1|$x = 27^{\frac23}$`, R`|A1|$x = 9$`], R`$x = 9$`,
+  R`$x = 27^{\frac23} = \left(\sqrt[3]{27}\right)^2 = 9$. Check: $9^{\frac32} = 3^3 = 27$ ✓`),
+Q('P1.4-10', 3, R`Given that $y = \dfrac{1}{16}x^4$, express $y^{-\frac12}$ in the form $kx^n$. [[3]]`,
+  [R`Apply the power $-\frac12$ to both factors.`, R`$\left(\frac1{16}\right)^{-\frac12} = 16^{\frac12} = 4$.`],
+  [R`|M1|Applies the power to both factors`, R`|A1|$k = 4$`, R`|A1|$n = -2$`], R`$4x^{-2}$`,
+  R`$y^{-\frac12} = \left(\dfrac1{16}\right)^{-\frac12} \times (x^4)^{-\frac12} = 16^{\frac12} \times x^{-2} = 4x^{-2}$.`),
+Q('P1.4-11', 3, R`Solve $4^{x} = \dfrac{1}{8}$. [[3]]`,
+  [R`Write both sides as powers of $2$.`, R`$4^x = 2^{2x}$ and $\dfrac18 = 2^{-3}$.`],
+  [R`|M1|$2^{2x}$`, R`|M1|$2^{-3}$`, R`|A1|$x = -\frac32$`], R`$x = -\frac32$`,
+  R`$2^{2x} = 2^{-3}$, so $2x = -3$ and $x = -\frac32$.`),
+Q('P1.4-12', 4, R`**(a)** Write $\sqrt[3]{x^2}$ and $\dfrac{4}{x}$ as powers of $x$. [[2]]
+
+**(b)** Hence write $\dfrac{(2\sqrt x)^3 - 4}{x}$ in the form $ax^p + bx^q$. [[3]]`,
+  [R`$\sqrt[3]{x^2} = x^{\frac23}$.`, R`$(2\sqrt x)^3 = 8x^{\frac32}$.`, R`Divide each term by $x$.`],
+  [R`(a)|B1|$x^{\frac23}$`, R`(a)|B1|$4x^{-1}$`, R`(b)|M1|$(2\sqrt x)^3 = 8x^{\frac32}$`, R`(b)|A1|$8x^{\frac12}$`, R`(b)|A1|$-4x^{-1}$`],
+  R`(a) $x^{\frac23}$, $4x^{-1}$ (b) $8x^{\frac12} - 4x^{-1}$`,
+  R`**(a)** $\sqrt[3]{x^2} = x^{\frac23}$ and $\dfrac4x = 4x^{-1}$.
+
+**(b)** $(2\sqrt x)^3 = 8x^{\frac32}$, so $\dfrac{8x^{\frac32} - 4}{x} = 8x^{\frac12} - 4x^{-1}$.`),
+Q('P1.4-13', 4, R`Solve $2^{2x+1} = 8^{x-1}$, then evaluate $x^{-\frac12}$ for your value of $x$. [[5]]`,
+  [R`$8^{x-1} = 2^{3x-3}$.`, R`$2x + 1 = 3x - 3$.`],
+  [R`|M1|$8^{x-1} = 2^{3(x-1)}$`, R`|M1|$2x + 1 = 3x - 3$`, R`|A1|$x = 4$`, R`|M1|$4^{-\frac12} = \frac{1}{\sqrt4}$`, R`|A1|$\frac12$`],
+  R`$x = 4$, $x^{-\frac12} = \frac12$`,
+  R`1. $2^{2x+1} = 2^{3x - 3}$, so $2x + 1 = 3x - 3$ and $x = 4$.
+2. $4^{-\frac12} = \dfrac{1}{\sqrt4} = \dfrac12$.`),
+Q('P1.4-14', 4, R`Find the value of $x$ such that $\dfrac{9^{x}}{3^{x+2}} = 27^{\frac13}$. [[4]]`,
+  [R`Write everything as powers of $3$.`, R`$9^x = 3^{2x}$ and $27^{\frac13} = 3$.`],
+  [R`|M1|$9^x = 3^{2x}$`, R`|M1|$3^{2x - (x + 2)} = 3^{x - 2}$`, R`|B1|$27^{\frac13} = 3$`, R`|A1|$x = 3$`],
+  R`$x = 3$`,
+  R`1. $\dfrac{3^{2x}}{3^{x+2}} = 3^{x - 2}$
+2. $27^{\frac13} = 3 = 3^1$
+3. $x - 2 = 1$, so $x = 3$.`),
+Q('P1.4-15', 5, R`**(a)** Given that $y = 2^x$, write $4^x$ and $2^{x+3}$ in terms of $y$. [[2]]
+
+**(b)** Hence solve $4^x - 2^{x+3} + 16 = 0$. [[3]]
+
+**(c)** Show that $9^x - 4 \times 3^x + 3 = 0$ has two solutions, and find them. [[4]]`,
+  [R`$4^x = (2^x)^2 = y^2$ and $2^{x+3} = 8 \times 2^x$.`, R`You get a quadratic in $y$.`, R`For (c), let $u = 3^x$.`],
+  [R`(a)|B1|$4^x = y^2$`, R`(a)|B1|$2^{x+3} = 8y$`, R`(b)|M1|$y^2 - 8y + 16 = 0$`, R`(b)|A1|$y = 4$`, R`(b)|A1|$x = 2$`, R`(c)|M1|$u^2 - 4u + 3 = 0$ with $u = 3^x$`, R`(c)|A1|$u = 1$ or $u = 3$`, R`(c)|A1|$x = 0$`, R`(c)|A1|$x = 1$`],
+  R`(b) $x = 2$ (c) $x = 0$ or $x = 1$`,
+  R`**(a)** $4^x = (2^2)^x = (2^x)^2 = y^2$ and $2^{x+3} = 2^3 \times 2^x = 8y$.
+
+**(b)** $y^2 - 8y + 16 = 0$, so $(y - 4)^2 = 0$ and $y = 4$. Then $2^x = 4$, so $x = 2$.
+
+**(c)** Let $u = 3^x$. Then $9^x = u^2$ and $u^2 - 4u + 3 = 0$, so $(u - 1)(u - 3) = 0$.
+$3^x = 1$ gives $x = 0$; $3^x = 3$ gives $x = 1$. Both are valid (each $u$ is positive), so there are two solutions.`)
+]
+};
+
+CONTENT['P1.5'] = {
+notes: R`
+### Surds
+A surd is a root that can't be written as a whole number or fraction, such as $\sqrt2$ or $\sqrt{12}$.
+> $$\sqrt{ab} = \sqrt a\sqrt b \qquad \sqrt{\frac ab} = \frac{\sqrt a}{\sqrt b} \qquad \sqrt a \times \sqrt a = a$$
+
+### Simplifying
+Find the **largest square factor**: $\sqrt{72} = \sqrt{36 \times 2} = 6\sqrt2$.
+
+### Adding and subtracting
+Only like surds combine, just like algebra: $3\sqrt2 + 5\sqrt2 = 8\sqrt2$. Simplify each surd first: $\sqrt{50} + \sqrt{18} = 5\sqrt2 + 3\sqrt2 = 8\sqrt2$.
+
+### Expanding brackets
+Expand as normal, using $\sqrt a\sqrt a = a$:
+$(2 + \sqrt3)(4 - \sqrt3) = 8 - 2\sqrt3 + 4\sqrt3 - 3 = 5 + 2\sqrt3$.
+
+::: booklet
+**Not in the formula booklet:** the surd rules. You'll need them on the non-calculator style questions.
+:::
+
+### Worked example 1
+Simplify $\sqrt{48} - \sqrt{12}$: $4\sqrt3 - 2\sqrt3 = 2\sqrt3$.
+
+### Worked example 2: roots don't split over addition
+Is $\sqrt{9 + 16}$ equal to $\sqrt9 + \sqrt{16}$?
+- $\sqrt{25} = 5$, but $3 + 4 = 7$. So no.
+
+**The trap:** writing $\sqrt{a + b} = \sqrt a + \sqrt b$. Roots only split over **multiplication** and division.
+
+### Watch out
+- $(\sqrt5)^2 = 5$, and $(2\sqrt5)^2 = 4 \times 5 = 20$.
+- Always look for the **largest** square factor, or you'll need to simplify twice.
+`,
+questions: [
+Q('P1.5-1', 1, R`Simplify $\sqrt{50}$. [[1]]`,
+  [R`Find the largest square factor of $50$.`, R`$50 = 25 \times 2$.`],
+  [R`|B1|$5\sqrt2$`], R`$5\sqrt2$`,
+  R`$\sqrt{50} = \sqrt{25}\sqrt2 = 5\sqrt2$.`),
+Q('P1.5-2', 1, R`Simplify $\sqrt{12} \times \sqrt3$. [[1]]`,
+  [R`$\sqrt a\sqrt b = \sqrt{ab}$.`, R`$\sqrt{36}$.`],
+  [R`|B1|$6$`], R`$6$`,
+  R`$\sqrt{12}\sqrt3 = \sqrt{36} = 6$.`),
+Q('P1.5-3', 1, R`Simplify $3\sqrt5 + 4\sqrt5 - \sqrt5$. [[1]]`,
+  [R`They're all multiples of $\sqrt5$.`, R`$3 + 4 - 1$.`],
+  [R`|B1|$6\sqrt5$`], R`$6\sqrt5$`,
+  R`$(3 + 4 - 1)\sqrt5 = 6\sqrt5$.`),
+Q('P1.5-4', 2, R`Simplify $\sqrt{75} - \sqrt{27}$. [[2]]`,
+  [R`Simplify each surd first.`, R`$\sqrt{75} = 5\sqrt3$ and $\sqrt{27} = 3\sqrt3$.`],
+  [R`|M1|Simplifies at least one surd`, R`|A1|$2\sqrt3$`], R`$2\sqrt3$`,
+  R`$5\sqrt3 - 3\sqrt3 = 2\sqrt3$.`),
+Q('P1.5-5', 2, R`Expand and simplify $(3 + \sqrt2)(5 - \sqrt2)$. [[2]]`,
+  [R`Four terms, using $\sqrt2 \times \sqrt2 = 2$.`, R`$15 - 3\sqrt2 + 5\sqrt2 - 2$.`],
+  [R`|M1|Four terms`, R`|A1|$13 + 2\sqrt2$`], R`$13 + 2\sqrt2$`,
+  R`$15 - 3\sqrt2 + 5\sqrt2 - 2 = 13 + 2\sqrt2$.`),
+Q('P1.5-6', 2, R`Expand and simplify $(2\sqrt3 - 1)^2$. [[2]]`,
+  [R`$(2\sqrt3)^2 = 12$.`, R`Middle term: $2 \times 2\sqrt3 \times (-1)$.`],
+  [R`|M1|Correct expansion method`, R`|A1|$13 - 4\sqrt3$`], R`$13 - 4\sqrt3$`,
+  R`$(2\sqrt3)^2 - 2(2\sqrt3)(1) + 1 = 12 - 4\sqrt3 + 1 = 13 - 4\sqrt3$.`),
+Q('P1.5-7', 2, R`Simplify $\sqrt{8} + \sqrt{18} + \sqrt{32}$. [[2]]`,
+  [R`Each is a multiple of $\sqrt2$.`, R`$2\sqrt2 + 3\sqrt2 + 4\sqrt2$.`],
+  [R`|M1|Simplifies each surd`, R`|A1|$9\sqrt2$`], R`$9\sqrt2$`,
+  R`$\sqrt8 = 2\sqrt2$, $\sqrt{18} = 3\sqrt2$, $\sqrt{32} = 4\sqrt2$, so the sum is $9\sqrt2$.`),
+Q('P1.5-8', 3, R`A rectangle has sides $(4 + \sqrt5)$ cm and $(4 - \sqrt5)$ cm. Find, without a calculator, its exact area and the exact length of its diagonal. [[4]]`,
+  [R`Area: a difference of two squares.`, R`Diagonal$^2$ = sum of the squares of the sides. Expand each square.`],
+  [R`|M1|$(4 + \sqrt5)(4 - \sqrt5)$`, R`|A1|Area $11$ cm²`, R`|M1|$(4 + \sqrt5)^2 + (4 - \sqrt5)^2$`, R`|A1|Diagonal $\sqrt{42}$ cm`],
+  R`Area $11$ cm², diagonal $\sqrt{42}$ cm`,
+  R`1. **Area:** $(4 + \sqrt5)(4 - \sqrt5) = 16 - 5 = 11$ cm².
+2. **Diagonal:** $(4 + \sqrt5)^2 + (4 - \sqrt5)^2 = (21 + 8\sqrt5) + (21 - 8\sqrt5) = 42$, so the diagonal is $\sqrt{42}$ cm.`),
+Q('P1.5-9', 3, R`Show that $\sqrt{20} + \sqrt{45} - \sqrt{80}$ can be written as $k\sqrt5$, stating the value of $k$. [[3]]`,
+  [R`Simplify each surd as a multiple of $\sqrt5$.`, R`$2\sqrt5 + 3\sqrt5 - 4\sqrt5$.`],
+  [R`|M1|Simplifies two surds correctly`, R`|M1|All three as multiples of $\sqrt5$`, R`|A1|$k = 1$`], R`$k = 1$`,
+  R`$\sqrt{20} = 2\sqrt5$, $\sqrt{45} = 3\sqrt5$, $\sqrt{80} = 4\sqrt5$. So the total is $(2 + 3 - 4)\sqrt5 = \sqrt5$, and $k = 1$.`),
+Q('P1.5-10', 3, R`Solve the equation $x\sqrt2 + 5 = \sqrt{50}$, giving your answer in the form $a + b\sqrt2$. [[3]]`,
+  [R`$\sqrt{50} = 5\sqrt2$.`, R`$x\sqrt2 = 5\sqrt2 - 5$, then divide by $\sqrt2$.`, R`$\dfrac{5}{\sqrt2} = \dfrac{5\sqrt2}{2}$.`],
+  [R`|M1|$x\sqrt2 = 5\sqrt2 - 5$`, R`|M1|Divides by $\sqrt2$ and simplifies $\frac{5}{\sqrt2}$`, R`|A1|$5 - \frac52\sqrt2$`], R`$x = 5 - \frac52\sqrt2$`,
+  R`1. $x\sqrt2 = 5\sqrt2 - 5$
+2. $x = 5 - \dfrac{5}{\sqrt2} = 5 - \dfrac{5\sqrt2}{2}$`),
+Q('P1.5-11', 3, R`Expand and simplify $(\sqrt7 + \sqrt3)(\sqrt7 - \sqrt3) + (\sqrt7 + \sqrt3)^2$. [[3]]`,
+  [R`The first product is a difference of two squares.`, R`$(\sqrt7 + \sqrt3)^2 = 7 + 2\sqrt{21} + 3$.`],
+  [R`|B1|$(\sqrt7 + \sqrt3)(\sqrt7 - \sqrt3) = 4$`, R`|M1|Expands the square`, R`|A1|$14 + 2\sqrt{21}$`], R`$14 + 2\sqrt{21}$`,
+  R`1. $(\sqrt7 + \sqrt3)(\sqrt7 - \sqrt3) = 7 - 3 = 4$
+2. $(\sqrt7 + \sqrt3)^2 = 7 + 2\sqrt{21} + 3 = 10 + 2\sqrt{21}$
+3. Total: $14 + 2\sqrt{21}$`),
+Q('P1.5-12', 4, R`The point $A$ has coordinates $(1 + \sqrt3, 2)$ and $B$ has coordinates $(1 - \sqrt3, 2 + 2\sqrt3)$. Show that $AB = 2\sqrt6$. [[4]]`,
+  [R`$AB^2 = (\Delta x)^2 + (\Delta y)^2$.`, R`$\Delta x = -2\sqrt3$ and $\Delta y = 2\sqrt3$.`],
+  [R`|M1|Finds both differences`, R`|M1|$(2\sqrt3)^2 + (2\sqrt3)^2$`, R`|A1|$AB^2 = 24$`, R`|A1|$AB = \sqrt{24} = 2\sqrt6$ (cso)`],
+  R`$AB = 2\sqrt6$`,
+  R`1. $\Delta x = (1 - \sqrt3) - (1 + \sqrt3) = -2\sqrt3$ and $\Delta y = 2\sqrt3$.
+2. $AB^2 = 12 + 12 = 24$, so $AB = \sqrt{24} = \sqrt{4 \times 6} = 2\sqrt6$. $\blacksquare$`),
+Q('P1.5-13', 4, R`Given that $(a + b\sqrt2)^2 = 11 + 6\sqrt2$, where $a$ and $b$ are positive integers, find $a$ and $b$. [[4]]`,
+  [R`Expand: $a^2 + 2b^2 + 2ab\sqrt2$.`, R`Compare: $a^2 + 2b^2 = 11$ and $2ab = 6$.`, R`$ab = 3$ with positive integers: try $a = 3, b = 1$ or $a = 1, b = 3$.`],
+  [R`|M1|Expands to $a^2 + 2b^2 + 2ab\sqrt2$`, R`|M1|Equates rational and surd parts`, R`|A1|$a = 3$`, R`|A1|$b = 1$`],
+  R`$a = 3$, $b = 1$`,
+  R`1. $(a + b\sqrt2)^2 = a^2 + 2ab\sqrt2 + 2b^2$
+2. Compare: $a^2 + 2b^2 = 11$ and $2ab = 6$, so $ab = 3$.
+3. Positive integers with $ab = 3$: $(3, 1)$ gives $9 + 2 = 11$ ✓; $(1, 3)$ gives $1 + 18 \ne 11$. So $a = 3$, $b = 1$.`),
+Q('P1.5-14', 4, R`A right-angled triangle has shorter sides $(2 + \sqrt3)$ cm and $(2 - \sqrt3)$ cm. Find, in simplest form, its exact area and the exact length of its hypotenuse. [[5]]`,
+  [R`Area $= \frac12 \times$ base $\times$ height.`, R`Hypotenuse$^2 = (2 + \sqrt3)^2 + (2 - \sqrt3)^2$.`],
+  [R`|M1|$\frac12(2 + \sqrt3)(2 - \sqrt3)$`, R`|A1|Area $\frac12$ cm²`, R`|M1|Sum of squares`, R`|A1|$14$`, R`|A1|Hypotenuse $\sqrt{14}$ cm`],
+  R`Area $\frac12$ cm², hypotenuse $\sqrt{14}$ cm`,
+  R`1. **Area:** $\frac12(4 - 3) = \frac12$ cm².
+2. **Hypotenuse:** $(7 + 4\sqrt3) + (7 - 4\sqrt3) = 14$, so it is $\sqrt{14}$ cm.`),
+Q('P1.5-15', 5, R`**(a)** Show that $(\sqrt{n + 1} - \sqrt n)(\sqrt{n + 1} + \sqrt n) = 1$ for any positive integer $n$. [[2]]
+
+**(b)** Hence show that $\dfrac{1}{\sqrt{n+1} + \sqrt n} = \sqrt{n+1} - \sqrt n$. [[1]]
+
+**(c)** Hence find the exact value of $\dfrac{1}{\sqrt2 + \sqrt1} + \dfrac{1}{\sqrt3 + \sqrt2} + \cdots + \dfrac{1}{\sqrt{100} + \sqrt{99}}$. [[4]]`,
+  [R`Difference of two squares.`, R`Divide both sides of (a) by $\sqrt{n+1} + \sqrt n$.`, R`For (c), write each term using (b). Most terms cancel in pairs.`],
+  [R`(a)|M1|Expands as a difference of two squares`, R`(a)|A1|$(n + 1) - n = 1$ (cso)`, R`(b)|B1|Divides by $\sqrt{n+1} + \sqrt n$`, R`(c)|M1|Writes each term as $\sqrt{n+1} - \sqrt n$`, R`(c)|M1|Recognises the cancelling`, R`(c)|A1|$\sqrt{100} - \sqrt1$`, R`(c)|A1|$9$`],
+  R`(c) $9$`,
+  R`**(a)** $(\sqrt{n+1})^2 - (\sqrt n)^2 = (n + 1) - n = 1$ $\blacksquare$
+
+**(b)** Divide (a) by $\sqrt{n+1} + \sqrt n$ (which is positive). $\blacksquare$
+
+**(c)** By (b), the sum is $(\sqrt2 - \sqrt1) + (\sqrt3 - \sqrt2) + \cdots + (\sqrt{100} - \sqrt{99})$. Every term cancels except $\sqrt{100} - \sqrt1 = 10 - 1 = 9$.`)
+]
+};
+
+CONTENT['P1.6'] = {
+notes: R`
+### Rationalising the denominator
+"Rationalise" means removing surds from the bottom of a fraction.
+- **One surd on the bottom:** multiply top and bottom by that surd.
+$$\frac{6}{\sqrt3} = \frac{6\sqrt3}{3} = 2\sqrt3$$
+- **A bracket like $a + \sqrt b$:** multiply top and bottom by the **conjugate** $a - \sqrt b$. The bottom becomes a difference of two squares, so the surd disappears.
+$$\frac{1}{3 + \sqrt2} = \frac{3 - \sqrt2}{(3 + \sqrt2)(3 - \sqrt2)} = \frac{3 - \sqrt2}{7}$$
+
+::: booklet
+**Not in the formula booklet:** this method. Multiply by the conjugate, which is the same bracket with the sign in the middle flipped.
+:::
+
+### Worked example 1
+Rationalise $\dfrac{4}{\sqrt5 - 1}$.
+1. Multiply by $\dfrac{\sqrt5 + 1}{\sqrt5 + 1}$: the bottom is $5 - 1 = 4$.
+2. $\dfrac{4(\sqrt5 + 1)}{4} = \sqrt5 + 1$.
+
+### Worked example 2: multiply the whole numerator
+Rationalise $\dfrac{2 + \sqrt3}{2 - \sqrt3}$.
+1. Multiply top and bottom by $2 + \sqrt3$. Bottom: $4 - 3 = 1$.
+2. Top: $(2 + \sqrt3)^2 = 4 + 4\sqrt3 + 3 = 7 + 4\sqrt3$.
+
+**The trap:** multiplying only one term of the numerator by the conjugate. The **whole** numerator gets multiplied.
+
+### Watch out
+- Multiply top **and** bottom by the same thing, so the value doesn't change.
+- Simplify at the end: cancel common factors.
+`,
+questions: [
+Q('P1.6-1', 1, R`Rationalise the denominator of $\dfrac{10}{\sqrt5}$. [[2]]`,
+  [R`Multiply top and bottom by $\sqrt5$.`, R`$\dfrac{10\sqrt5}{5}$.`],
+  [R`|M1|Multiplies by $\frac{\sqrt5}{\sqrt5}$`, R`|A1|$2\sqrt5$`], R`$2\sqrt5$`,
+  R`$\dfrac{10}{\sqrt5} \times \dfrac{\sqrt5}{\sqrt5} = \dfrac{10\sqrt5}{5} = 2\sqrt5$.`),
+Q('P1.6-2', 1, R`Rationalise the denominator of $\dfrac{1}{\sqrt7}$. [[1]]`,
+  [R`Multiply top and bottom by $\sqrt7$.`, R`$\sqrt7 \times \sqrt7 = 7$.`],
+  [R`|B1|$\frac{\sqrt7}{7}$`], R`$\frac{\sqrt7}{7}$`,
+  R`$\dfrac{1}{\sqrt7} \times \dfrac{\sqrt7}{\sqrt7} = \dfrac{\sqrt7}{7}$.`),
+Q('P1.6-3', 1, R`Rationalise the denominator of $\dfrac{3}{2\sqrt3}$. [[2]]`,
+  [R`Multiply by $\dfrac{\sqrt3}{\sqrt3}$.`, R`The bottom becomes $2 \times 3 = 6$.`],
+  [R`|M1|Multiplies by $\frac{\sqrt3}{\sqrt3}$`, R`|A1|$\frac{\sqrt3}{2}$`], R`$\frac{\sqrt3}{2}$`,
+  R`$\dfrac{3\sqrt3}{2 \times 3} = \dfrac{3\sqrt3}{6} = \dfrac{\sqrt3}{2}$.`),
+Q('P1.6-4', 2, R`Rationalise the denominator of $\dfrac{1}{3 + \sqrt2}$. [[2]]`,
+  [R`Multiply by the conjugate $3 - \sqrt2$.`, R`Bottom: $9 - 2 = 7$.`],
+  [R`|M1|Multiplies by $\frac{3 - \sqrt2}{3 - \sqrt2}$`, R`|A1|$\frac{3 - \sqrt2}{7}$`], R`$\frac{3 - \sqrt2}{7}$`,
+  R`$\dfrac{3 - \sqrt2}{(3 + \sqrt2)(3 - \sqrt2)} = \dfrac{3 - \sqrt2}{9 - 2} = \dfrac{3 - \sqrt2}{7}$.`),
+Q('P1.6-5', 2, R`Rationalise the denominator of $\dfrac{6}{\sqrt5 - \sqrt3}$. [[2]]`,
+  [R`Conjugate: $\sqrt5 + \sqrt3$.`, R`Bottom: $5 - 3 = 2$.`],
+  [R`|M1|Multiplies by the conjugate`, R`|A1|$3(\sqrt5 + \sqrt3)$`], R`$3\sqrt5 + 3\sqrt3$`,
+  R`$\dfrac{6(\sqrt5 + \sqrt3)}{5 - 3} = 3(\sqrt5 + \sqrt3) = 3\sqrt5 + 3\sqrt3$.`),
+Q('P1.6-6', 2, R`Write $\dfrac{4}{\sqrt3 + 1}$ in the form $a\sqrt3 + b$. [[3]]`,
+  [R`Multiply by $\dfrac{\sqrt3 - 1}{\sqrt3 - 1}$.`, R`Bottom: $3 - 1 = 2$.`],
+  [R`|M1|Multiplies by the conjugate`, R`|A1|$\frac{4(\sqrt3 - 1)}{2}$`, R`|A1|$2\sqrt3 - 2$`], R`$2\sqrt3 - 2$`,
+  R`$\dfrac{4(\sqrt3 - 1)}{3 - 1} = 2(\sqrt3 - 1) = 2\sqrt3 - 2$, so $a = 2$, $b = -2$.`),
+Q('P1.6-7', 2, R`Simplify $\dfrac{\sqrt{12}}{\sqrt{27}}$. [[2]]`,
+  [R`Simplify each surd, or combine into one root.`, R`$\dfrac{2\sqrt3}{3\sqrt3}$.`],
+  [R`|M1|$\frac{2\sqrt3}{3\sqrt3}$ or $\sqrt{\frac{12}{27}}$`, R`|A1|$\frac23$`], R`$\frac23$`,
+  R`$\dfrac{2\sqrt3}{3\sqrt3} = \dfrac23$. (Or $\sqrt{\frac{12}{27}} = \sqrt{\frac49} = \frac23$.)`),
+Q('P1.6-8', 3, R`Write $\dfrac{2 + \sqrt3}{2 - \sqrt3}$ in the form $a + b\sqrt3$. [[3]]`,
+  [R`Multiply top and bottom by $2 + \sqrt3$.`, R`Bottom $= 1$. Expand $(2 + \sqrt3)^2$.`],
+  [R`|M1|Multiplies by the conjugate`, R`|M1|Expands the numerator`, R`|A1|$7 + 4\sqrt3$`], R`$7 + 4\sqrt3$`,
+  R`$\dfrac{(2 + \sqrt3)^2}{4 - 3} = 4 + 4\sqrt3 + 3 = 7 + 4\sqrt3$.`),
+Q('P1.6-9', 3, R`Write $\dfrac{5 - \sqrt2}{3 + \sqrt2}$ in the form $a + b\sqrt2$, where $a$ and $b$ are rational. [[3]]`,
+  [R`Multiply top and bottom by $3 - \sqrt2$.`, R`Top: $(5 - \sqrt2)(3 - \sqrt2) = 15 - 5\sqrt2 - 3\sqrt2 + 2$.`],
+  [R`|M1|Multiplies by the conjugate`, R`|A1|Numerator $17 - 8\sqrt2$, denominator $7$`, R`|A1|$\frac{17}{7} - \frac87\sqrt2$`], R`$\frac{17}{7} - \frac{8}{7}\sqrt2$`,
+  R`1. Bottom: $9 - 2 = 7$.
+2. Top: $15 - 5\sqrt2 - 3\sqrt2 + 2 = 17 - 8\sqrt2$.
+3. So $\dfrac{17}{7} - \dfrac87\sqrt2$.`),
+Q('P1.6-10', 3, R`Show that $\dfrac{1}{\sqrt2 - 1} - \dfrac{1}{\sqrt2 + 1} = 2$. [[3]]`,
+  [R`Rationalise each fraction, or combine over a common denominator.`, R`The common denominator is $(\sqrt2 - 1)(\sqrt2 + 1) = 1$.`],
+  [R`|M1|Common denominator or rationalises both`, R`|A1|$(\sqrt2 + 1) - (\sqrt2 - 1)$`, R`|A1|$= 2$ (cso)`], R`$2$`,
+  R`$\dfrac{(\sqrt2 + 1) - (\sqrt2 - 1)}{(\sqrt2 - 1)(\sqrt2 + 1)} = \dfrac{2}{2 - 1} = 2$ $\blacksquare$`),
+Q('P1.6-11', 3, R`A rectangle has area $(10 + 4\sqrt3)$ cm² and width $(2 + \sqrt3)$ cm. Find its length in the form $(a + b\sqrt3)$ cm. [[3]]`,
+  [R`Length $= \dfrac{\text{area}}{\text{width}}$.`, R`Rationalise: multiply by $\dfrac{2 - \sqrt3}{2 - \sqrt3}$.`],
+  [R`|M1|$\frac{10 + 4\sqrt3}{2 + \sqrt3}$ and multiplies by the conjugate`, R`|A1|Numerator $8 - 2\sqrt3$, denominator $1$`, R`|A1|$8 - 2\sqrt3$`], R`$(8 - 2\sqrt3)$ cm`,
+  R`1. Length $= \dfrac{10 + 4\sqrt3}{2 + \sqrt3} \times \dfrac{2 - \sqrt3}{2 - \sqrt3}$. Bottom: $4 - 3 = 1$.
+2. Top: $20 - 10\sqrt3 + 8\sqrt3 - 12 = 8 - 2\sqrt3$.
+3. Length $= (8 - 2\sqrt3)$ cm. Check: $(2 + \sqrt3)(8 - 2\sqrt3) = 16 - 4\sqrt3 + 8\sqrt3 - 6 = 10 + 4\sqrt3$ ✓`),
+Q('P1.6-12', 4, R`Solve $x(\sqrt5 - 2) = \sqrt5 + 2$, giving $x$ in the form $a + b\sqrt5$. [[4]]`,
+  [R`$x = \dfrac{\sqrt5 + 2}{\sqrt5 - 2}$.`, R`Multiply top and bottom by $\sqrt5 + 2$. Bottom: $5 - 4 = 1$.`],
+  [R`|M1|$x = \frac{\sqrt5 + 2}{\sqrt5 - 2}$`, R`|M1|Multiplies by the conjugate`, R`|M1|Expands $(\sqrt5 + 2)^2$`, R`|A1|$9 + 4\sqrt5$`], R`$x = 9 + 4\sqrt5$`,
+  R`1. $x = \dfrac{\sqrt5 + 2}{\sqrt5 - 2} \times \dfrac{\sqrt5 + 2}{\sqrt5 + 2}$
+2. Bottom: $5 - 4 = 1$. Top: $5 + 4\sqrt5 + 4 = 9 + 4\sqrt5$.
+3. $x = 9 + 4\sqrt5$.`),
+Q('P1.6-13', 4, R`Given that $\dfrac{a + 2\sqrt2}{3 - \sqrt2} = b + \sqrt2$, where $a$ and $b$ are integers, find $a$ and $b$. [[4]]`,
+  [R`Multiply both sides by $3 - \sqrt2$.`, R`$(b + \sqrt2)(3 - \sqrt2) = 3b - b\sqrt2 + 3\sqrt2 - 2$.`, R`Compare the $\sqrt2$ parts and the whole-number parts.`],
+  [R`|M1|$a + 2\sqrt2 = (b + \sqrt2)(3 - \sqrt2)$`, R`|M1|Expands to $(3b - 2) + (3 - b)\sqrt2$`, R`|A1|$b = 1$`, R`|A1|$a = 1$`],
+  R`$a = 1$, $b = 1$`,
+  R`1. $a + 2\sqrt2 = (b + \sqrt2)(3 - \sqrt2) = (3b - 2) + (3 - b)\sqrt2$
+2. $\sqrt2$ parts: $3 - b = 2$, so $b = 1$.
+3. Whole parts: $a = 3b - 2 = 1$.
+
+Check: $\dfrac{1 + 2\sqrt2}{3 - \sqrt2} = \dfrac{(1 + 2\sqrt2)(3 + \sqrt2)}{7} = \dfrac{7 + 7\sqrt2}{7} = 1 + \sqrt2$ ✓`),
+Q('P1.6-14', 4, R`**(a)** Rationalise the denominator of $\dfrac{1}{\sqrt3 - \sqrt2}$. [[2]]
+
+**(b)** Hence show that $\dfrac{1}{\sqrt3 - \sqrt2} - \dfrac{2}{\sqrt3}$ can be written as $\dfrac{\sqrt3}{3} + \sqrt2$. [[3]]`,
+  [R`Conjugate: $\sqrt3 + \sqrt2$. Bottom: $3 - 2 = 1$.`, R`$\dfrac{2}{\sqrt3} = \dfrac{2\sqrt3}{3}$.`, R`$\sqrt3 - \frac23\sqrt3 = \frac13\sqrt3$.`],
+  [R`(a)|M1|Multiplies by the conjugate`, R`(a)|A1|$\sqrt3 + \sqrt2$`, R`(b)|B1|$\frac{2}{\sqrt3} = \frac{2\sqrt3}{3}$`, R`(b)|M1|Collects the $\sqrt3$ terms`, R`(b)|A1|$\frac{\sqrt3}{3} + \sqrt2$ (cso)`],
+  R`(a) $\sqrt3 + \sqrt2$`,
+  R`**(a)** $\dfrac{\sqrt3 + \sqrt2}{3 - 2} = \sqrt3 + \sqrt2$
+
+**(b)** $\sqrt3 + \sqrt2 - \dfrac{2\sqrt3}{3} = \dfrac{3\sqrt3 - 2\sqrt3}{3} + \sqrt2 = \dfrac{\sqrt3}{3} + \sqrt2$ $\blacksquare$`),
+Q('P1.6-15', 5, R`**(a)** Show that $\dfrac{1}{1 + \sqrt2} = \sqrt2 - 1$. [[2]]
+
+**(b)** Show that $(\sqrt2 - 1)^2 = 3 - 2\sqrt2$, and hence write $\dfrac{1}{(1 + \sqrt2)^4}$ in the form $a + b\sqrt2$. [[4]]
+
+**(c)** Use your answer to (b) to explain why $\dfrac{1}{(1 + \sqrt2)^4}$ is close to, but not equal to, $\dfrac{1}{34}$. [[2]]`,
+  [R`Rationalise: multiply by $\sqrt2 - 1$.`, R`$\dfrac{1}{(1 + \sqrt2)^4} = (\sqrt2 - 1)^4 = \big((\sqrt2 - 1)^2\big)^2$.`, R`$(3 - 2\sqrt2)^2 = 17 - 12\sqrt2$. Compare with $(17 + 12\sqrt2)(17 - 12\sqrt2) = 1$.`],
+  [R`(a)|M1|Multiplies by $\frac{\sqrt2 - 1}{\sqrt2 - 1}$`, R`(a)|A1|Bottom $= 1$, giving $\sqrt2 - 1$ (cso)`, R`(b)|B1|$(\sqrt2 - 1)^2 = 3 - 2\sqrt2$`, R`(b)|M1|Uses $(\sqrt2 - 1)^4 = (3 - 2\sqrt2)^2$`, R`(b)|M1|Expands $(3 - 2\sqrt2)^2$`, R`(b)|A1|$17 - 12\sqrt2$`, R`(c)|M1|Value is $\frac{1}{17 + 12\sqrt2}$ with $12\sqrt2 \approx 16.97$`, R`(c)|A1|Denominator is just under $34$ and irrational, so close to but not equal to $\frac1{34}$`],
+  R`(b) $17 - 12\sqrt2$`,
+  R`**(a)** $\dfrac{\sqrt2 - 1}{(1 + \sqrt2)(\sqrt2 - 1)} = \dfrac{\sqrt2 - 1}{2 - 1} = \sqrt2 - 1$ $\blacksquare$
+
+**(b)** $(\sqrt2 - 1)^2 = 2 - 2\sqrt2 + 1 = 3 - 2\sqrt2$.
+By (a), $\dfrac{1}{(1 + \sqrt2)^4} = (\sqrt2 - 1)^4 = (3 - 2\sqrt2)^2 = 9 - 12\sqrt2 + 8 = 17 - 12\sqrt2$.
+
+**(c)** $(17 - 12\sqrt2)(17 + 12\sqrt2) = 289 - 288 = 1$, so the value is $\dfrac{1}{17 + 12\sqrt2}$. Since $12\sqrt2 \approx 16.97$, the denominator is just under $34$, so the value is very close to $\frac1{34}$. But $17 + 12\sqrt2$ is irrational, so it can't equal $34$ exactly.`)
+]
+};
+
 /* 7.1 Addition formulae */
 CONTENT['7.1'] = {
 notes: R`
@@ -4791,7 +5586,7 @@ Pulling slightly upwards beats pulling horizontally (which needs $98$ N), becaus
 ]
 };
 
-const CHAPTERS = [
+const CHAPTERS = [...BOOK_CHAPTERS,
 { id:'p7', book:'Pure Mathematics Year 2', label:'Chapter 7', title:'Trigonometry and modelling', sections:[
   { id:'7.1', title:'Addition formulae' },
   { id:'7.2', title:'Using the angle addition formulae' },
@@ -4801,7 +5596,7 @@ const CHAPTERS = [
   { id:'7.6', title:'Proving trigonometric identities' },
   { id:'7.7', title:'Modelling with trigonometric functions' }
 ]},
-{ id:'a5', book:'Statistics & Mechanics Year 2', label:'Chapter 5', title:'Forces and friction', sections:[
+{ id:'a5', book:'Statistics & Mechanics Year 2', label:'Chapter 5', title:'Forces and friction', mech:true, sections:[
   { id:'5.1', title:'Resolving forces' },
   { id:'5.2', title:'Inclined planes' },
   { id:'5.3', title:'Friction' }
@@ -4820,6 +5615,7 @@ function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catc
 const SECTIONS = {};
 CHAPTERS.forEach(ch => ch.sections.forEach(s => { s.chapter = ch; SECTIONS[s.id] = s; }));
 const marksOf = q => q.scheme.length;
+const secNum = s => (s && (s.num || s.id)) || '';
 
 const state = { view:'home', sec:null, tab:'learn', qi:0, prac:null, ask:{ text:'', topic:'auto', imgs:[], turns:[], items:[], busy:false, mode:'solve', autoMode:null } };
 
@@ -5016,13 +5812,13 @@ async function keyCall(input, opts){
   }
 }
 
-const SPEC = R`You are an expert, encouraging A-level Mathematics tutor for the Pearson Edexcel specification (9MA0). The student is in Year 13 and is currently studying Pure Mathematics Year 2, Chapter 7 "Trigonometry and modelling" (7.1 addition formulae, 7.2 using the addition formulae, 7.3 double-angle formulae, 7.4 solving trigonometric equations, 7.5 writing a cos x ± b sin x as R cos(x ± α) or R sin(x ± α), 7.6 proving identities, 7.7 modelling) and Statistics & Mechanics Year 2, Chapter 5 "Forces and friction" (5.1 resolving forces, 5.2 inclined planes, 5.3 friction with F ≤ μR). Follow Edexcel conventions: g = 9.8 m s^-2 unless told otherwise; final answers to 3 significant figures or the accuracy the question asks for; mark-scheme codes M (method), A (accuracy, depends on the preceding M), B (independent), dM (dependent method), ft (follow through), cso (correct solution only).`;
+const SPEC = R`You are an expert, encouraging A-level Mathematics tutor for the Pearson Edexcel specification (9MA0). The student is studying the Year 1 and Year 2 content: Pure Mathematics, Statistics and Mechanics, following the Pearson Edexcel textbooks. Follow Edexcel conventions: g = 9.8 m s^-2 unless told otherwise; final answers to 3 significant figures or the accuracy the question asks for; mark-scheme codes M (method), A (accuracy, depends on the preceding M), B (independent), dM (dependent method), ft (follow through), cso (correct solution only). In statistics, use Edexcel notation such as X ~ B(n, p), give probabilities to 4 decimal places unless told otherwise, and set out hypothesis tests with H0, H1, the significance level, the comparison and a conclusion in context.`;
 const FORMAT = R`Write in Markdown. Put ALL maths in LaTeX using $...$ inline and $$...$$ on its own line for display. Write every fraction as \frac{a}{b} (use \dfrac{a}{b} inside display maths), never with a slash like a/b. Use ^\circ for degrees. Never use \( \) or \[ \] delimiters and never put maths in code blocks. Be clear and concise: short sentences, no filler.`;
 
 function topicLine(topic){
   if (!topic || topic === 'auto') return '';
   const s = SECTIONS[topic];
-  return s ? `The student says this is from section ${s.id} "${s.title}" (${s.chapter.book}, ${s.chapter.label}).` : '';
+  return s ? `The student says this is from section ${secNum(s)} "${s.title}" (${s.chapter.book}, ${s.chapter.label} "${s.chapter.title}").` : '';
 }
 
 /* Generated questions use a delimited text format, which survives LaTeX backslashes better than JSON. */
@@ -5326,26 +6122,32 @@ function renderHome(){
     <section class="intro">
       <span class="eyebrow">Pearson Edexcel · A level Mathematics</span>
       <h1>Pick a topic to learn or practise</h1>
-      <p>Each section has clear notes, worked examples, and 15 exam-style questions rated from one to five stars, each with hints, a mark scheme and a full solution. Stuck on a question from class or a past paper? Send it to the tutor as text or a photo.</p>
+      <p>Every section of the Year 1 and Year 2 courses has clear notes, worked examples, and 15 exam-style questions rated from one to five stars, each with hints, a mark scheme and a full solution. Stuck on a question from class or a past paper? Send it to the tutor as text or a photo.</p>
     </section>
-    <div class="chapters">${CHAPTERS.map(ch => {
-      const all = progress(questionsFor(ch.id));
-      return `<section class="chapter">
-        <div class="ch-head"><div><span class="eyebrow">${esc(ch.book)} · ${esc(ch.label)}</span><h2>${esc(ch.title)}</h2></div>
-          <button class="btn small" type="button" data-mix="${ch.id}">Mixed practice · ${all.got}/${all.tot}</button></div>
+    <div class="books">${[...new Set(CHAPTERS.map(ch => ch.book))].map(book => `<section class="book"><h2 class="book-title">${esc(book)}</h2><div class="chapters">${CHAPTERS.filter(ch => ch.book === book).map(ch => {
+      const all = progress(questionsFor(ch.id)); const pct = all.tot ? Math.round(100 * all.got / all.tot) : 0;
+      return `<details class="chapter" data-ch="${ch.id}" ${openChapters().includes(ch.id) ? 'open' : ''}>
+        <summary class="ch-head"><div><span class="eyebrow">${esc(ch.label)} · ${ch.sections.length} sections</span><h3>${esc(ch.title)}</h3></div>
+          <span class="sec-prog"><span class="bar"><i style="width:${pct}%"></i></span>${all.got}/${all.tot}</span></summary>
+        <div class="ch-tools"><button class="btn small" type="button" data-mix="${ch.id}">Mixed practice for this chapter</button></div>
         ${ch.sections.map(s => { const p = progress(questionsFor(s.id)); const pct = p.tot ? Math.round(100 * p.got / p.tot) : 0;
-          return `<div class="sec-row"><span class="sec-num">${s.id}</span>
+          return `<div class="sec-row"><span class="sec-num">${secNum(s)}</span>
             <button class="sec-title" type="button" data-learn="${s.id}">${esc(s.title)}</button>
             <div class="sec-prog" title="${p.done} of ${questionsFor(s.id).length} questions marked"><span class="bar"><i style="width:${pct}%"></i></span>${p.got}/${p.tot} marks</div>
             <div class="sec-acts"><button class="btn small ghost" type="button" data-learn="${s.id}">Learn</button><button class="btn small" type="button" data-prac="${s.id}">Practise</button></div></div>`; }).join('')}
-      </section>`; }).join('')}</div>
+      </details>`; }).join('')}</div></section>`).join('')}</div>
     <div class="ask-cta"><div><h3>Got a question of your own?</h3><p>Type it, paste a screenshot or take a photo. The tutor reads it, solves it step by step or guides you one step at a time, and can write similar questions for you to try.</p></div>
       <button class="btn primary" type="button" data-go-ask>Ask the tutor</button></div>`;
   $$('[data-learn]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.learn, tab:'learn', qi:0 }));
   $$('[data-prac]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.prac, tab:'practise', qi:0 }));
   $$('[data-mix]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.mix, tab:'practise', qi:0 }));
   $('[data-go-ask]', view).onclick = () => go('ask');
+  $$('details.chapter', view).forEach(d => d.addEventListener('toggle', () => {
+    const open = new Set(openChapters()); d.open ? open.add(d.dataset.ch) : open.delete(d.dataset.ch);
+    try { localStorage.setItem('edexcel-tutor-open', JSON.stringify([...open])); } catch(e){}
+  }));
 }
+function openChapters(){ try { return JSON.parse(localStorage.getItem('edexcel-tutor-open')) || []; } catch(e){ return []; } }
 
 const PAST_PAPERS = 'https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.coursematerials.html#filterQuery=category:Pearson-UK:Category%2FExam-materials';
 const shuffled = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -5361,7 +6163,7 @@ function renderSection(){
   view.innerHTML = `
     <div class="sec-header">
       <div><p class="crumbs"><button type="button" data-home>Topics</button> / ${esc(ch.book)} · ${esc(ch.label)}</p>
-      <h1>${isMix ? 'Mixed practice: ' + esc(ch.title) : `<span class="sec-num">${s.id}</span> ${esc(s.title)}`}</h1></div>
+      <h1>${isMix ? 'Mixed practice: ' + esc(ch.title) : `<span class="sec-num">${secNum(s)}</span> ${esc(s.title)}`}</h1></div>
       ${isMix ? '' : `<div class="tabs" role="tablist"><button role="tab" type="button" data-tab="learn" aria-selected="${state.tab === 'learn'}">Learn</button><button role="tab" type="button" data-tab="practise" aria-selected="${state.tab === 'practise'}">Practise (${all.length})</button></div>`}
     </div>
     <div id="sec-body"></div>`;
@@ -5370,7 +6172,7 @@ function renderSection(){
   const body = $('#sec-body');
   if (state.tab === 'learn' && s){
     body.innerHTML = `<article class="notes"><div class="md" id="notes-md"></div>
-      <div class="notes-foot"><button class="btn primary" type="button" data-go-prac>Practise ${s.id} · ${all.length} questions</button></div></article>
+      <div class="notes-foot"><button class="btn primary" type="button" data-go-prac>Practise ${secNum(s)} · ${all.length} questions</button></div></article>
       <div class="stuck"><h3>Real exam questions</h3><p class="muted small">Past papers and mark schemes for this course (9MA0) are free to download from Pearson. Paper 1 and Paper 2 cover the pure topics; Paper 3 Section B covers mechanics.</p>
         <p><a href="${PAST_PAPERS}" target="_blank" rel="noopener">Open Pearson past papers</a></p></div>
       <div class="stuck"><h3>Still confused about ${esc(s.title.toLowerCase())}?</h3><p class="muted small">Ask anything about this topic and the tutor will explain it.</p>
@@ -5424,7 +6226,7 @@ function renderSection(){
     const q = qs[state.qi];
     if (!q){ slot.innerHTML = '<p class="muted">No questions at this difficulty yet.</p>'; return; }
     const secId = secOfQ(q) || state.sec;
-    const label = `Question ${state.qi + 1}` + (isMix && SECTIONS[secId] ? ` · ${secId}` : '');
+    const label = `Question ${state.qi + 1}` + (isMix && SECTIONS[secId] ? ` · ${secNum(SECTIONS[secId])}` : '');
     slot.appendChild(questionCard(q, label, { onChange: drawNav, secId, timer: P.timed,
       onDelete: dq => { const k = secOfQ(dq); saved.gen[k] = (saved.gen[k] || []).filter(x => x.id !== dq.id); delete saved.scores[dq.id]; delete saved.work[dq.id]; persist(); rebuild(); renderSection(); } }));
     const pager = document.createElement('div'); pager.className = 'actions'; pager.style.marginTop = '12px';
@@ -5444,7 +6246,7 @@ function renderSection(){
     const examples = (sample.length ? sample : ts.questions.slice(0, 3)).map((q, i) => `Example ${i+1} (${starsOf(q)} stars):\n${plainQ(q.q)}`).join('\n\n');
     try {
       const { kept, dropped } = await generateQuestions({ secId: targetSec, n: 3,
-        basis: `Topic: section ${ts.id} "${ts.title}" from ${ts.chapter.book}, ${ts.chapter.label} "${ts.chapter.title}".${want ? ` Make every question ${want} stars on the scale below.` : ''} Here are questions the student has been practising:\n\n${examples}`,
+        basis: `Topic: section ${secNum(ts)} "${ts.title}" from ${ts.chapter.book}, ${ts.chapter.label} "${ts.chapter.title}".${want ? ` Make every question ${want} stars on the scale below.` : ''} Here are questions the student has been practising:\n\n${examples}`,
         onProgress: m => { st.textContent = m; } });
       saved.gen[targetSec] = (saved.gen[targetSec] || []).concat(kept).slice(-30); persist();
       const before = qs.length;
@@ -5452,7 +6254,7 @@ function renderSection(){
       state.qi = kept.length ? Math.min(before, qs.length - 1) : state.qi;
       st.className = 'status';
       st.textContent = kept.length
-        ? `Added ${kept.length} new question${kept.length > 1 ? 's' : ''}${s ? '' : ` on ${ts.id} ${ts.title}`}.${dropped ? ` ${dropped} was thrown away because the check didn't agree with its answer.` : ''}`
+        ? `Added ${kept.length} new question${kept.length > 1 ? 's' : ''}${s ? '' : ` on ${secNum(ts)} ${ts.title}`}.${dropped ? ` ${dropped} was thrown away because the check didn't agree with its answer.` : ''}`
         : 'None of the new questions passed the answer check, so none were added. Try again.';
       drawNav(); drawQ();
     } catch(err){ st.className = 'status err'; st.textContent = err.code === 'parse' ? 'The new questions came back in an unexpected format. Try again.' : errText(err); }
@@ -5542,7 +6344,7 @@ function renderAsk(){
       <div class="comp-row">
         <select id="ask-topic" aria-label="Topic">
           <option value="auto">Topic: work it out for me</option>
-          ${CHAPTERS.map(ch => `<optgroup label="${esc(ch.label)} · ${esc(ch.title)}">${ch.sections.map(s => `<option value="${s.id}" ${A.topic === s.id ? 'selected' : ''}>${s.id} ${esc(s.title)}</option>`).join('')}</optgroup>`).join('')}
+          ${CHAPTERS.map(ch => `<optgroup label="${esc(ch.book.replace('Mathematics ', '').replace('Statistics & Mechanics', 'Applied'))} · ${esc(ch.label)} · ${esc(ch.title)}">${ch.sections.map(s => `<option value="${s.id}" ${A.topic === s.id ? 'selected' : ''}>${secNum(s)} ${esc(s.title)}</option>`).join('')}</optgroup>`).join('')}
         </select>
         <div class="actions"><button class="btn ghost" type="button" id="ask-new" ${A.items.length ? '' : 'hidden'}>New question</button><button class="btn" type="button" id="ask-guide">Guide me</button><button class="btn primary" type="submit" id="ask-go">Solve step by step</button></div>
       </div>

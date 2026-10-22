@@ -62,7 +62,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Home */
 .intro{display:grid;gap:10px;margin-bottom:28px}
 .intro p{color:var(--muted);max-width:62ch}
-.chapters{display:grid;gap:22px}
+.chapters{display:grid;gap:10px}
 .chapter{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
 .eyebrow{font:500 .74rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -76,6 +76,16 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bar i{display:block;height:100%;background:var(--ok)}
 .sec-acts{display:flex;gap:6px}
 @media (max-width:560px){.sec-row{grid-template-columns:2.6rem minmax(0,1fr)}.sec-acts{grid-column:2}.sec-prog{grid-column:2}}
+.books{display:grid;gap:30px}
+.book{display:grid;gap:12px}
+.book-title{font-size:1.15rem;color:var(--muted)}
+details.chapter > summary{list-style:none;cursor:pointer}
+details.chapter > summary::-webkit-details-marker{display:none}
+details.chapter > summary::after{content:"Show sections ▾";font:500 .75rem var(--f-mono);color:var(--accent);white-space:nowrap}
+details.chapter[open] > summary::after{content:"Hide ▴"}
+details.chapter:not([open]) > summary{border-bottom:0}
+.ch-head h3{font-size:1.1rem}
+.ch-tools{padding:10px 20px;border-bottom:1px solid var(--line)}
 .ask-cta{margin-top:22px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:18px 20px;border:1px dashed var(--accent);border-radius:var(--r);background:var(--accent-soft)}
 .ask-cta p{color:var(--muted);max-width:52ch}
 
@@ -213,7 +223,7 @@ label.chip input{accent-color:var(--accent)}
 
 <header class="top">
   <div class="wrap">
-    <button class="brand" id="brand" type="button"><b>Edexcel Maths Tutor</b><small>Pure 2 · Ch 7 &nbsp;/&nbsp; Applied 2 · Ch 5</small></button>
+    <button class="brand" id="brand" type="button"><b>Edexcel Maths Tutor</b><small>A level · Year 1 and Year 2</small></button>
     <nav class="nav" aria-label="Main">
       <button type="button" data-go="home">Topics</button>
       <button type="button" data-go="ask">Ask the tutor</button>
@@ -235,8 +245,14 @@ const R = String.raw;
 /*@FIG@*/
 const CONTENT = {};
 const FIGS = {};
+const BOOK_CHAPTERS = [];
+// Compact question builder used by the Year 1 files. Scheme lines can be written "part|code|text" (part may be empty).
+function Q(id, stars, q, hints, scheme, answer, sol, extra){
+  const line = r => { if (typeof r !== 'string') return r; const i = r.indexOf('|'), j = r.indexOf('|', i + 1); return [r.slice(0, i), r.slice(i + 1, j), r.slice(j + 1)]; };
+  return Object.assign({ id, stars, q, hints, scheme: scheme.map(line), answer, sol }, extra || {});
+}
 /*@CONTENT@*/
-const CHAPTERS = [
+const CHAPTERS = [...BOOK_CHAPTERS,
 { id:'p7', book:'Pure Mathematics Year 2', label:'Chapter 7', title:'Trigonometry and modelling', sections:[
   { id:'7.1', title:'Addition formulae' },
   { id:'7.2', title:'Using the angle addition formulae' },
@@ -246,7 +262,7 @@ const CHAPTERS = [
   { id:'7.6', title:'Proving trigonometric identities' },
   { id:'7.7', title:'Modelling with trigonometric functions' }
 ]},
-{ id:'a5', book:'Statistics & Mechanics Year 2', label:'Chapter 5', title:'Forces and friction', sections:[
+{ id:'a5', book:'Statistics & Mechanics Year 2', label:'Chapter 5', title:'Forces and friction', mech:true, sections:[
   { id:'5.1', title:'Resolving forces' },
   { id:'5.2', title:'Inclined planes' },
   { id:'5.3', title:'Friction' }
@@ -265,6 +281,7 @@ function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catc
 const SECTIONS = {};
 CHAPTERS.forEach(ch => ch.sections.forEach(s => { s.chapter = ch; SECTIONS[s.id] = s; }));
 const marksOf = q => q.scheme.length;
+const secNum = s => (s && (s.num || s.id)) || '';
 
 const state = { view:'home', sec:null, tab:'learn', qi:0, prac:null, ask:{ text:'', topic:'auto', imgs:[], turns:[], items:[], busy:false, mode:'solve', autoMode:null } };
 
@@ -461,13 +478,13 @@ async function keyCall(input, opts){
   }
 }
 
-const SPEC = R`You are an expert, encouraging A-level Mathematics tutor for the Pearson Edexcel specification (9MA0). The student is in Year 13 and is currently studying Pure Mathematics Year 2, Chapter 7 "Trigonometry and modelling" (7.1 addition formulae, 7.2 using the addition formulae, 7.3 double-angle formulae, 7.4 solving trigonometric equations, 7.5 writing a cos x ± b sin x as R cos(x ± α) or R sin(x ± α), 7.6 proving identities, 7.7 modelling) and Statistics & Mechanics Year 2, Chapter 5 "Forces and friction" (5.1 resolving forces, 5.2 inclined planes, 5.3 friction with F ≤ μR). Follow Edexcel conventions: g = 9.8 m s^-2 unless told otherwise; final answers to 3 significant figures or the accuracy the question asks for; mark-scheme codes M (method), A (accuracy, depends on the preceding M), B (independent), dM (dependent method), ft (follow through), cso (correct solution only).`;
+const SPEC = R`You are an expert, encouraging A-level Mathematics tutor for the Pearson Edexcel specification (9MA0). The student is studying the Year 1 and Year 2 content: Pure Mathematics, Statistics and Mechanics, following the Pearson Edexcel textbooks. Follow Edexcel conventions: g = 9.8 m s^-2 unless told otherwise; final answers to 3 significant figures or the accuracy the question asks for; mark-scheme codes M (method), A (accuracy, depends on the preceding M), B (independent), dM (dependent method), ft (follow through), cso (correct solution only). In statistics, use Edexcel notation such as X ~ B(n, p), give probabilities to 4 decimal places unless told otherwise, and set out hypothesis tests with H0, H1, the significance level, the comparison and a conclusion in context.`;
 const FORMAT = R`Write in Markdown. Put ALL maths in LaTeX using $...$ inline and $$...$$ on its own line for display. Write every fraction as \frac{a}{b} (use \dfrac{a}{b} inside display maths), never with a slash like a/b. Use ^\circ for degrees. Never use \( \) or \[ \] delimiters and never put maths in code blocks. Be clear and concise: short sentences, no filler.`;
 
 function topicLine(topic){
   if (!topic || topic === 'auto') return '';
   const s = SECTIONS[topic];
-  return s ? `The student says this is from section ${s.id} "${s.title}" (${s.chapter.book}, ${s.chapter.label}).` : '';
+  return s ? `The student says this is from section ${secNum(s)} "${s.title}" (${s.chapter.book}, ${s.chapter.label} "${s.chapter.title}").` : '';
 }
 
 /* Generated questions use a delimited text format, which survives LaTeX backslashes better than JSON. */
@@ -771,26 +788,32 @@ function renderHome(){
     <section class="intro">
       <span class="eyebrow">Pearson Edexcel · A level Mathematics</span>
       <h1>Pick a topic to learn or practise</h1>
-      <p>Each section has clear notes, worked examples, and 15 exam-style questions rated from one to five stars, each with hints, a mark scheme and a full solution. Stuck on a question from class or a past paper? Send it to the tutor as text or a photo.</p>
+      <p>Every section of the Year 1 and Year 2 courses has clear notes, worked examples, and 15 exam-style questions rated from one to five stars, each with hints, a mark scheme and a full solution. Stuck on a question from class or a past paper? Send it to the tutor as text or a photo.</p>
     </section>
-    <div class="chapters">${CHAPTERS.map(ch => {
-      const all = progress(questionsFor(ch.id));
-      return `<section class="chapter">
-        <div class="ch-head"><div><span class="eyebrow">${esc(ch.book)} · ${esc(ch.label)}</span><h2>${esc(ch.title)}</h2></div>
-          <button class="btn small" type="button" data-mix="${ch.id}">Mixed practice · ${all.got}/${all.tot}</button></div>
+    <div class="books">${[...new Set(CHAPTERS.map(ch => ch.book))].map(book => `<section class="book"><h2 class="book-title">${esc(book)}</h2><div class="chapters">${CHAPTERS.filter(ch => ch.book === book).map(ch => {
+      const all = progress(questionsFor(ch.id)); const pct = all.tot ? Math.round(100 * all.got / all.tot) : 0;
+      return `<details class="chapter" data-ch="${ch.id}" ${openChapters().includes(ch.id) ? 'open' : ''}>
+        <summary class="ch-head"><div><span class="eyebrow">${esc(ch.label)} · ${ch.sections.length} sections</span><h3>${esc(ch.title)}</h3></div>
+          <span class="sec-prog"><span class="bar"><i style="width:${pct}%"></i></span>${all.got}/${all.tot}</span></summary>
+        <div class="ch-tools"><button class="btn small" type="button" data-mix="${ch.id}">Mixed practice for this chapter</button></div>
         ${ch.sections.map(s => { const p = progress(questionsFor(s.id)); const pct = p.tot ? Math.round(100 * p.got / p.tot) : 0;
-          return `<div class="sec-row"><span class="sec-num">${s.id}</span>
+          return `<div class="sec-row"><span class="sec-num">${secNum(s)}</span>
             <button class="sec-title" type="button" data-learn="${s.id}">${esc(s.title)}</button>
             <div class="sec-prog" title="${p.done} of ${questionsFor(s.id).length} questions marked"><span class="bar"><i style="width:${pct}%"></i></span>${p.got}/${p.tot} marks</div>
             <div class="sec-acts"><button class="btn small ghost" type="button" data-learn="${s.id}">Learn</button><button class="btn small" type="button" data-prac="${s.id}">Practise</button></div></div>`; }).join('')}
-      </section>`; }).join('')}</div>
+      </details>`; }).join('')}</div></section>`).join('')}</div>
     <div class="ask-cta"><div><h3>Got a question of your own?</h3><p>Type it, paste a screenshot or take a photo. The tutor reads it, solves it step by step or guides you one step at a time, and can write similar questions for you to try.</p></div>
       <button class="btn primary" type="button" data-go-ask>Ask the tutor</button></div>`;
   $$('[data-learn]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.learn, tab:'learn', qi:0 }));
   $$('[data-prac]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.prac, tab:'practise', qi:0 }));
   $$('[data-mix]', view).forEach(b => b.onclick = () => go('section', { sec:b.dataset.mix, tab:'practise', qi:0 }));
   $('[data-go-ask]', view).onclick = () => go('ask');
+  $$('details.chapter', view).forEach(d => d.addEventListener('toggle', () => {
+    const open = new Set(openChapters()); d.open ? open.add(d.dataset.ch) : open.delete(d.dataset.ch);
+    try { localStorage.setItem('edexcel-tutor-open', JSON.stringify([...open])); } catch(e){}
+  }));
 }
+function openChapters(){ try { return JSON.parse(localStorage.getItem('edexcel-tutor-open')) || []; } catch(e){ return []; } }
 
 const PAST_PAPERS = 'https://qualifications.pearson.com/en/qualifications/edexcel-a-levels/mathematics-2017.coursematerials.html#filterQuery=category:Pearson-UK:Category%2FExam-materials';
 const shuffled = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -806,7 +829,7 @@ function renderSection(){
   view.innerHTML = `
     <div class="sec-header">
       <div><p class="crumbs"><button type="button" data-home>Topics</button> / ${esc(ch.book)} · ${esc(ch.label)}</p>
-      <h1>${isMix ? 'Mixed practice: ' + esc(ch.title) : `<span class="sec-num">${s.id}</span> ${esc(s.title)}`}</h1></div>
+      <h1>${isMix ? 'Mixed practice: ' + esc(ch.title) : `<span class="sec-num">${secNum(s)}</span> ${esc(s.title)}`}</h1></div>
       ${isMix ? '' : `<div class="tabs" role="tablist"><button role="tab" type="button" data-tab="learn" aria-selected="${state.tab === 'learn'}">Learn</button><button role="tab" type="button" data-tab="practise" aria-selected="${state.tab === 'practise'}">Practise (${all.length})</button></div>`}
     </div>
     <div id="sec-body"></div>`;
@@ -815,7 +838,7 @@ function renderSection(){
   const body = $('#sec-body');
   if (state.tab === 'learn' && s){
     body.innerHTML = `<article class="notes"><div class="md" id="notes-md"></div>
-      <div class="notes-foot"><button class="btn primary" type="button" data-go-prac>Practise ${s.id} · ${all.length} questions</button></div></article>
+      <div class="notes-foot"><button class="btn primary" type="button" data-go-prac>Practise ${secNum(s)} · ${all.length} questions</button></div></article>
       <div class="stuck"><h3>Real exam questions</h3><p class="muted small">Past papers and mark schemes for this course (9MA0) are free to download from Pearson. Paper 1 and Paper 2 cover the pure topics; Paper 3 Section B covers mechanics.</p>
         <p><a href="${PAST_PAPERS}" target="_blank" rel="noopener">Open Pearson past papers</a></p></div>
       <div class="stuck"><h3>Still confused about ${esc(s.title.toLowerCase())}?</h3><p class="muted small">Ask anything about this topic and the tutor will explain it.</p>
@@ -869,7 +892,7 @@ function renderSection(){
     const q = qs[state.qi];
     if (!q){ slot.innerHTML = '<p class="muted">No questions at this difficulty yet.</p>'; return; }
     const secId = secOfQ(q) || state.sec;
-    const label = `Question ${state.qi + 1}` + (isMix && SECTIONS[secId] ? ` · ${secId}` : '');
+    const label = `Question ${state.qi + 1}` + (isMix && SECTIONS[secId] ? ` · ${secNum(SECTIONS[secId])}` : '');
     slot.appendChild(questionCard(q, label, { onChange: drawNav, secId, timer: P.timed,
       onDelete: dq => { const k = secOfQ(dq); saved.gen[k] = (saved.gen[k] || []).filter(x => x.id !== dq.id); delete saved.scores[dq.id]; delete saved.work[dq.id]; persist(); rebuild(); renderSection(); } }));
     const pager = document.createElement('div'); pager.className = 'actions'; pager.style.marginTop = '12px';
@@ -889,7 +912,7 @@ function renderSection(){
     const examples = (sample.length ? sample : ts.questions.slice(0, 3)).map((q, i) => `Example ${i+1} (${starsOf(q)} stars):\n${plainQ(q.q)}`).join('\n\n');
     try {
       const { kept, dropped } = await generateQuestions({ secId: targetSec, n: 3,
-        basis: `Topic: section ${ts.id} "${ts.title}" from ${ts.chapter.book}, ${ts.chapter.label} "${ts.chapter.title}".${want ? ` Make every question ${want} stars on the scale below.` : ''} Here are questions the student has been practising:\n\n${examples}`,
+        basis: `Topic: section ${secNum(ts)} "${ts.title}" from ${ts.chapter.book}, ${ts.chapter.label} "${ts.chapter.title}".${want ? ` Make every question ${want} stars on the scale below.` : ''} Here are questions the student has been practising:\n\n${examples}`,
         onProgress: m => { st.textContent = m; } });
       saved.gen[targetSec] = (saved.gen[targetSec] || []).concat(kept).slice(-30); persist();
       const before = qs.length;
@@ -897,7 +920,7 @@ function renderSection(){
       state.qi = kept.length ? Math.min(before, qs.length - 1) : state.qi;
       st.className = 'status';
       st.textContent = kept.length
-        ? `Added ${kept.length} new question${kept.length > 1 ? 's' : ''}${s ? '' : ` on ${ts.id} ${ts.title}`}.${dropped ? ` ${dropped} was thrown away because the check didn't agree with its answer.` : ''}`
+        ? `Added ${kept.length} new question${kept.length > 1 ? 's' : ''}${s ? '' : ` on ${secNum(ts)} ${ts.title}`}.${dropped ? ` ${dropped} was thrown away because the check didn't agree with its answer.` : ''}`
         : 'None of the new questions passed the answer check, so none were added. Try again.';
       drawNav(); drawQ();
     } catch(err){ st.className = 'status err'; st.textContent = err.code === 'parse' ? 'The new questions came back in an unexpected format. Try again.' : errText(err); }
@@ -987,7 +1010,7 @@ function renderAsk(){
       <div class="comp-row">
         <select id="ask-topic" aria-label="Topic">
           <option value="auto">Topic: work it out for me</option>
-          ${CHAPTERS.map(ch => `<optgroup label="${esc(ch.label)} · ${esc(ch.title)}">${ch.sections.map(s => `<option value="${s.id}" ${A.topic === s.id ? 'selected' : ''}>${s.id} ${esc(s.title)}</option>`).join('')}</optgroup>`).join('')}
+          ${CHAPTERS.map(ch => `<optgroup label="${esc(ch.book.replace('Mathematics ', '').replace('Statistics & Mechanics', 'Applied'))} · ${esc(ch.label)} · ${esc(ch.title)}">${ch.sections.map(s => `<option value="${s.id}" ${A.topic === s.id ? 'selected' : ''}>${secNum(s)} ${esc(s.title)}</option>`).join('')}</optgroup>`).join('')}
         </select>
         <div class="actions"><button class="btn ghost" type="button" id="ask-new" ${A.items.length ? '' : 'hidden'}>New question</button><button class="btn" type="button" id="ask-guide">Guide me</button><button class="btn primary" type="submit" id="ask-go">Solve step by step</button></div>
       </div>

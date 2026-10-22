@@ -7,7 +7,9 @@ published inside Claude). Run tools/check.mjs first to validate the content.
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-ORDER = ['7.1', '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '5.1', '5.2', '5.3']
+
+# Content files in load order: Year 1 chapter files first (P01..P14, A01..A11), then the Year 2 section files.
+ORDER = [l.strip() for l in (ROOT / 'src/content/index.txt').read_text().split() if l.strip()]
 
 app = (ROOT / 'src/app.html').read_text()
 fig = (ROOT / 'src/fig.js').read_text()

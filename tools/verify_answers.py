@@ -316,6 +316,11 @@ Pmin = min(0.5 * 20 * g / (C(t / 100) + 0.5 * S(t / 100)) for t in range(9000))
 best = min(range(9000), key=lambda t: 0.5 * 20 * g / (C(t / 100) + 0.5 * S(t / 100))) / 100
 check('5.3-15', [Pmin, best, 0.5 * 20 * g / math.sqrt(1.25)], [87.7, 26.6, 87.7], 0.051)
 
+# Year 1 chapters: one file of checks per chapter in tools/verify/, run with the same helpers.
+import glob, os
+for f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'verify', '*.py'))):
+    exec(compile(open(f).read(), f, 'exec'), globals())
+
 print(f'{count} checks run')
 if fails:
     print('\n'.join(fails)); raise SystemExit(1)

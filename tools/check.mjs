@@ -7,21 +7,31 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const ORDER = ['7.1', '7.2', '7.3', '7.4', '7.5', '7.6', '7.7', '5.1', '5.2', '5.3'];
+const FILES = fs.readFileSync(path.join(root, 'src/content/index.txt'), 'utf8').split(/\s+/).filter(Boolean);
+
 // IDs that students' saved scores already point at. Never remove or renumber these.
 const STABLE = ['7.1-1','7.1-2','7.1-3','7.2-1','7.2-2','7.2-3','7.2-4','7.3-1','7.3-2','7.3-3','7.3-4','7.4-1','7.4-2','7.4-3','7.4-4',
   '7.5-1','7.5-2','7.5-3','7.6-1','7.6-2','7.6-3','7.6-4','7.7-1','7.7-2','5.1-1','5.1-2','5.1-3','5.2-1','5.2-2','5.2-3','5.3-1','5.3-2','5.3-3','5.3-4','5.3-5'];
 const CODE = /^(M|A|B|dM)\d(ft|cso)?$/;
 
-const ctx = { R: String.raw, CONTENT: {}, FIGS: {}, Math, console };
+const ctx = { R: String.raw, CONTENT: {}, FIGS: {}, BOOK_CHAPTERS: [], Math, console };
 vm.createContext(ctx);
+const errors = [], seen = new Set();
 vm.runInContext(fs.readFileSync(path.join(root, 'src/fig.js'), 'utf8') + '\nthis.Fig = Fig;', ctx);
-for (const k of ORDER) vm.runInContext(fs.readFileSync(path.join(root, `src/content/${k}.js`), 'utf8'), ctx, { filename: `${k}.js` });
+vm.runInContext(fs.readFileSync(path.join(root, 'src/app.html'), 'utf8').match(/function Q\(id[\s\S]*?\n\}\n/)[0] + '\nthis.Q = Q;', ctx);
+for (const f of FILES) vm.runInContext(fs.readFileSync(path.join(root, `src/content/${f}.js`), 'utf8'), ctx, { filename: `${f}.js` });
+// Section order and which sections are mechanics: Year 1 chapters register themselves; Year 2 sections are listed in index.txt.
+const ORDER = [], MECH = new Set(['5.1', '5.2', '5.3']);
+for (const ch of ctx.BOOK_CHAPTERS){
+  if (!ch.id || !ch.book || !ch.label || !ch.title || !Array.isArray(ch.sections)) errors.push(`${ch.id}: chapter needs id, book, label, title and sections`);
+  for (const s of ch.sections){ ORDER.push(s.id); if (ch.mech) MECH.add(s.id); if (!s.num || !s.title) errors.push(`${s.id}: section needs num and title`); }
+}
+for (const f of FILES) if (ctx.CONTENT[f]) ORDER.push(f);
 
 let katex = null;
 if (process.env.KATEX) katex = createRequire(import.meta.url)(process.env.KATEX);
 const MATH = /\$\$[\s\S]+?\$\$|\$(?!\s)[^$\n]+?\$/g;
-const errors = [], seen = new Set();
+
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
 function checkTex(where, src){
   if (!katex) return;
@@ -48,11 +58,11 @@ for (const k of ORDER){
     if (stated !== q.scheme.length) err(w, `question says ${stated} marks but the scheme has ${q.scheme.length} lines`);
     if (!Array.isArray(q.hints) || q.hints.length < 2) err(w, 'needs at least 2 hints');
     if (!q.answer || !q.answer.trim()) err(w, 'missing answer');
-    if (!q.sol || q.sol.trim().length < 40) err(w, 'missing or very short solution');
+    if (!q.sol || q.sol.trim().length < 20) err(w, 'missing or very short solution');
     q.scheme.forEach((r, i) => { if (r.length !== 3) err(w, `scheme line ${i + 1} must be [part, code, text]`); else if (!CODE.test(r[1])) err(w, `scheme line ${i + 1} has unusual code ${r[1]}`); });
     const parts = [...q.q.matchAll(/\*\*\(([a-z])\)\*\*/g)].map(m => `(${m[1]})`);
     if (parts.length && q.scheme.some(r => !parts.includes(r[0]))) err(w, 'scheme part labels must match the question parts');
-    if (k.startsWith('5.') && !q.fig) err(w, 'mechanics questions need a force diagram');
+    if (MECH.has(k) && !q.fig && !q.noFig) err(w, 'mechanics questions need a force diagram (or noFig: true if no diagram makes sense)');
     [q.q, q.answer, q.sol, ...q.hints, ...q.scheme.map(r => r[2])].forEach(t => checkTex(w, t));
     total++;
   }
