@@ -20438,9 +20438,96 @@ function tex(m){
   try { return katex.renderToString(t.trim(), { displayMode: display, throwOnError: false, strict: 'ignore', output: 'html' }); }
   catch(e){ return esc(m); }
 }
+/* ------------------------------------------------------------------ */
+/* Diagrams written by the AI tutor. The tutor writes a fenced block    */
+/*   ```diagram {"type":"graph", ...} ```                               */
+/* holding JSON. It is checked and drawn with the same Fig helpers as   */
+/* the built-in diagrams. Nothing in it is ever run as code: functions  */
+/* are given as expression strings and compiled by a small parser.     */
+/* ------------------------------------------------------------------ */
+function compileExpr(src){
+  const s = String(src).replace(/\s+/g, '').replace(/\*\*/g, '^').replace(/π/g, 'pi');
+  if (s.length > 200) throw new Error('too long');
+  let i = 0;
+  const FN = { sin: Math.sin, cos: Math.cos, tan: Math.tan, exp: Math.exp, ln: Math.log, log: Math.log10, sqrt: Math.sqrt, abs: Math.abs,
+    sec: x => 1 / Math.cos(x), cosec: x => 1 / Math.sin(x), csc: x => 1 / Math.sin(x), cot: x => 1 / Math.tan(x), arcsin: Math.asin, arccos: Math.acos, arctan: Math.atan };
+  const peek = () => s[i];
+  const startsTerm = c => c && /[0-9.a-zA-Z(]/.test(c);
+  function expr(){ let f = term(); while (peek() === '+' || peek() === '-'){ const op = s[i++], a = f, b = term(); f = op === '+' ? x => a(x) + b(x) : x => a(x) - b(x); } return f; }
+  function term(){ let f = unary(); for (;;){ const c = peek();
+    if (c === '*' || c === '/'){ i++; const a = f, b = unary(); f = c === '*' ? x => a(x) * b(x) : x => a(x) / b(x); }
+    else if (startsTerm(c)){ const a = f, b = power(); f = x => a(x) * b(x); }   // implicit multiplication: 2x, 3(x+1)
+    else return f; } }
+  function unary(){ if (peek() === '-'){ i++; const a = unary(); return x => -a(x); } if (peek() === '+'){ i++; return unary(); } return power(); }
+  function power(){ const b = atom(); if (peek() === '^'){ i++; const e = unary(); return x => Math.pow(b(x), e(x)); } return b; }
+  function atom(){
+    const c = peek();
+    if (c === '('){ i++; const f = expr(); if (s[i++] !== ')') throw new Error('bracket'); return f; }
+    const num = s.slice(i).match(/^\d*\.?\d+(e[+-]?\d+)?/i);
+    if (num){ i += num[0].length; const v = parseFloat(num[0]); return () => v; }
+    const w = s.slice(i).match(/^[a-zA-Z]+/);
+    if (w){
+      let name = w[0];
+      const fn = Object.keys(FN).sort((a, b) => b.length - a.length).find(k => name.startsWith(k));
+      if (fn){ i += fn.length; let pw = null;
+        if (peek() === '^'){ i++; pw = atom(); }            // sin^2(x)
+        const arg = peek() === '(' ? atom() : power();
+        const g = FN[fn]; return pw ? x => Math.pow(g(arg(x)), pw(x)) : x => g(arg(x)); }
+      if (name.startsWith('pi')){ i += 2; return () => Math.PI; }
+      if (name[0] === 'e'){ i += 1; return () => Math.E; }
+      if (name[0] === 'x' || name[0] === 't'){ i += 1; return x => x; }
+      throw new Error('unknown ' + name);
+    }
+    throw new Error('unexpected ' + c);
+  }
+  const f = expr();
+  if (i !== s.length) throw new Error('trailing');
+  return x => { const v = f(x); return Number.isFinite(v) ? v : NaN; };
+}
+const FIG_COLS = { accent: 'var(--accent)', pen: 'var(--pen)', ink: 'var(--ink)', muted: 'var(--muted)', red: 'var(--pen)', blue: 'var(--accent)' };
+// Make a JSON value safe to hand to a Fig helper: finite numbers only, short strings with no markup characters,
+// colours from a fixed list, and expression strings turned into functions for the keys that take functions.
+function cleanFigArgs(v, key = '', depth = 0){
+  if (depth > 6) return undefined;
+  if (Array.isArray(v)) return v.slice(0, 60).map(x => cleanFigArgs(x, key, depth + 1)).filter(x => x !== undefined);
+  if (v && typeof v === 'object'){
+    const o = {};
+    for (const [k, x] of Object.entries(v).slice(0, 40)){
+      if (k === 'col'){ if (FIG_COLS[x]) o.col = FIG_COLS[x]; continue; }
+      if ((k === 'f' || k === 'lo' || k === 'hi') && typeof x === 'string'){ try { o[k] = compileExpr(x); } catch(e){} continue; }
+      const c = cleanFigArgs(x, k, depth + 1); if (c !== undefined) o[k] = c;
+    }
+    return o;
+  }
+  if (typeof v === 'number') return Number.isFinite(v) ? Math.max(-1e6, Math.min(1e6, v)) : undefined;
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'string') return v.replace(/[<>"'&`\\]/g, '').slice(0, 80);
+  return undefined;
+}
+const AI_FIG_TYPES = ['graph', 'particle', 'ground', 'slope', 'hanging', 'pulleyHang', 'tablePulley', 'train', 'boxplot', 'histogram', 'tree', 'venn', 'geo'];
+function aiFigure(json){
+  let spec;
+  try { spec = JSON.parse(json); } catch(e){ return '<p class="muted small">(The tutor tried to draw a diagram but it could not be read.)</p>'; }
+  const type = spec && spec.type;
+  if (!AI_FIG_TYPES.includes(type)) return '<p class="muted small">(Diagram type not supported.)</p>';
+  const args = cleanFigArgs(spec);
+  delete args.type;
+  if (type === 'graph'){
+    // Sensible defaults so a partial spec still draws.
+    args.x0 = args.x0 ?? -5; args.x1 = args.x1 ?? 5; args.y0 = args.y0 ?? -5; args.y1 = args.y1 ?? 5;
+    if (!(args.x1 > args.x0) || !(args.y1 > args.y0)) return '<p class="muted small">(Diagram range not valid.)</p>';
+    (args.fns || []).forEach(fn => { if (typeof fn.f !== 'function') fn.f = () => NaN; });
+    args.fns = (args.fns || []).filter(fn => typeof fn.f === 'function');
+    (args.regions || []).forEach(r => { ['lo', 'hi'].forEach(k => { if (r[k] != null && typeof r[k] !== 'function') delete r[k]; }); });
+    ['xticks', 'yticks'].forEach(k => { if (Array.isArray(args[k])) args[k] = args[k].filter(t => Array.isArray(t) && typeof t[0] === 'number').map(t => [t[0], String(t[1] ?? t[0])]); });
+  }
+  if (type === 'geo' && !(args.pts && typeof args.segs === 'string')) return '<p class="muted small">(Diagram not complete.)</p>';
+  try { return Fig[type](args); } catch(e){ return '<p class="muted small">(The diagram could not be drawn.)</p>'; }
+}
 function md(src){
   const maths = [];
-  let s = String(src || '').replace(/\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$(?!\s)[^$\n]+?\$/g, m => { maths.push(m); return 'MATHPH' + (maths.length-1) + 'Z'; });
+  const aiFigs = [];
+  let s = String(src || '').replace(/```\s*diagram\s*\n([\s\S]*?)```/g, (_, j) => { aiFigs.push(aiFigure(j)); return '\n\nAIDGRM' + (aiFigs.length-1) + 'Z\n\n'; }).replace(/```\s*diagram[\s\S]*$/, '\n\n*Drawing a diagram…*\n').replace(/\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$(?!\s)[^$\n]+?\$/g, m => { maths.push(m); return 'MATHPH' + (maths.length-1) + 'Z'; });
   s = s.replace(/\[\[(\d+)\]\]/g, 'MKPH$1Z');
   const figs = [];
   s = s.replace(/\[\[fig:([\w.-]+)\]\]/g, (_, k) => { figs.push(FIGS[k] || ''); return '\n\nFIGPH' + (figs.length-1) + 'Z\n\n'; });
@@ -20452,6 +20539,7 @@ function md(src){
   html = html.replace(/MKPH(\d+)Z/g, '<span class="mk">($1)</span>');
   html = html.replace(/MATHPH(\d+)Z/g, (_, i) => tex(maths[+i]));
   html = html.replace(/<p>FIGPH(\d+)Z<\/p>|FIGPH(\d+)Z/g, (_, a, b) => figs[+(a ?? b)]);
+  html = html.replace(/<p>AIDGRM(\d+)Z<\/p>|AIDGRM(\d+)Z/g, (_, a, b) => aiFigs[+(a ?? b)]);
   return html;
 }
 function setMD(el, src){ el.innerHTML = md(src); }
@@ -20612,7 +20700,24 @@ async function keyCall(input, opts){
 }
 
 const SPEC = R`You are an expert, encouraging A-level Mathematics tutor for the Pearson Edexcel specification (9MA0). The student is studying the Year 1 and Year 2 content: Pure Mathematics, Statistics and Mechanics, following the Pearson Edexcel textbooks. Follow Edexcel conventions: g = 9.8 m s^-2 unless told otherwise; final answers to 3 significant figures or the accuracy the question asks for; mark-scheme codes M (method), A (accuracy, depends on the preceding M), B (independent), dM (dependent method), ft (follow through), cso (correct solution only). In statistics, use Edexcel notation such as X ~ B(n, p), give probabilities to 4 decimal places unless told otherwise, and set out hypothesis tests with H0, H1, the significance level, the comparison and a conclusion in context.`;
-const FORMAT = R`Write in Markdown. Put ALL maths in LaTeX using $...$ inline and $$...$$ on its own line for display. Write every fraction as \frac{a}{b} (use \dfrac{a}{b} inside display maths), never with a slash like a/b. Use ^\circ for degrees. Never use \( \) or \[ \] delimiters and never put maths in code blocks. Be clear and concise: short sentences, no filler.`;
+const FORMAT_TEXT = R`Write in Markdown. Put ALL maths in LaTeX using $...$ inline and $$...$$ on its own line for display. Write every fraction as \frac{a}{b} (use \dfrac{a}{b} inside display maths), never with a slash like a/b. Use ^\circ for degrees. Never use \( \) or \[ \] delimiters and never put maths in code blocks. Be clear and concise: short sentences, no filler.`;
+const FORMAT = () => FORMAT_TEXT + '\n\n' + DIAGRAMS;
+
+const DIAGRAMS = R`DIAGRAMS. When a diagram would genuinely help (a curve sketch, a graph of motion, a force diagram, a box plot, a Venn or tree diagram), draw it by writing a fenced block that starts with three backticks and the word diagram, holding ONE JSON object, then three backticks to close. This is the only code block you may use. Never draw diagrams with ASCII art. Labels are short plain text (no LaTeX, no $), e.g. "y = x² − 4", "5 N", "30°", "mg". Angles (deg) are in degrees measured anticlockwise from the positive x-direction (0 right, 90 up, 270 down). Types:
+- {"type":"graph","x0":-2,"x1":5,"y0":-4,"y1":6,"xlab":"x","ylab":"y","fns":[{"f":"x^2-4x+3","label":"y = x² − 4x + 3"}],"points":[{"x":1,"y":0,"label":"(1, 0)"}],"xticks":[[1,"1"],[3,"3"]],"yticks":[[3,"3"]],"segs":[{"x1":0,"y1":0,"x2":2,"y2":4,"dash":true}],"regions":[{"from":1,"to":3,"lo":"x^2-4x+3","hi":"0"}],"hlines":[{"y":2,"label":"y = 2"}],"vlines":[{"x":0.5,"label":"x = 0.5","dash":true}],"equal":false}. Expressions use x (or t), + - * / ^, brackets, implicit multiplication, and sin cos tan sec cosec cot arcsin arccos arctan exp ln log sqrt abs pi e; trig is in radians. Use fns with "from"/"to" to restrict a domain. For a piecewise-linear motion graph use segs. A segment with "arrow":true is a vector. Optional "col" is one of "accent","pen","ink","muted".
+- {"type":"particle","forces":[{"deg":0,"label":"10 N","len":80},{"deg":270,"label":"mg","weight":true}],"angles":[{"from":0,"to":30,"label":"30°"}],"ref":true}: a particle with forces (len 40 to 100).
+- {"type":"ground","forces":[{"deg":30,"label":"40 N"},{"deg":90,"label":"R"},{"deg":180,"label":"F"},{"deg":270,"label":"mg","weight":true}],"angles":[{"from":0,"to":30,"label":"30°"}],"rough":true,"motion":"a"}: a block on horizontal ground; angled forces are drawn with their horizontal and vertical components.
+- {"type":"slope","deg":30,"forces":[{"dir":"normal","label":"R"},{"dir":"weight","label":"mg"},{"dir":"down","label":"F"},{"dir":"up","label":"P"},{"dir":"horiz","label":"X"}],"motion":"","components":true}: a block on an inclined plane; the weight (and a horizontal force) are drawn with components parallel and perpendicular to the slope. dir is "up", "down", "normal", "weight", "horiz" or {"rel":20} for an angle above the slope (add "relLabel":"20°"). Optional "pulley":{"name":"B","weightLabel":"2g","tension":"T","blockName":"A"} for a string over a pulley at the top.
+- {"type":"hanging","strings":[{"deg":120,"label":"T₁"},{"deg":60,"label":"T₂"}],"extra":[{"deg":0,"label":"5 N"}],"weightLabel":"mg","angles":[{"from":90,"to":120,"label":"30°"}]}: a particle hanging on strings from a ceiling (string deg between 0 and 180).
+- {"type":"pulleyHang","left":{"name":"5 kg","weight":"5g","drop":140},"right":{"name":"3 kg","weight":"3g","drop":90},"tension":"T"}: two particles over a fixed pulley.
+- {"type":"tablePulley","block":{"name":"P 4 kg","weight":"4g"},"hang":{"name":"Q","weight":"g"},"tension":"T","reaction":"R","friction":"F"}: a block on a table joined over a pulley to a hanging particle.
+- {"type":"train","blocks":[{"name":"trailer 500 kg","w":96},{"name":"car 1000 kg","w":96}],"forces":[{"on":1,"dir":"R","label":"3000 N"},{"on":1,"dir":"TL","label":"T"},{"on":0,"dir":"TR","label":"T"},{"on":0,"dir":"L","label":"200 N"}],"link":"rope","motion":"a"}: bodies in a line on level ground (dir R, L, U, D; TL/TR are tensions in the link, add "push":true for a thrust).
+- {"type":"boxplot","boxes":[{"label":"A","min":2,"q1":5,"med":7,"q3":9,"max":12,"outliers":[20]}],"x0":0,"x1":22,"ticks":[[0,"0"],[10,"10"],[20,"20"]],"xlab":"marks"}.
+- {"type":"histogram","bars":[{"lo":0,"hi":10,"fd":1.2}],"x0":0,"x1":50,"y1":6,"xticks":[[0,"0"],[10,"10"]],"yticks":[[2,"2"]],"xlab":"length (cm)"}.
+- {"type":"tree","first":[{"label":"R","p":"0.4"},{"label":"B","p":"0.6"}],"second":[[{"label":"R","p":"3/9"},{"label":"B","p":"6/9"}],[{"label":"R","p":"4/9"},{"label":"B","p":"5/9"}]],"outcomes":[["12/90","24/90"],["24/90","30/90"]]}.
+- {"type":"venn","sets":["A","B"],"values":{"A":"7","AB":"3","B":"5","out":"5"},"shade":["A"]}: two or three single-letter sets; region keys combine the set letters, plus "out".
+- {"type":"geo","pts":{"A":[0,0],"B":[4,0],"C":[4,3]},"segs":"AB BC CA","right":["ABC"],"angles":[{"at":"A","from":"B","to":"C","label":"θ"}],"sides":[{"on":"AB","label":"4 cm"}],"labels":{"A":[-12,6]}}: a geometry figure.
+Every value you show must match your working. Keep the JSON on as few lines as you like, but it must be valid JSON with double quotes.`;
 
 function topicLine(topic){
   if (!topic || topic === 'auto') return '';
@@ -20621,7 +20726,7 @@ function topicLine(topic){
 }
 
 /* Generated questions use a delimited text format, which survives LaTeX backslashes better than JSON. */
-const GEN_FORMAT = R`Output format: plain text, no code fences, no preamble. Repeat this block once per question:
+const GEN_FORMAT = R`Output format: plain text, no code fences (except diagram blocks inside the question or solution), no preamble. Repeat this block once per question:
 ===QUESTION===
 ---stars---
 <one whole number from 1 to 5 for the difficulty, using this scale: 1 = one technique, one or two steps (1-3 marks); 2 = standard textbook exercise (3-5 marks); 3 = typical exam question, multi-part with one trap (5-8 marks); 4 = harder exam question: a "hence" chain, unfamiliar context or a mix of sections (7-10 marks); 5 = stretch: needs insight, links chapters, proof or error-spotting (8-12 marks)>
@@ -20669,7 +20774,7 @@ async function generateQuestions({ basis, n=3, secId, onProgress, signal }){
 Write ${n} NEW exam-style practice questions in the style of Pearson Edexcel A-level papers.
 ${basis}
 Keep the same techniques, but change the numbers, angles and contexts so the questions are new. Spread the difficulty: make question 1 slightly easier than the source and the last one harder. Every answer must be correct, so work each one out fully before writing it, and choose numbers that give clean or sensible answers. Use g = 9.8 for mechanics.
-${FORMAT}
+${FORMAT()}
 
 ${GEN_FORMAT}`;
   onProgress && onProgress('Writing new questions');
@@ -21236,7 +21341,7 @@ function drawThread(){
 
 function solvePrompt(text, hasImg, topic){
   return `${SPEC}
-${FORMAT}
+${FORMAT()}
 
 The student has sent a question${hasImg ? ' as an image (a photo or screenshot), possibly with some typed text' : ''}. ${topicLine(topic)}
 Reply with exactly these sections:
@@ -21259,7 +21364,7 @@ ${text || '(no text, see the image)'}
 
 function guidePrompt(text, hasImg, topic){
   return `${SPEC}
-${FORMAT}
+${FORMAT()}
 
 The student has sent a question${hasImg ? ' as an image (a photo or screenshot), possibly with some typed text' : ''}. ${topicLine(topic)}
 Guide them through it ONE STEP AT A TIME so that they do the work. Never give the whole solution at once, and never give away a step's answer before they have tried it.
