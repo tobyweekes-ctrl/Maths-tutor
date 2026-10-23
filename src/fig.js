@@ -200,7 +200,7 @@ const Fig = (() => {
 
   /* Graph of y = f(x). fns: [{f, label}], ticks as [value, text]. */
   let graphId = 0;
-  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], segs = [], circles = [], equal = false, xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
+  function graph({ fns = [], x0, x1, y0, y1, xticks = [], yticks = [], hlines = [], vlines = [], regions = [], points = [], texts = [], segs = [], circles = [], equal = false, axes = true, xlab = 'x', ylab = 'y', w = 380, h = 230, label = 'Graph' } = {}){
     const L = 44, Rr = 16, T = 14, B = 34;
     if (equal) h = Math.round(T + B + (y1 - y0) * (w - L - Rr) / (x1 - x0));   // same scale on both axes, so circles look round
     const X = x => L + (x - x0) / (x1 - x0) * (w - L - Rr), Y = y => T + (y1 - y) / (y1 - y0) * (h - T - B);
@@ -219,8 +219,8 @@ const Fig = (() => {
     yticks.forEach(([v, s]) => { body += line(L, Y(v), w - Rr, Y(v), { col: 'var(--line)', w: 1 }) + text(L - 6, Y(v), s, { col: MUTE, anchor: 'end', size: 11 }); });
     xticks.forEach(([v, s]) => { body += line(X(v), T, X(v), h - B, { col: 'var(--line)', w: 1 }) + text(X(v), h - B + 14, s, { col: MUTE, size: 11 }); });
     const zy = Math.min(Math.max(Y(0), T), h - B), zx = Math.min(Math.max(X(0), L), w - Rr);
-    body += line(L, zy, w - Rr, zy, { col: INK, w: 1.3 }) + line(zx, T, zx, h - B, { col: INK, w: 1.3 });
-    body += text(w - Rr, zy - 10, xlab, { col: MUTE, anchor: 'end', size: 12, italic: true }) + text(zx + 8, T + 4, ylab, { col: MUTE, anchor: 'start', size: 12, italic: true });
+    if (axes) body += line(L, zy, w - Rr, zy, { col: INK, w: 1.3 }) + line(zx, T, zx, h - B, { col: INK, w: 1.3 })
+      + text(w - Rr, zy - 10, xlab, { col: MUTE, anchor: 'end', size: 12, italic: true }) + text(zx + 8, T + 4, ylab, { col: MUTE, anchor: 'start', size: 12, italic: true });
     hlines.forEach(hl => { body += line(L, Y(hl.y), w - Rr, Y(hl.y), { col: WEIGHT, w: 1.3, dash: '5 4' }) + (hl.label ? text(w - Rr - 2, Y(hl.y) - 9, hl.label, { col: WEIGHT, anchor: 'end', size: 11 }) : ''); });
     vlines.forEach(vl => { body += line(X(vl.x), T, X(vl.x), h - B, { col: vl.col || WEIGHT, w: 1.6, dash: vl.dash ? '5 4' : '' }) + (vl.label ? text(X(vl.x) + 4, T + 8, vl.label, { col: vl.col || WEIGHT, anchor: 'start', size: 11 }) : ''); });
     fns.forEach((fn, i) => {
