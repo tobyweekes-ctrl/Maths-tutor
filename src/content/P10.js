@@ -15,7 +15,7 @@ BOOK_CHAPTERS.push({ id:'P10', book:'Pure Mathematics Year 1', label:'Chapter 10
     x0: -1.5, x1: 1.5, y0: -1.3, y1: 1.3, equal: true, xlab: '', ylab: '', circles: [{ x: 0, y: 0, r: 1 }],
     segs: [{ x1: 0, y1: 0, x2: Cs(210), y2: S(210), col: 'var(--pen)', w: 2 }, { x1: Cs(210), y1: S(210), x2: Cs(210), y2: 0, dash: true }],
     points: [pt(Cs(210), S(210), '(cos 210°, sin 210°)', -10, 18)],
-    texts: [{ x: 0.5, y: 0.5, label: 'A (all)' }, { x: -0.5, y: 0.5, label: 'S (sin)' }, { x: -0.35, y: -0.7, label: 'T (tan)' }, { x: 0.5, y: -0.5, label: 'C (cos)' }, { x: -0.42, y: -0.14, label: '30°', size: 11 }] });
+    texts: [{ x: 0.5, y: 0.5, label: 'A (all)' }, { x: -0.5, y: 0.5, label: 'S (sin)' }, { x: -0.2, y: -0.88, label: 'T (tan)' }, { x: 0.5, y: -0.5, label: 'C (cos)' }, { x: -0.42, y: -0.14, label: '30°', size: 11 }] });
   FIGS['P10.2-tris'] = Fig.geo({ label: 'Left: half an equilateral triangle with sides 1, √3 and 2 and angles 30°, 60°, 90°. Right: an isosceles right-angled triangle with sides 1, 1 and √2',
     pts: { A: [0, 0], B: [1.732, 0], C: [0, 1], D: [3, 0], E: [4, 0], F: [3, 1] }, segs: 'AB BC CA DE EF FD', right: ['BAC', 'EDF'],
     labels: { A: [-10, 10], B: [10, 10], C: [-10, -6], D: [-10, 10], E: [10, 10], F: [-10, -6] },

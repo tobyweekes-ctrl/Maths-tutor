@@ -237,7 +237,7 @@ const Fig = (() => {
       if (fn.label) body += text(X(fn.lx != null ? fn.lx : x1) - 4, Math.max(T + 8, Y(fn.ly != null ? fn.ly : fn.f(x1)) - 12), fn.label, { col, anchor: 'end', size: 12 });
     });
     circles.forEach(cc => { body += `<ellipse cx="${n2(X(cc.x))}" cy="${n2(Y(cc.y))}" rx="${n2(cc.r * (w - L - Rr) / (x1 - x0))}" ry="${n2(cc.r * (h - T - B) / (y1 - y0))}" fill="none" stroke="${cc.col || FORCE}" stroke-width="2.2" clip-path="url(#${cid})"${cc.dash ? ' stroke-dasharray="6 5"' : ''}/>`; });
-    segs.forEach(sg => { body += line(X(sg.x1), Y(sg.y1), X(sg.x2), Y(sg.y2), { col: sg.col || MUTE, w: sg.w || 1.6, dash: sg.dash ? '5 4' : '' }); });
+    segs.forEach(sg => { body += sg.arrow ? arrow(X(sg.x1), Y(sg.y1), X(sg.x2), Y(sg.y2), sg.col || MUTE, sg.w || 2) : line(X(sg.x1), Y(sg.y1), X(sg.x2), Y(sg.y2), { col: sg.col || MUTE, w: sg.w || 1.6, dash: sg.dash ? '5 4' : '' }); });
     texts.forEach(tx => { body += text(X(tx.x), Y(tx.y), tx.label, { col: tx.col || INK, size: tx.size || 12, anchor: tx.anchor || 'middle' }); });
     points.forEach(p => { body += `<circle cx="${n2(X(p.x))}" cy="${n2(Y(p.y))}" r="4" fill="${INK}"/>` + (p.label ? text(X(p.x) + (p.dx || 0), Y(p.y) + (p.dy || -14), p.label, { size: 12 }) : ''); });
     return wrap(w, h, `<defs><clipPath id="${cid}"><rect x="${L}" y="${T}" width="${w - L - Rr}" height="${h - T - B}"/></clipPath></defs><g>${body}</g>`, label);
