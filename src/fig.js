@@ -243,5 +243,82 @@ const Fig = (() => {
     return wrap(w, h, `<defs><clipPath id="${cid}"><rect x="${L}" y="${T}" width="${w - L - Rr}" height="${h - T - B}"/></clipPath></defs><g>${body}</g>`, label);
   }
 
-  return { particle, hanging, slope, ground, geo, graph };
+  /* Box plots on a shared horizontal scale. boxes: [{ label, min, q1, med, q3, max, outliers: [] }]. */
+  function boxplot({ boxes, x0, x1, ticks = [], xlab = '', label = 'Box plot', w = 380 } = {}){
+    const L = 70, Rr = 16, T = 14, rowH = 46, h = T + boxes.length * rowH + 40;
+    const X = v => L + (v - x0) / (x1 - x0) * (w - L - Rr);
+    let body = '';
+    const axisY = T + boxes.length * rowH + 4;
+    body += line(L, axisY, w - Rr, axisY, { col: INK, w: 1.3 });
+    ticks.forEach(([v, s]) => { body += line(X(v), axisY, X(v), axisY + 5, { col: INK, w: 1 }) + text(X(v), axisY + 15, s, { col: MUTE, size: 11 }); });
+    if (xlab) body += text((L + w - Rr) / 2, axisY + 30, xlab, { col: MUTE, size: 12, italic: true });
+    boxes.forEach((b, i) => {
+      const cy = T + i * rowH + rowH / 2, hh = 13, col = i % 2 ? WEIGHT : FORCE;
+      body += text(L - 8, cy, b.label || '', { anchor: 'end', size: 12, col });
+      body += line(X(b.min), cy, X(b.q1), cy, { col }) + line(X(b.q3), cy, X(b.max), cy, { col });
+      body += line(X(b.min), cy - 7, X(b.min), cy + 7, { col }) + line(X(b.max), cy - 7, X(b.max), cy + 7, { col });
+      body += `<rect x="${n2(X(b.q1))}" y="${n2(cy - hh)}" width="${n2(X(b.q3) - X(b.q1))}" height="${2 * hh}" fill="${SOFT}" stroke="${col}" stroke-width="1.8"/>`;
+      body += line(X(b.med), cy - hh, X(b.med), cy + hh, { col, w: 2.4 });
+      (b.outliers || []).forEach(o => { body += text(X(o), cy, '×', { col, size: 16, weight: 'bold' }); });
+    });
+    return wrap(w, h, body, label);
+  }
+
+  /* Histogram: bars [{ lo, hi, fd }] drawn with area proportional to frequency. */
+  function histogram({ bars, x0, x1, y1, xticks = [], yticks = [], xlab = '', ylab = 'Frequency density', label = 'Histogram', w = 380, h = 240, line: poly = false } = {}){
+    const L = 48, Rr = 16, T = 14, B = 40;
+    const X = v => L + (v - x0) / (x1 - x0) * (w - L - Rr), Y = v => T + (y1 - v) / y1 * (h - T - B);
+    let body = '';
+    yticks.forEach(([v, s]) => { body += line(L, Y(v), w - Rr, Y(v), { col: 'var(--line)', w: 1 }) + text(L - 6, Y(v), s, { col: MUTE, anchor: 'end', size: 11 }); });
+    bars.forEach(b => { body += `<rect x="${n2(X(b.lo))}" y="${n2(Y(b.fd))}" width="${n2(X(b.hi) - X(b.lo))}" height="${n2(Y(0) - Y(b.fd))}" fill="${SOFT}" stroke="${FORCE}" stroke-width="1.6"/>`; });
+    if (poly) { const pts = bars.map(b => `${n2(X((b.lo + b.hi) / 2))},${n2(Y(b.fd))}`).join(' '); body += `<polyline points="${pts}" fill="none" stroke="${WEIGHT}" stroke-width="2"/>`; }
+    body += line(L, Y(0), w - Rr, Y(0), { col: INK, w: 1.3 }) + line(L, T, L, Y(0), { col: INK, w: 1.3 });
+    xticks.forEach(([v, s]) => { body += line(X(v), Y(0), X(v), Y(0) + 5, { col: INK, w: 1 }) + text(X(v), Y(0) + 15, s, { col: MUTE, size: 11 }); });
+    if (xlab) body += text((L + w - Rr) / 2, h - 8, xlab, { col: MUTE, size: 12, italic: true });
+    body += `<text x="12" y="${n2((T + Y(0)) / 2)}" fill="${MUTE}" font-size="12" font-style="italic" text-anchor="middle" transform="rotate(-90 12 ${n2((T + Y(0)) / 2)})">${escT(ylab)}</text>`;
+    return wrap(w, h, body, label);
+  }
+
+  /* Two-stage tree diagram. first: [{ label, p }]; second: one array per first branch, [{ label, p }]. */
+  function tree({ first, second, label = 'Tree diagram', w = 380, outcomes = null } = {}){
+    const rows = second.reduce((n, s) => n + s.length, 0), rowH = 34, h = Math.max(160, rows * rowH + 20);
+    const x0 = 20, x1 = 140, x2 = 270;
+    let body = '', r = 0;
+    const ys = second.map(s => { const ys2 = s.map(() => 10 + rowH / 2 + rowH * r++); return ys2; });
+    first.forEach((f, i) => {
+      const y1 = (ys[i][0] + ys[i][ys[i].length - 1]) / 2;
+      body += line(x0, h / 2, x1, y1, { col: FORCE, w: 1.8 }) + text(x1 + 6, y1, f.label, { anchor: 'start', weight: 'bold', size: 13 });
+      body += text((x0 + x1) / 2 - 6, (h / 2 + y1) / 2 + (y1 < h / 2 ? -10 : 10), f.p, { col: FORCE, size: 12 });
+      second[i].forEach((s, j) => {
+        const y2 = ys[i][j], xs = x1 + 34;
+        body += line(xs, y1, x2, y2, { col: WEIGHT, w: 1.6 }) + text(x2 + 6, y2, s.label, { anchor: 'start', weight: 'bold', size: 13 });
+        body += text((xs + x2) / 2, (y1 + y2) / 2 + (y2 < y1 ? -9 : y2 > y1 ? 9 : -9), s.p, { col: WEIGHT, size: 12 });
+        if (outcomes) body += text(w - 8, y2, outcomes[i][j], { anchor: 'end', col: MUTE, size: 12 });
+      });
+    });
+    return wrap(w, h, body, label);
+  }
+
+  /* Venn diagram for two or three sets. values: { region: text } with regions like 'A', 'AB', 'ABC', 'out'. */
+  function venn({ sets = ['A', 'B'], values = {}, label = 'Venn diagram', w = 340, shade = [] } = {}){
+    const three = sets.length === 3, h = three ? 250 : 190, r = three ? 62 : 64;
+    const C = three ? [[w / 2 - 38, 98], [w / 2 + 38, 98], [w / 2, 160]] : [[w / 2 - 42, h / 2], [w / 2 + 42, h / 2]];
+    let body = `<rect x="8" y="8" width="${w - 16}" height="${h - 16}" fill="none" stroke="${INK}" stroke-width="1.4"/>`;
+    if (shade.length) {
+      // Shade a region by testing a grid of points.
+      const inSet = (x, y, i) => Math.hypot(x - C[i][0], y - C[i][1]) < r;
+      const key = (x, y) => { const k = sets.map((s, i) => inSet(x, y, i) ? s : '').join(''); return k || 'out'; };
+      for (let x = 10; x < w - 10; x += 4) for (let y = 10; y < h - 10; y += 4) if (shade.includes(key(x, y))) body += `<rect x="${x}" y="${y}" width="4" height="4" fill="var(--accent)" fill-opacity="0.18"/>`;
+    }
+    C.forEach(([cx, cy], i) => { body += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${i === 1 ? WEIGHT : FORCE}" stroke-width="2"/>`; });
+    const lab = three ? [[C[0][0] - 58, C[0][1] - 58], [C[1][0] + 58, C[1][1] - 58], [C[2][0] + 70, C[2][1] + 40]] : [[C[0][0] - 52, C[0][1] - 58], [C[1][0] + 52, C[1][1] - 58]];
+    sets.forEach((s, i) => { body += text(lab[i][0], lab[i][1], s, { weight: 'bold', size: 15, col: i === 1 ? WEIGHT : FORCE }); });
+    const pos = three ? { A: [C[0][0] - 28, C[0][1] - 12], B: [C[1][0] + 28, C[1][1] - 12], C: [C[2][0], C[2][1] + 32], AB: [w / 2, 76], AC: [w / 2 - 36, 138], BC: [w / 2 + 36, 138], ABC: [w / 2, 118], out: [30, h - 22] }
+      : { A: [C[0][0] - 26, h / 2], B: [C[1][0] + 26, h / 2], AB: [w / 2, h / 2], out: [30, h - 22] };
+    const map = three ? { [sets[0]]: 'A', [sets[1]]: 'B', [sets[2]]: 'C' } : { [sets[0]]: 'A', [sets[1]]: 'B' };
+    Object.entries(values).forEach(([k, v]) => { const kk = k === 'out' ? 'out' : k.split('').map(c => map[c]).join(''); const p = pos[kk]; if (p) body += text(p[0], p[1], v, { size: 13 }); });
+    return wrap(w, h, body, label);
+  }
+
+  return { particle, hanging, slope, ground, geo, graph, boxplot, histogram, tree, venn };
 })();
