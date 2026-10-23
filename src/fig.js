@@ -281,14 +281,15 @@ const Fig = (() => {
 
   /* Two-stage tree diagram. first: [{ label, p }]; second: one array per first branch, [{ label, p }]. */
   function tree({ first, second, label = 'Tree diagram', w = 380, outcomes = null } = {}){
-    const rows = second.reduce((n, s) => n + s.length, 0), rowH = 34, h = Math.max(160, rows * rowH + 20);
+    const rows = second.reduce((n, s) => n + Math.max(1, s.length), 0), rowH = 34, h = Math.max(160, rows * rowH + 20);
     const x0 = 20, x1 = 140, x2 = 270;
     let body = '', r = 0;
-    const ys = second.map(s => { const ys2 = s.map(() => 10 + rowH / 2 + rowH * r++); return ys2; });
+    const ys = second.map(s => (s.length ? s : [null]).map(() => 10 + rowH / 2 + rowH * r++));   // a branch with no second stage still takes one row
+    const ry = 10 + rowH / 2 + rowH * (rows - 1) / 2;   // root level with the middle of the rows
     first.forEach((f, i) => {
       const y1 = (ys[i][0] + ys[i][ys[i].length - 1]) / 2;
-      body += line(x0, h / 2, x1, y1, { col: FORCE, w: 1.8 }) + text(x1 + 6, y1, f.label, { anchor: 'start', weight: 'bold', size: 13 });
-      body += text((x0 + x1) / 2 - 6, (h / 2 + y1) / 2 + (y1 < h / 2 ? -10 : 10), f.p, { col: FORCE, size: 12 });
+      body += line(x0, ry, x1, y1, { col: FORCE, w: 1.8 }) + text(x1 + 6, y1, f.label, { anchor: 'start', weight: 'bold', size: 13 });
+      body += text((x0 + x1) / 2 - 6, (ry + y1) / 2 + (y1 < ry ? -10 : 10), f.p, { col: FORCE, size: 12 });
       second[i].forEach((s, j) => {
         const y2 = ys[i][j], xs = x1 + 34;
         body += line(xs, y1, x2, y2, { col: WEIGHT, w: 1.6 }) + text(x2 + 6, y2, s.label, { anchor: 'start', weight: 'bold', size: 13 });
@@ -308,11 +309,12 @@ const Fig = (() => {
       // Shade a region by testing a grid of points.
       const inSet = (x, y, i) => Math.hypot(x - C[i][0], y - C[i][1]) < r;
       const key = (x, y) => { const k = sets.map((s, i) => inSet(x, y, i) ? s : '').join(''); return k || 'out'; };
-      for (let x = 10; x < w - 10; x += 4) for (let y = 10; y < h - 10; y += 4) if (shade.includes(key(x, y))) body += `<rect x="${x}" y="${y}" width="4" height="4" fill="var(--accent)" fill-opacity="0.18"/>`;
+      for (let x = 10; x < w - 10; x += 4) for (let y = 10; y < h - 10; y += 4) if (shade.includes(key(x + 2, y + 2))) body += `<rect x="${x}" y="${y}" width="4" height="4" fill="var(--accent)" fill-opacity="0.18"/>`;
     }
-    C.forEach(([cx, cy], i) => { body += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${i === 1 ? WEIGHT : FORCE}" stroke-width="2"/>`; });
+    const setCol = i => [FORCE, WEIGHT, INK][i];
+    C.forEach(([cx, cy], i) => { body += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${setCol(i)}" stroke-width="2"/>`; });
     const lab = three ? [[C[0][0] - 58, C[0][1] - 58], [C[1][0] + 58, C[1][1] - 58], [C[2][0] + 70, C[2][1] + 40]] : [[C[0][0] - 52, C[0][1] - 58], [C[1][0] + 52, C[1][1] - 58]];
-    sets.forEach((s, i) => { body += text(lab[i][0], lab[i][1], s, { weight: 'bold', size: 15, col: i === 1 ? WEIGHT : FORCE }); });
+    sets.forEach((s, i) => { body += text(lab[i][0], lab[i][1], s, { weight: 'bold', size: 15, col: setCol(i) }); });
     const pos = three ? { A: [C[0][0] - 28, C[0][1] - 12], B: [C[1][0] + 28, C[1][1] - 12], C: [C[2][0], C[2][1] + 32], AB: [w / 2, 76], AC: [w / 2 - 36, 138], BC: [w / 2 + 36, 138], ABC: [w / 2, 118], out: [30, h - 22] }
       : { A: [C[0][0] - 26, h / 2], B: [C[1][0] + 26, h / 2], AB: [w / 2, h / 2], out: [30, h - 22] };
     const map = three ? { [sets[0]]: 'A', [sets[1]]: 'B', [sets[2]]: 'C' } : { [sets[0]]: 'A', [sets[1]]: 'B' };
