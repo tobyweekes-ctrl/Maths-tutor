@@ -322,5 +322,76 @@ const Fig = (() => {
     return wrap(w, h, body, label);
   }
 
-  return { particle, hanging, slope, ground, geo, graph, boxplot, histogram, tree, venn };
+  /* Bodies in a line on level ground, joined by a rope or tow bar. blocks: [{ name, w }] left to right;
+     forces: [{ on, dir: 'L' | 'R' | 'U' | 'D', label, weight, len }]. Tensions at a link point along the link. */
+  function train({ blocks, forces = [], label = 'Connected bodies on level ground', link = 'rope', motion = '' } = {}){
+    const gap = 46, H = 34, gy = 150, h = 220;
+    const widths = blocks.map(b => b.w || 70), total = widths.reduce((a, b) => a + b, 0) + gap * (blocks.length - 1);
+    const w = Math.max(400, total + 230);
+    let x = (w - total) / 2; const boxes = [];
+    let body = line(16, gy, w - 16, gy, { col: INK, w: 2 });
+    blocks.forEach((b, i) => {
+      boxes.push({ x, w: widths[i], cx: x + widths[i] / 2, cy: gy - H / 2 });
+      body += `<rect x="${n2(x)}" y="${gy - H}" width="${widths[i]}" height="${H}" rx="4" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>` + text(x + widths[i] / 2, gy - H / 2, b.name, { size: 13 });
+      x += widths[i] + gap;
+    });
+    for (let i = 0; i + 1 < boxes.length; i++) body += line(boxes[i].x + boxes[i].w, gy - H / 2, boxes[i + 1].x, gy - H / 2, { col: INK, w: link === 'rod' ? 3 : 1.4 });
+    forces.forEach(f => {
+      const bx = boxes[f.on]; const len = f.len || 40;
+      if (f.dir === 'R') body += force(bx.x + bx.w, bx.cy, 0, len, f.label, FORCE);
+      if (f.dir === 'L') body += force(bx.x, bx.cy, 180, len, f.label, FORCE);
+      if (f.dir === 'U') body += force(bx.cx, gy - H, 90, len - 8, f.label, FORCE);
+      if (f.dir === 'D') body += force(bx.cx, gy, 270, len - 8, f.label, f.weight === false ? FORCE : WEIGHT);
+      if (f.dir === 'TR' || f.dir === 'TL'){   // tension in a link, drawn short along the link
+        const sx = f.dir === 'TR' ? bx.x + bx.w : bx.x, d = f.dir === 'TR' ? 1 : -1;
+        // a tension pulls the body towards the link; a thrust (push: true) pushes it away from the link
+        body += (f.push ? arrow(sx + d * 20, bx.cy, sx, bx.cy, FORCE, 2) : arrow(sx, bx.cy, sx + d * 20, bx.cy, FORCE, 2)) + text(sx + d * 14, bx.cy - 14, f.label, { col: FORCE, weight: 'bold', size: 13 });
+      }
+    });
+    if (motion) body += arrow(28, 26, 88, 26, MUTE, 1.4) + text(96, 26, motion, { col: MUTE, size: 12, anchor: 'start' });
+    return wrap(w, h, body, label);
+  }
+
+  /* Two particles hanging either side of a fixed smooth pulley. left/right: { name, weight, drop } */
+  function pulleyHang({ left, right, tension = 'T', label = 'Particles connected over a smooth pulley', motion = '' } = {}){
+    const w = 320, cx = w / 2, cy = 46, r = 16, h = cy + Math.max(left.drop || 110, right.drop || 110) + 80;
+    let body = line(cx - 60, 14, cx + 60, 14, { col: INK, w: 2 }) + line(cx, 14, cx, cy, { col: INK, w: 1.6 });
+    for (let x = cx - 54; x < cx + 60; x += 12) body += line(x, 14, x - 8, 6, { col: MUTE, w: 1 });
+    body += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>`;
+    [[left, -1], [right, 1]].forEach(([p, s]) => {
+      const x = cx + s * r, y = cy + (p.drop || 110);
+      body += line(x, cy, x, y - 16, { col: INK, w: 1.3 });
+      body += `<rect x="${x - 16}" y="${y - 16}" width="32" height="32" rx="3" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>` + text(x, y, p.name, { size: 13 });
+      body += arrow(x, y - 16, x, y - 50, FORCE, 2) + text(x + s * 16, y - 44, tension, { col: FORCE, weight: 'bold', size: 13 });
+      body += force(x, y + 16, 270, 34, p.weight, WEIGHT);
+    });
+    if (motion) body += text(cx, h - 10, motion, { col: MUTE, size: 12 });
+    return wrap(w, h, body, label);
+  }
+
+  /* Block on a horizontal table joined by a string over a smooth pulley at the edge to a hanging particle. */
+  function tablePulley({ block, hang, tension = 'T', reaction = 'R', friction = '', label = 'Block on a table connected to a hanging particle', extraLeft = '' } = {}){
+    const w = 380, h = 290, ty = 110, edge = 290, r = 12;
+    let body = `<rect x="20" y="${ty}" width="${edge - 20}" height="10" fill="${SOFT}" stroke="${INK}" stroke-width="1.4"/>` + line(edge - 6, ty + 10, edge - 6, h - 10, { col: INK, w: 1.6 });
+    const pc = [edge + 4, ty - 4];
+    body += `<circle cx="${pc[0]}" cy="${pc[1]}" r="${r}" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>`;
+    const bx = 150, by = ty - 18;
+    body += `<rect x="${bx - 30}" y="${ty - 36}" width="60" height="36" rx="3" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>` + text(bx, by, block.name, { size: 13 });
+    body += line(bx + 30, pc[1] - r, pc[0], pc[1] - r, { col: INK, w: 1.3 });
+    const hx = pc[0] + r, hy = ty + 92;
+    body += line(hx, pc[1], hx, hy - 15, { col: INK, w: 1.3 });
+    body += `<rect x="${hx - 15}" y="${hy - 15}" width="30" height="30" rx="3" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>` + text(hx, hy, hang.name, { size: 13 });
+    // forces on the block
+    body += arrow(bx + 30, by - 6, bx + 62, by - 6, FORCE, 2) + text(bx + 50, by - 20, tension, { col: FORCE, weight: 'bold', size: 13 });
+    if (reaction) body += force(bx, ty - 36, 90, 30, reaction, FORCE);
+    body += force(bx, ty, 270, 34, block.weight, WEIGHT);
+    if (friction) body += force(bx - 30, by + 6, 180, 36, friction, FORCE);
+    if (extraLeft) body += force(bx - 30, by - 8, 180, 46, extraLeft, FORCE);
+    // forces on the hanging particle
+    body += arrow(hx, hy - 15, hx, hy - 46, FORCE, 2) + text(hx + 18, hy - 38, tension, { col: FORCE, weight: 'bold', size: 13 });
+    body += force(hx, hy + 15, 270, 30, hang.weight, WEIGHT);
+    return wrap(w, h, body, label);
+  }
+
+  return { particle, hanging, slope, ground, geo, graph, boxplot, histogram, tree, venn, train, pulleyHang, tablePulley };
 })();
