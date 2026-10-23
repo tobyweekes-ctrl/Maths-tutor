@@ -26,7 +26,7 @@ head = '''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="AI maths tutor for Pearson Edexcel A level: all of Year 1 Pure and Year 1 Statistics &amp; Mechanics, plus Year 2 Pure Chapter 7 and Applied Chapter 5.">
+<meta name="description" content="AI maths tutor for Pearson Edexcel A level: all of Year 1 Pure and Year 1 Statistics &amp; Mechanics, plus Year 2 Pure Chapters 1, 2, 3, 6 and 7 and Applied Chapters 4 and 5.">
 <meta name="theme-color" content="#2a45c4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Maths Tutor">

@@ -393,5 +393,33 @@ const Fig = (() => {
     return wrap(w, h, body, label);
   }
 
-  return { particle, hanging, slope, ground, geo, graph, boxplot, histogram, tree, venn, train, pulleyHang, tablePulley };
+  /* A horizontal rod of length L (m). supports: [{ x, label }] (pivots under the rod); strings: [{ x, label }] (vertical strings to a ceiling);
+     forces: [{ x, dir: 'up' | 'down' | deg, label, len, weight }]; dims: positions to mark on a distance line under the rod;
+     names: [{ x, label }] letters written above the rod. */
+  function beam({ L, forces = [], supports = [], strings = [], dims = [], names = [], label = 'Rod with forces', w = 400, hinge = null } = {}){
+    const x0 = 52, x1 = w - 56, X = v => x0 + v / L * (x1 - x0);
+    const top = strings.length ? 40 : 20, ry = top + 74, h = ry + (dims.length ? 124 : 84);
+    let body = '';
+    if (strings.length){ body += line(x0 - 10, top, x1 + 10, top, { col: INK, w: 2 }); for (let x = x0 - 4; x < x1 + 10; x += 12) body += line(x, top, x - 8, top - 8, { col: MUTE, w: 1 }); }
+    strings.forEach(st => { body += line(X(st.x), top, X(st.x), ry - 5, { col: INK, w: 1.3 }); if (st.label) body += arrow(X(st.x) + 9, ry - 6, X(st.x) + 9, ry - 40, FORCE, 2) + text(X(st.x) + 22, ry - 34, st.label, { col: FORCE, weight: 'bold', size: 13, anchor: 'start' }); });
+    body += `<rect x="${x0}" y="${ry - 5}" width="${x1 - x0}" height="10" rx="2" fill="${SOFT}" stroke="${INK}" stroke-width="1.6"/>`;
+    if (hinge != null){ const hx = X(hinge); body += `<rect x="${n2(hx - 14)}" y="${ry - 22}" width="8" height="44" fill="${INK}" opacity="0.25"/>` + `<circle cx="${n2(hx)}" cy="${ry}" r="4" fill="${INK}"/>`; }
+    supports.forEach(sp => { const sx = X(sp.x); body += `<polygon points="${n2(sx)},${ry + 5} ${n2(sx - 10)},${ry + 24} ${n2(sx + 10)},${ry + 24}" fill="var(--paper)" stroke="${INK}" stroke-width="1.6"/>`; if (sp.label) body += text(sx, ry + 36, sp.label, { size: 13, weight: 'bold' }); });
+    names.forEach(nm => { body += text(X(nm.x) + (nm.x < L / 2 ? -13 : 13), ry - 14, nm.label, { size: 13, weight: 'bold' }); });   // offset so labels clear any arrow at the same point
+    forces.forEach(f => {
+      const fx = X(f.x), len = f.len || 44, col = f.weight ? WEIGHT : FORCE;
+      if (f.dir === 'up') body += force(fx, ry - 5, 90, len, f.label, col);
+      else if (f.dir === 'down') body += force(fx, ry + 5, 270, len, f.label, col);
+      else body += force(fx, ry, Number(f.dir), len, f.label, col) + (f.angle ? arc(fx, ry, 22, Number(f.dir) > 270 ? 360 : Number(f.dir) > 90 ? 180 : 0, Number(f.dir), f.angle, { lr: 36 }) : '');
+    });
+    if (dims.length){
+      const dy = h - 14, ps = [...new Set(dims)].sort((a, b) => a - b);
+      body += line(X(ps[0]), dy, X(ps[ps.length - 1]), dy, { col: MUTE, w: 1 });
+      ps.forEach(v => { body += line(X(v), dy - 5, X(v), dy + 5, { col: MUTE, w: 1 }); });
+      for (let i = 0; i + 1 < ps.length; i++){ const d = +(ps[i + 1] - ps[i]).toFixed(2); body += text((X(ps[i]) + X(ps[i + 1])) / 2, dy - 11, d + ' m', { col: MUTE, size: 11 }); }
+    }
+    return wrap(w, h, body, label);
+  }
+
+  return { particle, hanging, slope, ground, geo, graph, boxplot, histogram, tree, venn, train, pulleyHang, tablePulley, beam };
 })();

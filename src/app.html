@@ -371,7 +371,7 @@ function cleanFigArgs(v, key = '', depth = 0){
   if (typeof v === 'string') return v.replace(/[<>"'&`\\]/g, '').slice(0, 80);
   return undefined;
 }
-const AI_FIG_TYPES = ['graph', 'particle', 'ground', 'slope', 'hanging', 'pulleyHang', 'tablePulley', 'train', 'boxplot', 'histogram', 'tree', 'venn', 'geo'];
+const AI_FIG_TYPES = ['graph', 'particle', 'ground', 'slope', 'hanging', 'pulleyHang', 'tablePulley', 'train', 'beam', 'boxplot', 'histogram', 'tree', 'venn', 'geo'];
 function aiFigure(json){
   let spec;
   try { spec = JSON.parse(json); } catch(e){ return '<p class="muted small">(The tutor tried to draw a diagram but it could not be read.)</p>'; }
@@ -579,6 +579,7 @@ const DIAGRAMS = R`DIAGRAMS. When a diagram would genuinely help (a curve sketch
 - {"type":"pulleyHang","left":{"name":"5 kg","weight":"5g","drop":140},"right":{"name":"3 kg","weight":"3g","drop":90},"tension":"T"}: two particles over a fixed pulley.
 - {"type":"tablePulley","block":{"name":"P 4 kg","weight":"4g"},"hang":{"name":"Q","weight":"g"},"tension":"T","reaction":"R","friction":"F"}: a block on a table joined over a pulley to a hanging particle.
 - {"type":"train","blocks":[{"name":"trailer 500 kg","w":96},{"name":"car 1000 kg","w":96}],"forces":[{"on":1,"dir":"R","label":"3000 N"},{"on":1,"dir":"TL","label":"T"},{"on":0,"dir":"TR","label":"T"},{"on":0,"dir":"L","label":"200 N"}],"link":"rope","motion":"a"}: bodies in a line on level ground (dir R, L, U, D; TL/TR are tensions in the link, add "push":true for a thrust).
+- {"type":"beam","L":6,"names":[{"x":0,"label":"A"},{"x":6,"label":"B"}],"supports":[{"x":1,"label":"C"},{"x":4,"label":"D"}],"strings":[],"forces":[{"x":1,"dir":"up","label":"R"},{"x":3,"dir":"down","label":"20g","weight":true},{"x":6,"dir":60,"label":"T","angle":"60°"}],"dims":[0,1,3,4,6]}: a horizontal rod (moments). "strings":[{"x":0,"label":"T"}] hangs it from a ceiling; "hinge":0 adds a hinge at a wall; dims marks distances under the rod.
 - {"type":"boxplot","boxes":[{"label":"A","min":2,"q1":5,"med":7,"q3":9,"max":12,"outliers":[20]}],"x0":0,"x1":22,"ticks":[[0,"0"],[10,"10"],[20,"20"]],"xlab":"marks"}.
 - {"type":"histogram","bars":[{"lo":0,"hi":10,"fd":1.2}],"x0":0,"x1":50,"y1":6,"xticks":[[0,"0"],[10,"10"]],"yticks":[[2,"2"]],"xlab":"length (cm)"}.
 - {"type":"tree","first":[{"label":"R","p":"0.4"},{"label":"B","p":"0.6"}],"second":[[{"label":"R","p":"3/9"},{"label":"B","p":"6/9"}],[{"label":"R","p":"4/9"},{"label":"B","p":"5/9"}]],"outcomes":[["12/90","24/90"],["24/90","30/90"]]}.
