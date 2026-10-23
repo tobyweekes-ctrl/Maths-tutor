@@ -7697,7 +7697,7 @@ Q('P11.2-11', 3, R`Find the vector in the same direction as $3\mathbf{i} + 4\mat
 Q('P11.2-12', 4, R`Find $\lambda$ and $\mu$ such that $\lambda\begin{pmatrix} 2 \\ -1 \end{pmatrix} + \mu\begin{pmatrix} -3 \\ 2 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$. [[3]]`,
   [R`$2\lambda - 3\mu = 1$ and $-\lambda + 2\mu = 0$.`, R`$\lambda = 2\mu$.`],
   [R`|M1|Two equations`, R`|M1|Substitutes $\lambda = 2\mu$`, R`|A1|$\lambda = 2$, $\mu = 1$`], R`$\lambda = 2$, $\mu = 1$`,
-  R`$\lambda = 2\mu$. $4\mu - 3\mu = 1$.`),
+  R`Components: $2\lambda - 3\mu = 1$ and $-\lambda + 2\mu = 0$. The second gives $\lambda = 2\mu$, so $4\mu - 3\mu = 1$: $\mu = 1$, $\lambda = 2$.`),
 Q('P11.2-13', 4, R`$ABCD$ is a parallelogram with $A(1, 1)$, $B(5, 2)$ and $D(2, 4)$. Find the coordinates of $C$. [[3]]`,
   [R`$\overrightarrow{BC} = \overrightarrow{AD}$.`, R`$\overrightarrow{AD} = \mathbf{i} + 3\mathbf{j}$.`],
   [R`|B1|$\overrightarrow{AD} = \mathbf{i} + 3\mathbf{j}$`, R`|M1|$C = B + \overrightarrow{AD}$`, R`|A1|$(6, 5)$`], R`$(6, 5)$`,
@@ -7791,7 +7791,7 @@ Q('P11.3-8', 3, R`Find the angle between $-2\mathbf{i} + 5\mathbf{j}$ and the po
 Q('P11.3-9', 3, R`Find a vector of magnitude $26$ in the direction of $5\mathbf{i} - 12\mathbf{j}$. [[2]]`,
   [R`$|5\mathbf{i} - 12\mathbf{j}| = 13$.`, R`Double it.`],
   [R`|M1|Magnitude $13$`, R`|A1|$10\mathbf{i} - 24\mathbf{j}$`], R`$10\mathbf{i} - 24\mathbf{j}$`,
-  R`Double it. $26 = 2 \times 13$.`),
+  R`$|5\mathbf{i} - 12\mathbf{j}| = 13$, and $26 = 2 \times 13$, so double the vector: $10\mathbf{i} - 24\mathbf{j}$.`),
 Q('P11.3-10', 3, R`$|k\mathbf{i} + 2k\mathbf{j}| = 10$. Find the exact possible values of $k$. [[3]]`,
   [R`$k^2 + 4k^2 = 100$.`, R`$5k^2 = 100$.`],
   [R`|M1|$k^2 + (2k)^2 = 100$`, R`|M1|$k^2 = 20$`, R`|A1|$k = \pm2\sqrt5$`], R`$k = \pm2\sqrt5$`,
@@ -7892,7 +7892,7 @@ Q('P11.4-8', 3, R`$OABC$ is a parallelogram with $A(4, 1)$ and $C(1, 3)$. Find t
 Q('P11.4-9', 3, R`$P(2, k)$ and $Q(5, 1)$ with $|\overrightarrow{PQ}| = 5$. Find the possible values of $k$. [[3]]`,
   [R`$\overrightarrow{PQ} = 3\mathbf{i} + (1 - k)\mathbf{j}$.`, R`$9 + (1 - k)^2 = 25$.`],
   [R`|M1|$9 + (1 - k)^2 = 25$`, R`|M1|$1 - k = \pm4$`, R`|A1|$k = -3$ or $5$`], R`$k = -3$ or $k = 5$`,
-  R`$9 + (1 - k)^2 = 25$. $(1 - k)^2 = 16$.`),
+  R`$\overrightarrow{PQ} = 3\mathbf{i} + (1 - k)\mathbf{j}$, so $9 + (1 - k)^2 = 25$, $(1 - k)^2 = 16$, $1 - k = \pm4$: $k = -3$ or $5$.`),
 Q('P11.4-10', 3, R`$A(1, 3)$ and $B(7, 11)$. $C$ lies on $AB$ with $AC : CB = 3 : 1$. Find the coordinates of $C$. [[2]]`,
   [R`$\overrightarrow{AC} = \frac34\overrightarrow{AB}$.`, R`$\overrightarrow{AB} = 6\mathbf{i} + 8\mathbf{j}$.`],
   [R`|M1|$\mathbf{a} + \frac34(\mathbf{b} - \mathbf{a})$`, R`|A1|$(5.5, 9)$`], R`$(5.5, 9)$`,
@@ -8064,7 +8064,7 @@ questions: [
 Q('P11.6-1', 1, R`A particle moves with velocity $(5\mathbf{i} - 12\mathbf{j})$ m s⁻¹. Find its speed. [[1]]`,
   [R`Speed $= |\mathbf{v}|$.`, R`$\sqrt{25 + 144}$.`],
   [R`|B1|$13$ m s⁻¹`], R`$13$ m s⁻¹`,
-  R`$\sqrt{25 + 144}$. $\sqrt{169} = 13$.`),
+  R`Speed $= |\mathbf{v}| = \sqrt{5^2 + 12^2} = \sqrt{169} = 13$ m s⁻¹.`),
 Q('P11.6-2', 1, R`Find the resultant of the forces $(2\mathbf{i} + 3\mathbf{j})$ N and $(4\mathbf{i} - \mathbf{j})$ N. [[1]]`,
   [R`Add the forces.`, R`Collect $\mathbf{i}$ and $\mathbf{j}$.`],
   [R`|B1|$(6\mathbf{i} + 2\mathbf{j})$ N`], R`$(6\mathbf{i} + 2\mathbf{j})$ N`,
@@ -8136,6 +8136,1166 @@ Q('P11.6-15', 5, R`A particle $P$ moves with constant velocity. At $t = 0$ it is
 (d) $t = \frac43$: $x = -3 + \frac83 = -\frac13$.
 
 (e) At $t = 2$: $\mathbf{r} = \mathbf{i} - \mathbf{j}$, distance $\sqrt2$ m.`)
+]};
+
+/* Pure Mathematics Year 1 · Chapter 12 Differentiation (sections 12.1 to 12.6) */
+BOOK_CHAPTERS.push({ id:'P12', book:'Pure Mathematics Year 1', label:'Chapter 12', title:'Differentiation', sections:[
+  { id:'P12.1', num:'12.1', title:'Gradients of curves' },
+  { id:'P12.2', num:'12.2', title:'Finding the derivative' },
+  { id:'P12.3', num:'12.3', title:'Differentiating xⁿ' },
+  { id:'P12.4', num:'12.4', title:'Differentiating quadratics' },
+  { id:'P12.5', num:'12.5', title:'Differentiating functions with two or more terms' },
+  { id:'P12.6', num:'12.6', title:'Gradients, tangents and normals' },
+  { id:'P12.7', num:'12.7', title:'Increasing and decreasing functions' },
+  { id:'P12.8', num:'12.8', title:'Second order derivatives' },
+  { id:'P12.9', num:'12.9', title:'Stationary points' },
+  { id:'P12.10', num:'12.10', title:'Sketching gradient functions' },
+  { id:'P12.11', num:'12.11', title:'Modelling with differentiation' }
+]});
+{
+  const pt = (x, y, label, dx, dy) => ({ x, y, label, dx, dy });
+  FIGS['P12.1-chords'] = Fig.graph({ label: 'y = x² with the tangent at (2, 4), gradient 4, and the chord from (2, 4) to (3, 9), gradient 5: as the second point slides towards (2, 4) the chord approaches the tangent',
+    x0: -0.5, x1: 3.5, y0: -2, y1: 12, fns: [{ f: x => x * x, label: 'y = x²', lx: 3.5, ly: 11.5 }, { f: x => 4 * x - 4, col: 'var(--pen)', label: 'tangent', lx: 3.5, ly: 6.4 }, { f: x => 5 * x - 6, col: 'var(--muted)', dash: true, from: 1.2, to: 3.5 }],
+    points: [pt(2, 4, '(2, 4)', -28, -4), pt(3, 9, '(3, 9)', -28, -4)], texts: [{ x: 1.7, y: 1.2, label: 'chord gradient 5', col: 'var(--muted)', anchor: 'start' }] });
+  FIGS['P12.6-tn'] = Fig.graph({ label: 'y = x² − 4x + 5 with the tangent at (3, 2), gradient 2, and the normal there, gradient −1/2, drawn to equal scales',
+    x0: -0.5, x1: 7, y0: -0.5, y1: 5, equal: true, fns: [{ f: x => x * x - 4 * x + 5 }, { f: x => 2 * x - 4, col: 'var(--pen)', label: 'tangent', lx: 4.3, ly: 4.6 }, { f: x => 3.5 - x / 2, col: 'var(--pen)', dash: true, label: 'normal', lx: 7, ly: 0.4 }],
+    points: [pt(3, 2, '(3, 2)', 26, 6)] });
+}
+
+CONTENT['P12.1'] = {
+notes: R`
+### The gradient of a curve
+The gradient of a curve at a point is the gradient of the **tangent** there. It changes from point to point.
+
+### Chords close in on the tangent
+A **chord** joins two points on the curve. As the second point moves closer to the first, the chord's gradient gets closer and closer to the tangent's gradient.
+
+[[fig:P12.1-chords]]
+
+::: booklet
+**Not in the formula booklet:** this idea (the formal version appears in 12.2).
+:::
+
+### Worked example 1
+Find the gradient of the chord of $y = x^2$ from $(2, 4)$ to $(2.1, 4.41)$, and estimate the gradient at $(2, 4)$.
+- $\frac{4.41 - 4}{0.1} = 4.1$. With $x = 2.01$ the chord gradient is $4.01$; it's closing in on $4$.
+
+### Worked example 2: a general chord
+Find the gradient of the chord from $x = 2$ to $x = 2 + h$ on $y = x^2$.
+$$\frac{(2 + h)^2 - 4}{h} = \frac{4h + h^2}{h} = 4 + h$$
+As $h \to 0$ this tends to $4$: the gradient at $(2, 4)$ is exactly $4$.
+
+**The trap:** using a chord to a far-away point, like $(3, 9)$, and calling its gradient ($5$) the gradient at $(2, 4)$. A chord only approximates the tangent when the points are very close.
+
+### Watch out
+- Cancel $h$ **before** letting $h \to 0$; you can't divide by zero.
+`,
+questions: [
+Q('P12.1-1', 1, R`Find the gradient of the chord of $y = x^2$ from $x = 1$ to $x = 3$. [[1]]`,
+  [R`The points are $(1, 1)$ and $(3, 9)$.`, R`$\frac{9 - 1}{3 - 1}$.`],
+  [R`|B1|$4$`], R`$4$`,
+  R`The chord joins $(1, 1)$ and $(3, 9)$: gradient $\frac{9 - 1}{3 - 1} = 4$.`),
+Q('P12.1-2', 1, R`Find the gradient of the chord of $y = x^2$ from $x = 3$ to $x = 3.1$. [[1]]`,
+  [R`$3.1^2 = 9.61$.`, R`$\frac{9.61 - 9}{0.1}$.`],
+  [R`|B1|$6.1$`], R`$6.1$`,
+  R`$\frac{0.61}{0.1} = 6.1$.`),
+Q('P12.1-3', 1, R`Chords of $y = x^2$ from $x = 3$ to $x = 3.1$, $3.01$ and $3.001$ have gradients $6.1$, $6.01$ and $6.001$. Estimate the gradient of the curve at $x = 3$. [[1]]`,
+  [R`What value are they approaching?`, R`The extra bit shrinks with $h$.`],
+  [R`|B1|$6$`], R`$6$`,
+  R`The chord gradients approach $6$ as the points get closer.`),
+Q('P12.1-4', 2, R`Show that the chord of $y = x^2$ from $x = 2$ to $x = 2 + h$ has gradient $4 + h$, and hence find the gradient of the curve at $(2, 4)$. [[3]]`,
+  [R`$(2 + h)^2 = 4 + 4h + h^2$.`, R`Let $h \to 0$.`],
+  [R`|M1|$\frac{(2 + h)^2 - 4}{h}$`, R`|A1|$= 4 + h$`, R`|A1|Gradient $4$`], R`$4$`,
+  R`$\frac{4h + h^2}{h} = 4 + h \to 4$.`),
+Q('P12.1-5', 2, R`Find the gradient of the chord of $y = x^3$ from $x = 1$ to $x = 1.1$. [[2]]`,
+  [R`$1.1^3 = 1.331$.`, R`$\frac{1.331 - 1}{0.1}$.`],
+  [R`|M1|$\frac{1.1^3 - 1}{0.1}$`, R`|A1|$3.31$`], R`$3.31$`,
+  R`$\frac{0.331}{0.1} = 3.31$ (the gradient at $x = 1$ is $3$).`),
+Q('P12.1-6', 2, R`For $y = 2x^2$, show that the chord from $x = 1$ to $x = 1 + h$ has gradient $4 + 2h$. Hence find the gradient at $x = 1$. [[3]]`,
+  [R`$2(1 + h)^2 = 2 + 4h + 2h^2$.`, R`Subtract $2$ and divide by $h$.`],
+  [R`|M1|$\frac{2(1 + h)^2 - 2}{h}$`, R`|A1|$4 + 2h$`, R`|A1|$4$`], R`$4$`,
+  R`$\frac{4h + 2h^2}{h} = 4 + 2h \to 4$.`),
+Q('P12.1-7', 2, R`The gradient of $y = x^2$ at $(1, 1)$ is $2$. Find the equation of the tangent there. [[2]]`,
+  [R`$y - 1 = 2(x - 1)$.`, R`Simplify.`],
+  [R`|M1|$y - 1 = 2(x - 1)$`, R`|A1|$y = 2x - 1$`], R`$y = 2x - 1$`,
+  R`Tangent through $(1, 1)$ with gradient $2$: $y - 1 = 2(x - 1)$, so $y = 2x - 1$.`),
+Q('P12.1-8', 3, R`For $y = x^2 - 3x$, show that the chord from $x = 2$ to $x = 2 + h$ has gradient $1 + h$, and state the gradient at $x = 2$. [[3]]`,
+  [R`At $x = 2$, $y = -2$.`, R`$(2 + h)^2 - 3(2 + h) = -2 + h + h^2$.`],
+  [R`|M1|$\frac{(2 + h)^2 - 3(2 + h) + 2}{h}$`, R`|A1|$1 + h$`, R`|A1|$1$`], R`$1$`,
+  R`$4 + 4h + h^2 - 6 - 3h + 2 = h + h^2$, divided by $h$ gives $1 + h$.`),
+Q('P12.1-9', 3, R`For $y = \dfrac1x$, find the gradient of the chord from $x = 1$ to $x = 1 + h$, and hence the gradient of the curve at $(1, 1)$. [[3]]`,
+  [R`$\frac{1}{1 + h} - 1 = \frac{-h}{1 + h}$.`, R`Divide by $h$.`],
+  [R`|M1|$\frac{\frac{1}{1 + h} - 1}{h}$`, R`|A1|$-\frac{1}{1 + h}$`, R`|A1|$-1$`], R`$-1$`,
+  R`$\frac{-h/(1 + h)}{h} = -\frac{1}{1 + h} \to -1$.`),
+Q('P12.1-10', 3, R`Show that the chord of $y = x^3$ from $x$ to $x + h$ has gradient $3x^2 + 3xh + h^2$. What is the gradient of the curve at $x$? [[3]]`,
+  [R`$(x + h)^3 = x^3 + 3x^2h + 3xh^2 + h^3$.`, R`Subtract $x^3$, divide by $h$.`],
+  [R`|M1|Expands $(x + h)^3$`, R`|A1|$3x^2 + 3xh + h^2$`, R`|A1|$3x^2$`], R`$3x^2$`,
+  R`As $h \to 0$ the $3xh$ and $h^2$ terms vanish.`),
+Q('P12.1-11', 3, R`Chords of $y = x^2$ start at $x = 5$. Find their gradients when the other end is at $x = 5.1$, $5.01$ and $5.001$, and estimate the gradient at $x = 5$. [[2]]`,
+  [R`The chord gradient is $10 + h$.`, R`$h = 0.1, 0.01, 0.001$.`],
+  [R`|B1|$10.1$, $10.01$, $10.001$`, R`|B1|$10$`], R`$10.1$, $10.01$, $10.001$; $10$`,
+  R`$\frac{(5 + h)^2 - 25}{h} = 10 + h$.`),
+Q('P12.1-12', 4, R`Show that the chord of $y = x^2$ joining $x = a$ and $x = b$ has gradient $a + b$. Hence find the gradient of the curve at $x = a$. [[3]]`,
+  [R`$\frac{b^2 - a^2}{b - a}$.`, R`Difference of two squares; then let $b \to a$.`],
+  [R`|M1|$\frac{b^2 - a^2}{b - a}$`, R`|A1|$= \frac{(b - a)(b + a)}{b - a} = a + b$`, R`|A1|$2a$`], R`$a + b$; $2a$`,
+  R`As $b$ approaches $a$, $a + b$ approaches $2a$.`),
+Q('P12.1-13', 4, R`For $y = 4 - x^2$, find the gradient of the chord from $x = 1$ to $x = 1 + h$, and hence the gradient at $x = 1$. [[3]]`,
+  [R`At $x = 1$, $y = 3$.`, R`$4 - (1 + h)^2 - 3 = -2h - h^2$.`],
+  [R`|M1|$\frac{4 - (1 + h)^2 - 3}{h}$`, R`|A1|$-2 - h$`, R`|A1|$-2$`], R`$-2$`,
+  R`Divide $-2h - h^2$ by $h$ and let $h \to 0$.`),
+Q('P12.1-14', 4, R`Use a chord with $h = 0.001$ to estimate the gradient of $y = 2^x$ at $x = 0$, to $3$ decimal places. [[2]]`,
+  [R`$\frac{2^{0.001} - 2^0}{0.001}$.`, R`$2^{0.001} = 1.000693\ldots$`],
+  [R`|M1|$\frac{2^{0.001} - 1}{0.001}$`, R`|A1|$0.693$`], R`$0.693$`,
+  R`$\frac{0.000693}{0.001} = 0.693$. (The exact value is $\ln 2 = 0.6931\ldots$, which you'll meet in Chapter 14.)`),
+Q('P12.1-15', 5, R`The curve $C$ has equation $y = x^2 + 2x$.
+
+**(a)** Show that the gradient of the chord from $x = 3$ to $x = 3 + h$ is $8 + h$. [[3]]
+
+**(b)** Hence find the gradient of $C$ at $x = 3$. [[1]]
+
+**(c)** Find the equation of the tangent to $C$ at $x = 3$. [[2]]
+
+**(d)** Find where this tangent crosses the $x$-axis. [[1]]`,
+  [R`At $x = 3$, $y = 15$.`, R`$(3 + h)^2 + 2(3 + h) - 15 = 8h + h^2$.`],
+  [R`(a)|M1|$\frac{(3 + h)^2 + 2(3 + h) - 15}{h}$`, R`(a)|M1|Expands: $8h + h^2$`, R`(a)|A1|$8 + h$`, R`(b)|B1|$8$`, R`(c)|M1|$y - 15 = 8(x - 3)$`, R`(c)|A1|$y = 8x - 9$`, R`(d)|B1|$\left(\frac98, 0\right)$`],
+  R`(b) $8$ (c) $y = 8x - 9$ (d) $\left(\frac98, 0\right)$`,
+  R`(a) $9 + 6h + h^2 + 6 + 2h - 15 = 8h + h^2$.
+
+(c) $y = 8x - 24 + 15$.`)
+]};
+
+CONTENT['P12.2'] = {
+notes: R`
+### Differentiation from first principles
+The **derivative** (gradient function) of $f(x)$ is
+$$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$$
+It's the chord gradient from $x$ to $x + h$, with $h$ shrinking to zero. Also written $\dfrac{dy}{dx}$.
+
+::: booklet
+**In the formula booklet:** $f'(x) = \displaystyle\lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$.
+:::
+
+### Worked example 1
+Prove from first principles that the derivative of $x^2$ is $2x$.
+$$\frac{(x + h)^2 - x^2}{h} = \frac{2xh + h^2}{h} = 2x + h \to 2x \text{ as } h \to 0$$
+
+### Worked example 2: more than one term
+Find, from first principles, the derivative of $f(x) = 3x^2 - x$.
+1. $f(x + h) - f(x) = 3(x + h)^2 - (x + h) - 3x^2 + x = 6xh + 3h^2 - h$.
+2. Divide by $h$: $6x + 3h - 1$.
+3. As $h \to 0$: $f'(x) = 6x - 1$.
+
+**The trap:** dividing only some terms by $h$, or setting $h = 0$ before cancelling (giving $\frac00$). Simplify fully, **then** take the limit.
+
+### Watch out
+- Write "as $h \to 0$" (or "$\lim$") in your answer: it's needed for full marks.
+`,
+questions: [
+Q('P12.2-1', 1, R`Write down the definition of $f'(x)$ from first principles. [[1]]`,
+  [R`It's a limit of chord gradients.`, R`From $x$ to $x + h$.`],
+  [R`|B1|$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$`], R`$\lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$`,
+  R`The gradient of the chord from $x$ to $x + h$, as $h \to 0$.`),
+Q('P12.2-2', 1, R`Expand and simplify $(x + h)^2 - x^2$. [[1]]`,
+  [R`$(x + h)^2 = x^2 + 2xh + h^2$.`, R`The $x^2$ terms cancel.`],
+  [R`|B1|$2xh + h^2$`], R`$2xh + h^2$`,
+  R`$x^2 + 2xh + h^2 - x^2 = 2xh + h^2$.`),
+Q('P12.2-3', 1, R`Simplify $\dfrac{(x + h)^2 - x^2}{h}$ and find its limit as $h \to 0$. [[2]]`,
+  [R`Top: $2xh + h^2$.`, R`Divide by $h$.`],
+  [R`|M1|$2x + h$`, R`|A1|Limit $2x$`], R`$2x + h$; limit $2x$`,
+  R`$\frac{2xh + h^2}{h} = 2x + h \to 2x$.`),
+Q('P12.2-4', 2, R`Prove from first principles that the derivative of $5x$ is $5$. [[2]]`,
+  [R`$\frac{5(x + h) - 5x}{h}$.`, R`$= \frac{5h}{h}$.`],
+  [R`|M1|$\frac{5(x + h) - 5x}{h} = 5$`, R`|A1|Limit $5$`], R`$5$`,
+  R`The chord gradient is $5$ for every $h$, so the limit is $5$. (A straight line has the same gradient everywhere.)`),
+Q('P12.2-5', 2, R`Find, from first principles, the derivative of $f(x) = x^2 + 3$. [[3]]`,
+  [R`$f(x + h) - f(x) = 2xh + h^2$.`, R`The $3$s cancel.`],
+  [R`|M1|$\frac{(x + h)^2 + 3 - x^2 - 3}{h}$`, R`|A1|$2x + h$`, R`|A1|$f'(x) = 2x$ as $h \to 0$`], R`$2x$`,
+  R`The constant disappears: adding $3$ just shifts the curve up.`),
+Q('P12.2-6', 2, R`Find, from first principles, the derivative of $f(x) = 4x^2$. [[3]]`,
+  [R`$4(x + h)^2 - 4x^2 = 8xh + 4h^2$.`, R`Divide by $h$.`],
+  [R`|M1|$\frac{4(x + h)^2 - 4x^2}{h}$`, R`|A1|$8x + 4h$`, R`|A1|$8x$`], R`$8x$`,
+  R`$8x + 4h \to 8x$ as $h \to 0$.`),
+Q('P12.2-7', 2, R`Find, from first principles, the derivative of $f(x) = x^2 - 6x$. [[3]]`,
+  [R`$f(x + h) - f(x) = 2xh + h^2 - 6h$.`, R`Divide by $h$.`],
+  [R`|M1|Sets up the limit`, R`|A1|$2x + h - 6$`, R`|A1|$2x - 6$`], R`$2x - 6$`,
+  R`$\frac{2xh + h^2 - 6h}{h} = 2x + h - 6 \to 2x - 6$.`),
+Q('P12.2-8', 3, R`Prove from first principles that the derivative of $x^3$ is $3x^2$. [[4]]`,
+  [R`$(x + h)^3 = x^3 + 3x^2h + 3xh^2 + h^3$.`, R`Divide by $h$, then $h \to 0$.`],
+  [R`|M1|Expands $(x + h)^3$`, R`|M1|$\frac{3x^2h + 3xh^2 + h^3}{h}$`, R`|A1|$3x^2 + 3xh + h^2$`, R`|A1|$\to 3x^2$`], R`$3x^2$`,
+  R`Every term except $3x^2$ contains $h$, so vanishes in the limit.`),
+Q('P12.2-9', 3, R`Find, from first principles, the derivative of $f(x) = 2x^2 + 5x$. [[4]]`,
+  [R`$f(x + h) - f(x) = 4xh + 2h^2 + 5h$.`, R`Divide by $h$.`],
+  [R`|M1|$f(x + h) = 2(x + h)^2 + 5(x + h)$`, R`|M1|$4xh + 2h^2 + 5h$`, R`|A1|$4x + 2h + 5$`, R`|A1|$4x + 5$`], R`$4x + 5$`,
+  R`$\lim_{h \to 0}(4x + 2h + 5) = 4x + 5$.`),
+Q('P12.2-10', 3, R`Find, from first principles, the derivative of $f(x) = 1 - x^2$. [[3]]`,
+  [R`$f(x + h) - f(x) = -2xh - h^2$.`, R`Divide by $h$.`],
+  [R`|M1|Sets up the limit`, R`|A1|$-2x - h$`, R`|A1|$-2x$`], R`$-2x$`,
+  R`$1 - (x + h)^2 - 1 + x^2 = -2xh - h^2$.`),
+Q('P12.2-11', 3, R`Find, from first principles, the derivative of $f(x) = ax^2 + bx + c$, where $a$, $b$ and $c$ are constants. [[4]]`,
+  [R`$f(x + h) - f(x) = 2axh + ah^2 + bh$.`, R`Divide by $h$.`],
+  [R`|M1|$a(x + h)^2 + b(x + h) + c$`, R`|M1|$2axh + ah^2 + bh$`, R`|A1|$2ax + ah + b$`, R`|A1|$2ax + b$`], R`$2ax + b$`,
+  R`This is the general rule for differentiating a quadratic.`),
+Q('P12.2-12', 4, R`Find, from first principles, the derivative of $f(x) = x^3 - 2x$. [[4]]`,
+  [R`$(x + h)^3 - 2(x + h) - x^3 + 2x$.`, R`$= 3x^2h + 3xh^2 + h^3 - 2h$.`],
+  [R`|M1|Sets up the limit`, R`|M1|Expands`, R`|A1|$3x^2 + 3xh + h^2 - 2$`, R`|A1|$3x^2 - 2$`], R`$3x^2 - 2$`,
+  R`Divide by $h$, then let $h \to 0$.`),
+Q('P12.2-13', 4, R`Find, from first principles, the derivative of $f(x) = \dfrac1x$. [[4]]`,
+  [R`$\frac{1}{x + h} - \frac1x = \frac{x - (x + h)}{x(x + h)}$.`, R`$= \frac{-h}{x(x + h)}$.`],
+  [R`|M1|Common denominator`, R`|A1|$\frac{-h}{x(x + h)}$`, R`|M1|Divides by $h$: $\frac{-1}{x(x + h)}$`, R`|A1|$-\frac{1}{x^2}$`], R`$-\frac{1}{x^2}$`,
+  R`As $h \to 0$, $x(x + h) \to x^2$.`),
+Q('P12.2-14', 4, R`Prove from first principles that the derivative of $x^4$ is $4x^3$. [[4]]`,
+  [R`$(x + h)^4 = x^4 + 4x^3h + 6x^2h^2 + 4xh^3 + h^4$.`, R`Use the binomial expansion.`],
+  [R`|M1|Binomial expansion`, R`|M1|Subtracts $x^4$ and divides by $h$`, R`|A1|$4x^3 + 6x^2h + 4xh^2 + h^3$`, R`|A1|$\to 4x^3$`], R`$4x^3$`,
+  R`Every term but $4x^3$ has a factor of $h$.`),
+Q('P12.2-15', 5, R`$f(x) = 2x^3 + x^2$.
+
+**(a)** Show that $f(x + h) - f(x) = 6x^2h + 6xh^2 + 2h^3 + 2xh + h^2$. [[3]]
+
+**(b)** Hence find $f'(x)$ from first principles. [[2]]
+
+**(c)** Find the gradient of $y = f(x)$ at $x = -1$. [[1]]
+
+**(d)** Find the values of $x$ where the gradient is $0$. [[2]]`,
+  [R`$2(x + h)^3 = 2x^3 + 6x^2h + 6xh^2 + 2h^3$.`, R`$(x + h)^2 = x^2 + 2xh + h^2$.`],
+  [R`(a)|M1|Expands $2(x + h)^3$`, R`(a)|M1|Expands $(x + h)^2$`, R`(a)|A1|Subtracts to the given form`, R`(b)|M1|Divides by $h$`, R`(b)|A1|$6x^2 + 2x$ as $h \to 0$`, R`(c)|B1|$4$`, R`(d)|M1|$2x(3x + 1) = 0$`, R`(d)|A1|$x = 0$ or $-\frac13$`],
+  R`(b) $6x^2 + 2x$ (c) $4$ (d) $0$, $-\frac13$`,
+  R`(b) $\frac{f(x + h) - f(x)}{h} = 6x^2 + 6xh + 2h^2 + 2x + h \to 6x^2 + 2x$.
+
+(c) $6 - 2 = 4$.`)
+]};
+
+CONTENT['P12.3'] = {
+notes: R`
+### The power rule
+$$y = x^n \implies \frac{dy}{dx} = nx^{n - 1}$$
+It works for **any** real power $n$: positive, negative or fractional. Multiply by the power, then reduce the power by $1$.
+
+### Rewrite first
+- $\sqrt{x} = x^{\frac12}$, $\sqrt[3]{x} = x^{\frac13}$
+- $\dfrac{1}{x^3} = x^{-3}$, $\dfrac{1}{\sqrt{x}} = x^{-\frac12}$
+- $x\sqrt{x} = x^{\frac32}$
+
+::: booklet
+**Not in the formula booklet:** the power rule.
+:::
+
+### Worked example 1
+Differentiate **(a)** $x^5$ **(b)** $\sqrt{x}$.
+- (a) $5x^4$. (b) $x^{\frac12} \to \frac12 x^{-\frac12} = \frac{1}{2\sqrt{x}}$.
+
+### Worked example 2: negative powers
+Differentiate $\dfrac{1}{x^3}$.
+- $x^{-3} \to -3x^{-4} = -\dfrac{3}{x^4}$.
+
+**The trap:** reducing $-3$ by $1$ and getting $-2$. One less than $-3$ is $-4$.
+
+### Watch out
+- Write roots and fractions as powers of $x$ **before** differentiating.
+`,
+questions: [
+Q('P12.3-1', 1, R`Differentiate $y = x^6$. [[1]]`,
+  [R`Bring the power down.`, R`Reduce the power by $1$.`],
+  [R`|B1|$6x^5$`], R`$6x^5$`,
+  R`$\frac{dy}{dx} = 6x^{6 - 1} = 6x^5$.`),
+Q('P12.3-2', 1, R`Differentiate $y = x^{-2}$. [[1]]`,
+  [R`$n = -2$.`, R`$-2 - 1 = -3$.`],
+  [R`|B1|$-2x^{-3}$`], R`$-2x^{-3}$`,
+  R`$\frac{dy}{dx} = -2x^{-3} = -\frac{2}{x^3}$.`),
+Q('P12.3-3', 1, R`Differentiate $y = x^{\frac12}$. [[1]]`,
+  [R`$n = \frac12$.`, R`$\frac12 - 1 = -\frac12$.`],
+  [R`|B1|$\frac12 x^{-\frac12}$`], R`$\frac12 x^{-\frac12}$`,
+  R`$\frac{dy}{dx} = \frac12 x^{-\frac12} = \frac{1}{2\sqrt x}$.`),
+Q('P12.3-4', 2, R`Differentiate $y = \dfrac{1}{x^4}$. [[2]]`,
+  [R`Rewrite as $x^{-4}$.`, R`$-4 - 1 = -5$.`],
+  [R`|M1|$x^{-4}$`, R`|A1|$-4x^{-5}$`], R`$-4x^{-5}$`,
+  R`$\frac{dy}{dx} = -4x^{-5} = -\frac{4}{x^5}$.`),
+Q('P12.3-5', 2, R`Differentiate $y = \sqrt[3]{x}$. [[2]]`,
+  [R`$x^{\frac13}$.`, R`$\frac13 - 1 = -\frac23$.`],
+  [R`|M1|$x^{\frac13}$`, R`|A1|$\frac13 x^{-\frac23}$`], R`$\frac13 x^{-\frac23}$`,
+  R`$\frac{dy}{dx} = \frac13 x^{-\frac23}$.`),
+Q('P12.3-6', 2, R`Differentiate $y = x\sqrt{x}$. [[2]]`,
+  [R`$x \times x^{\frac12} = x^{\frac32}$.`, R`$\frac32 - 1 = \frac12$.`],
+  [R`|M1|$x^{\frac32}$`, R`|A1|$\frac32 x^{\frac12}$`], R`$\frac32 x^{\frac12}$`,
+  R`$\frac{dy}{dx} = \frac32\sqrt{x}$.`),
+Q('P12.3-7', 2, R`Differentiate $y = \dfrac{1}{\sqrt x}$. [[2]]`,
+  [R`$x^{-\frac12}$.`, R`$-\frac12 - 1 = -\frac32$.`],
+  [R`|M1|$x^{-\frac12}$`, R`|A1|$-\frac12 x^{-\frac32}$`], R`$-\frac12 x^{-\frac32}$`,
+  R`$\frac{dy}{dx} = -\frac{1}{2x\sqrt x}$.`),
+Q('P12.3-8', 3, R`Differentiate $y = \dfrac{x^3}{\sqrt[3]{x}}$. [[2]]`,
+  [R`$x^3 \div x^{\frac13} = x^{\frac83}$.`, R`$\frac83 - 1 = \frac53$.`],
+  [R`|M1|$x^{\frac83}$`, R`|A1|$\frac83 x^{\frac53}$`], R`$\frac83 x^{\frac53}$`,
+  R`Subtract the powers to simplify, then differentiate.`),
+Q('P12.3-9', 3, R`Find the gradient of $y = \sqrt x$ at $x = 4$. [[2]]`,
+  [R`$\frac{dy}{dx} = \frac12 x^{-\frac12}$.`, R`$4^{-\frac12} = \frac12$.`],
+  [R`|M1|$\frac12 x^{-\frac12}$`, R`|A1|$\frac14$`], R`$\frac14$`,
+  R`$\frac12 \times \frac12 = \frac14$.`),
+Q('P12.3-10', 3, R`Find the gradient of $y = \dfrac{1}{x^2}$ at $x = 2$. [[2]]`,
+  [R`$\frac{dy}{dx} = -2x^{-3}$.`, R`$2^{-3} = \frac18$.`],
+  [R`|M1|$-2x^{-3}$`, R`|A1|$-\frac14$`], R`$-\frac14$`,
+  R`$-2 \times \frac18 = -\frac14$.`),
+Q('P12.3-11', 3, R`Find the point on $y = x^{\frac32}$ where the gradient is $6$. [[3]]`,
+  [R`$\frac32 x^{\frac12} = 6$.`, R`$\sqrt x = 4$.`],
+  [R`|M1|$\frac32 x^{\frac12} = 6$`, R`|A1|$x = 16$`, R`|A1|$(16, 64)$`], R`$(16, 64)$`,
+  R`$16^{\frac32} = 4^3 = 64$.`),
+Q('P12.3-12', 4, R`Find the points on $y = \dfrac1x$ where the gradient is $-4$. [[3]]`,
+  [R`$-x^{-2} = -4$.`, R`$x^2 = \frac14$.`],
+  [R`|M1|$-\frac{1}{x^2} = -4$`, R`|A1|$x = \pm\frac12$`, R`|A1|$\left(\frac12, 2\right)$ and $\left(-\frac12, -2\right)$`], R`$\left(\frac12, 2\right)$, $\left(-\frac12, -2\right)$`,
+  R`Two points, one on each branch.`),
+Q('P12.3-13', 4, R`Find the gradient of $y = x^{-\frac12}$ at $x = \frac14$. [[3]]`,
+  [R`$\frac{dy}{dx} = -\frac12 x^{-\frac32}$.`, R`$\left(\frac14\right)^{-\frac32} = 4^{\frac32} = 8$.`],
+  [R`|M1|$-\frac12 x^{-\frac32}$`, R`|M1|$\left(\frac14\right)^{-\frac32} = 8$`, R`|A1|$-4$`], R`$-4$`,
+  R`$-\frac12 \times 8 = -4$.`),
+Q('P12.3-14', 4, R`The curve $y = x^n$, where $n$ is a positive integer, has gradient $32$ at $x = 2$. Find $n$. [[3]]`,
+  [R`$n \times 2^{n - 1} = 32$.`, R`Try values of $n$.`],
+  [R`|M1|$n \cdot 2^{n - 1} = 32$`, R`|M1|Tests values`, R`|A1|$n = 4$`], R`$n = 4$`,
+  R`$n = 3$: $12$; $n = 4$: $4 \times 8 = 32$; $n = 5$: $80$. The left side increases with $n$, so $n = 4$ is the only answer.`),
+Q('P12.3-15', 5, R`The curve $C$ has equation $y = x^{\frac23}$.
+
+**(a)** Find $\dfrac{dy}{dx}$. [[1]]
+
+**(b)** Find the gradient of $C$ at $x = 8$. [[1]]
+
+**(c)** Find the equation of the tangent to $C$ at $(8, 4)$. [[3]]
+
+**(d)** Find the point on $C$ where the gradient is $\frac16$. [[3]]`,
+  [R`$\frac23 x^{-\frac13}$.`, R`$8^{-\frac13} = \frac12$.`],
+  [R`(a)|B1|$\frac23 x^{-\frac13}$`, R`(b)|B1|$\frac13$`, R`(c)|M1|$y - 4 = \frac13(x - 8)$`, R`(c)|M1|Expands`, R`(c)|A1|$y = \frac13 x + \frac43$`, R`(d)|M1|$\frac23 x^{-\frac13} = \frac16$`, R`(d)|M1|$x^{-\frac13} = \frac14$`, R`(d)|A1|$(64, 16)$`],
+  R`(a) $\frac23 x^{-\frac13}$ (b) $\frac13$ (c) $y = \frac13 x + \frac43$ (d) $(64, 16)$`,
+  R`(d) $x^{\frac13} = 4$, so $x = 64$ and $y = 64^{\frac23} = 16$.`)
+]};
+
+CONTENT['P12.4'] = {
+notes: R`
+### Differentiating a quadratic
+$$y = ax^2 + bx + c \implies \frac{dy}{dx} = 2ax + b$$
+- A constant differentiates to $0$.
+- $bx$ differentiates to $b$.
+- The vertex of a parabola is where $\frac{dy}{dx} = 0$.
+
+::: booklet
+**Not in the formula booklet:** this rule.
+:::
+
+### Worked example 1
+Find the gradient of $y = x^2 - 6x + 5$ at $x = 1$.
+- $\frac{dy}{dx} = 2x - 6$; at $x = 1$ it's $-4$.
+
+### Worked example 2: expand first
+Differentiate $y = (2x - 1)^2$.
+- $y = 4x^2 - 4x + 1$, so $\frac{dy}{dx} = 8x - 4$.
+
+**The trap:** writing $2(2x - 1)$ by treating the bracket like $x^2$. Expand first; the power rule only applies to a plain power of $x$.
+
+### Watch out
+- To find where the gradient has a given value, set $\frac{dy}{dx}$ equal to it and solve, then find $y$ from the **curve**.
+`,
+questions: [
+Q('P12.4-1', 1, R`Differentiate $y = x^2 + 4x$. [[1]]`,
+  [R`Each term separately.`, R`$x^2 \to 2x$, $4x \to 4$.`],
+  [R`|B1|$2x + 4$`], R`$2x + 4$`,
+  R`$\frac{dy}{dx} = 2x + 4$.`),
+Q('P12.4-2', 1, R`Differentiate $y = 3x^2 - 5x + 2$. [[1]]`,
+  [R`$2ax + b$.`, R`The constant goes.`],
+  [R`|B1|$6x - 5$`], R`$6x - 5$`,
+  R`$\frac{dy}{dx} = 6x - 5$; the $+2$ becomes $0$.`),
+Q('P12.4-3', 1, R`Differentiate $y = 7 - 2x^2$. [[1]]`,
+  [R`$7 \to 0$.`, R`$-2x^2 \to -4x$.`],
+  [R`|B1|$-4x$`], R`$-4x$`,
+  R`$\frac{dy}{dx} = -4x$.`),
+Q('P12.4-4', 2, R`Find the gradient of $y = x^2 - 6x + 5$ at $x = 1$. [[2]]`,
+  [R`$\frac{dy}{dx} = 2x - 6$.`, R`Substitute $x = 1$.`],
+  [R`|M1|$2x - 6$`, R`|A1|$-4$`], R`$-4$`,
+  R`$\frac{dy}{dx} = 2x - 6$, so at $x = 1$ the gradient is $2 - 6 = -4$.`),
+Q('P12.4-5', 2, R`Find the point on $y = x^2 - 4x + 1$ where the gradient is zero. [[2]]`,
+  [R`$2x - 4 = 0$.`, R`Then find $y$.`],
+  [R`|M1|$2x - 4 = 0$`, R`|A1|$(2, -3)$`], R`$(2, -3)$`,
+  R`$x = 2$, $y = 4 - 8 + 1 = -3$: the vertex.`),
+Q('P12.4-6', 2, R`Differentiate $y = (x + 3)(x - 1)$. [[2]]`,
+  [R`Expand first.`, R`$x^2 + 2x - 3$.`],
+  [R`|M1|$x^2 + 2x - 3$`, R`|A1|$2x + 2$`], R`$2x + 2$`,
+  R`$\frac{dy}{dx} = 2x + 2$.`),
+Q('P12.4-7', 2, R`Differentiate $y = (2x - 1)^2$. [[2]]`,
+  [R`$(2x - 1)^2 = 4x^2 - 4x + 1$.`, R`Then differentiate.`],
+  [R`|M1|Expands`, R`|A1|$8x - 4$`], R`$8x - 4$`,
+  R`$\frac{dy}{dx} = 8x - 4$.`),
+Q('P12.4-8', 3, R`Find the coordinates of the point on $y = 2x^2 - 3x + 1$ where the gradient is $5$. [[3]]`,
+  [R`$4x - 3 = 5$.`, R`$x = 2$.`],
+  [R`|M1|$4x - 3 = 5$`, R`|A1|$x = 2$`, R`|A1|$(2, 3)$`], R`$(2, 3)$`,
+  R`$y = 8 - 6 + 1 = 3$.`),
+Q('P12.4-9', 3, R`The curve $y = ax^2 + 3x$ has gradient $11$ at $x = 2$. Find $a$. [[2]]`,
+  [R`$\frac{dy}{dx} = 2ax + 3$.`, R`$4a + 3 = 11$.`],
+  [R`|M1|$4a + 3 = 11$`, R`|A1|$a = 2$`], R`$a = 2$`,
+  R`$\frac{dy}{dx} = 2ax + 3$, so at $x = 2$: $4a + 3 = 11$.`),
+Q('P12.4-10', 3, R`The curve $y = x^2 + bx + c$ passes through $(1, 4)$, where its gradient is $6$. Find $b$ and $c$. [[3]]`,
+  [R`$2 + b = 6$.`, R`$1 + b + c = 4$.`],
+  [R`|M1|$2(1) + b = 6$`, R`|A1|$b = 4$`, R`|A1|$c = -1$`], R`$b = 4$, $c = -1$`,
+  R`$1 + 4 + c = 4$ gives $c = -1$.`),
+Q('P12.4-11', 3, R`Use differentiation to find the maximum point of $y = 5 + 4x - x^2$. [[3]]`,
+  [R`$4 - 2x = 0$.`, R`It's a $\cap$ shape, so this is a maximum.`],
+  [R`|M1|$4 - 2x = 0$`, R`|A1|$x = 2$`, R`|A1|$(2, 9)$`], R`$(2, 9)$`,
+  R`$y = 5 + 8 - 4 = 9$.`),
+Q('P12.4-12', 4, R`Find the value of $x$ at which $y = x^2$ and $y = 6x - x^2$ have the same gradient. [[3]]`,
+  [R`$2x = 6 - 2x$.`, R`Solve.`],
+  [R`|M1|Both derivatives`, R`|M1|$2x = 6 - 2x$`, R`|A1|$x = \frac32$`], R`$x = \frac32$`,
+  R`The gradients are $2x$ and $6 - 2x$. Setting them equal: $4x = 6$, so $x = \frac32$.`),
+Q('P12.4-13', 4, R`Find the point on $y = (3 - x)(x + 5)$ where the gradient is $-4$. [[3]]`,
+  [R`$y = -x^2 - 2x + 15$.`, R`$-2x - 2 = -4$.`],
+  [R`|M1|Expands`, R`|M1|$-2x - 2 = -4$`, R`|A1|$(1, 12)$`], R`$(1, 12)$`,
+  R`$x = 1$, $y = 2 \times 6 = 12$.`),
+Q('P12.4-14', 4, R`The curve $y = px^2 + qx$ has gradient $1$ at $x = 1$ and gradient $-7$ at $x = -1$. Find $p$ and $q$. [[3]]`,
+  [R`$\frac{dy}{dx} = 2px + q$.`, R`$2p + q = 1$ and $-2p + q = -7$.`],
+  [R`|M1|Two equations`, R`|A1|$q = -3$`, R`|A1|$p = 2$`], R`$p = 2$, $q = -3$`,
+  R`$\frac{dy}{dx} = 2px + q$, so $2p + q = 1$ and $-2p + q = -7$. Adding: $2q = -6$, $q = -3$, then $p = 2$.`),
+Q('P12.4-15', 5, R`The curve $C$ has equation $y = x^2 - 5x + 6$.
+
+**(a)** Find $\dfrac{dy}{dx}$. [[1]]
+
+**(b)** Find the gradient of $C$ at each point where it crosses the $x$-axis. [[3]]
+
+**(c)** Show that the tangents at these points are perpendicular. [[1]]
+
+**(d)** Find the point where these tangents meet. [[3]]`,
+  [R`$C$ crosses the axis at $x = 2$ and $x = 3$.`, R`Tangents: through $(2, 0)$ and $(3, 0)$.`],
+  [R`(a)|B1|$2x - 5$`, R`(b)|M1|$(x - 2)(x - 3) = 0$`, R`(b)|A1|$-1$ at $x = 2$`, R`(b)|A1|$1$ at $x = 3$`, R`(c)|B1|$(-1)(1) = -1$`, R`(d)|M1|$y = -(x - 2)$ and $y = x - 3$`, R`(d)|M1|Solves`, R`(d)|A1|$\left(\frac52, -\frac12\right)$`],
+  R`(a) $2x - 5$ (b) $-1$, $1$ (d) $\left(\frac52, -\frac12\right)$`,
+  R`(d) $-x + 2 = x - 3$ gives $x = \frac52$, $y = -\frac12$, directly below the vertex.`)
+]};
+
+CONTENT['P12.5'] = {
+notes: R`
+### Term by term
+Differentiate each term separately:
+$$\frac{d}{dx}\left(f(x) \pm g(x)\right) = f'(x) \pm g'(x), \qquad \frac{d}{dx}\left(kf(x)\right) = kf'(x)$$
+
+### Simplify first
+- Expand brackets.
+- Split fractions with a single-term denominator: $\frac{x^2 + 3}{x} = x + 3x^{-1}$.
+- Write roots as powers.
+
+::: booklet
+**Not in the formula booklet:** these rules.
+:::
+
+### Worked example 1
+Differentiate $y = 4x^3 - 3x + \dfrac2x$.
+$$\frac{dy}{dx} = 12x^2 - 3 - 2x^{-2}$$
+
+### Worked example 2: split the fraction
+Differentiate $y = \dfrac{x^2 + 3}{\sqrt x}$.
+1. $y = \frac{x^2}{x^{1/2}} + \frac{3}{x^{1/2}} = x^{\frac32} + 3x^{-\frac12}$.
+2. $\frac{dy}{dx} = \frac32 x^{\frac12} - \frac32 x^{-\frac32}$.
+
+**The trap:** differentiating the top and bottom separately: $\frac{2x}{\frac12 x^{-1/2}}$ is wrong. Rewrite as a sum of powers first.
+
+### Watch out
+- $\frac{a}{x^n} = ax^{-n}$: the constant stays on top.
+`,
+questions: [
+Q('P12.5-1', 1, R`Differentiate $y = x^3 + 2x^2 - 5$. [[1]]`,
+  [R`Each term separately.`, R`$-5 \to 0$.`],
+  [R`|B1|$3x^2 + 4x$`], R`$3x^2 + 4x$`,
+  R`$\frac{dy}{dx} = 3x^2 + 4x$.`),
+Q('P12.5-2', 1, R`Differentiate $y = 2x^4 - 3x + 7$. [[1]]`,
+  [R`$2x^4 \to 8x^3$.`, R`$-3x \to -3$.`],
+  [R`|B1|$8x^3 - 3$`], R`$8x^3 - 3$`,
+  R`$\frac{dy}{dx} = 8x^3 - 3$.`),
+Q('P12.5-3', 1, R`Differentiate $f(x) = x^2 + \dfrac1x$. [[2]]`,
+  [R`$\frac1x = x^{-1}$.`, R`$x^{-1} \to -x^{-2}$.`],
+  [R`|M1|$x^{-1}$`, R`|A1|$2x - x^{-2}$`], R`$2x - \frac{1}{x^2}$`,
+  R`$f'(x) = 2x - x^{-2}$.`),
+Q('P12.5-4', 2, R`Differentiate $y = 4x^3 - 3x + \dfrac{2}{x}$. [[2]]`,
+  [R`$\frac2x = 2x^{-1}$.`, R`$2x^{-1} \to -2x^{-2}$.`],
+  [R`|M1|Powers of $x$`, R`|A1|$12x^2 - 3 - 2x^{-2}$`], R`$12x^2 - 3 - \frac{2}{x^2}$`,
+  R`Write $\frac2x = 2x^{-1}$, then differentiate term by term: $\frac{dy}{dx} = 12x^2 - 3 - 2x^{-2}$.`),
+Q('P12.5-5', 2, R`Differentiate $y = 6\sqrt x + x$. [[2]]`,
+  [R`$6x^{\frac12}$.`, R`$6 \times \frac12 = 3$.`],
+  [R`|M1|$6x^{\frac12}$`, R`|A1|$3x^{-\frac12} + 1$`], R`$\frac{3}{\sqrt x} + 1$`,
+  R`$\frac{dy}{dx} = 3x^{-\frac12} + 1$.`),
+Q('P12.5-6', 2, R`Differentiate $y = x(x^2 - 4)$. [[2]]`,
+  [R`Expand: $x^3 - 4x$.`, R`Then differentiate.`],
+  [R`|M1|$x^3 - 4x$`, R`|A1|$3x^2 - 4$`], R`$3x^2 - 4$`,
+  R`$\frac{dy}{dx} = 3x^2 - 4$.`),
+Q('P12.5-7', 2, R`Differentiate $y = \dfrac{x^2 + 3}{x}$. [[2]]`,
+  [R`$x + 3x^{-1}$.`, R`$3x^{-1} \to -3x^{-2}$.`],
+  [R`|M1|$x + 3x^{-1}$`, R`|A1|$1 - 3x^{-2}$`], R`$1 - \frac{3}{x^2}$`,
+  R`Split the fraction first.`),
+Q('P12.5-8', 3, R`Differentiate $y = \dfrac{x^2 + 3}{\sqrt x}$. [[3]]`,
+  [R`$x^{\frac32} + 3x^{-\frac12}$.`, R`Differentiate each power.`],
+  [R`|M1|Splits the fraction`, R`|M1|$x^{\frac32} + 3x^{-\frac12}$`, R`|A1|$\frac32 x^{\frac12} - \frac32 x^{-\frac32}$`], R`$\frac32 x^{\frac12} - \frac32 x^{-\frac32}$`,
+  R`$3 \times \left(-\frac12\right) = -\frac32$.`),
+Q('P12.5-9', 3, R`Differentiate $f(x) = \dfrac{(2x + 1)(x - 3)}{x}$. [[3]]`,
+  [R`Expand: $\frac{2x^2 - 5x - 3}{x}$.`, R`$2x - 5 - 3x^{-1}$.`],
+  [R`|M1|Expands the numerator`, R`|M1|$2x - 5 - 3x^{-1}$`, R`|A1|$2 + 3x^{-2}$`], R`$2 + \frac{3}{x^2}$`,
+  R`$-3x^{-1} \to 3x^{-2}$.`),
+Q('P12.5-10', 3, R`Find the gradient of $y = x^3 - 12x$ at $x = 3$. [[2]]`,
+  [R`$3x^2 - 12$.`, R`Substitute $x = 3$.`],
+  [R`|M1|$3x^2 - 12$`, R`|A1|$15$`], R`$15$`,
+  R`$\frac{dy}{dx} = 3x^2 - 12$; at $x = 3$ this is $27 - 12 = 15$.`),
+Q('P12.5-11', 3, R`Find the gradient of $y = 3\sqrt x - \dfrac{4}{\sqrt x}$ at $x = 4$. [[3]]`,
+  [R`$3x^{\frac12} - 4x^{-\frac12}$.`, R`$\frac32 x^{-\frac12} + 2x^{-\frac32}$.`],
+  [R`|M1|Powers of $x$`, R`|A1|$\frac32 x^{-\frac12} + 2x^{-\frac32}$`, R`|A1|$1$`], R`$1$`,
+  R`At $x = 4$: $\frac32 \times \frac12 + 2 \times \frac18 = \frac34 + \frac14 = 1$.`),
+Q('P12.5-12', 4, R`$f(x) = (x - 2)^2(x + 1)$.
+
+**(a)** Find $f'(x)$. [[3]]
+
+**(b)** Solve $f'(x) = 0$. [[1]]`,
+  [R`Expand: $(x^2 - 4x + 4)(x + 1) = x^3 - 3x^2 + 4$.`, R`$3x^2 - 6x = 3x(x - 2)$.`],
+  [R`(a)|M1|Expands`, R`(a)|A1|$x^3 - 3x^2 + 4$`, R`(a)|A1|$3x^2 - 6x$`, R`(b)|B1|$x = 0$ or $2$`], R`(a) $3x^2 - 6x$ (b) $0$, $2$`,
+  R`The $x$ terms cancel: $-4x + 4x = 0$.`),
+Q('P12.5-13', 4, R`Find the gradient of $y = (1 + \sqrt x)^2$ at $x = 9$. [[3]]`,
+  [R`$1 + 2\sqrt x + x$.`, R`$\frac{dy}{dx} = x^{-\frac12} + 1$.`],
+  [R`|M1|Expands`, R`|A1|$x^{-\frac12} + 1$`, R`|A1|$\frac43$`], R`$\frac43$`,
+  R`$\frac13 + 1 = \frac43$.`),
+Q('P12.5-14', 4, R`$f(x) = ax^3 + bx$. Given that $f'(1) = 7$ and $f'(2) = 34$, find $a$ and $b$. [[3]]`,
+  [R`$f'(x) = 3ax^2 + b$.`, R`$3a + b = 7$ and $12a + b = 34$.`],
+  [R`|M1|Two equations`, R`|A1|$a = 3$`, R`|A1|$b = -2$`], R`$a = 3$, $b = -2$`,
+  R`Subtracting: $9a = 27$.`),
+Q('P12.5-15', 5, R`$f(x) = \dfrac{3x - 2\sqrt x}{x^2}$, $x > 0$.
+
+**(a)** Write $f(x)$ in the form $px^a + qx^b$. [[2]]
+
+**(b)** Find $f'(x)$. [[2]]
+
+**(c)** Find $f'(4)$. [[2]]
+
+**(d)** Solve $f'(x) = 0$. [[2]]`,
+  [R`$\frac{3x}{x^2} = 3x^{-1}$ and $\frac{2x^{1/2}}{x^2} = 2x^{-\frac32}$.`, R`$f'(x) = -3x^{-2} + 3x^{-\frac52}$.`],
+  [R`(a)|M1|Splits the fraction`, R`(a)|A1|$3x^{-1} - 2x^{-\frac32}$`, R`(b)|M1|Power rule`, R`(b)|A1|$-3x^{-2} + 3x^{-\frac52}$`, R`(c)|M1|Substitutes`, R`(c)|A1|$-\frac{3}{32}$`, R`(d)|M1|$3x^{-\frac52} = 3x^{-2}$`, R`(d)|A1|$x = 1$`],
+  R`(a) $3x^{-1} - 2x^{-\frac32}$ (b) $-3x^{-2} + 3x^{-\frac52}$ (c) $-\frac{3}{32}$ (d) $x = 1$`,
+  R`(c) $-\frac{3}{16} + \frac{3}{32} = -\frac{3}{32}$.
+
+(d) Multiply by $x^{5/2}$: $3 = 3x^{1/2}$, so $x = 1$.`)
+]};
+
+CONTENT['P12.6'] = {
+notes: R`
+### Tangents and normals
+At the point $(x_1, y_1)$ on a curve:
+1. Find $\frac{dy}{dx}$ and substitute $x_1$: the **tangent** gradient $m$.
+2. Tangent: $y - y_1 = m(x - x_1)$.
+3. The **normal** is perpendicular to the tangent: gradient $-\frac1m$.
+
+[[fig:P12.6-tn]]
+
+::: booklet
+**Not in the formula booklet:** these steps.
+:::
+
+### Worked example 1
+Find the tangent to $y = x^3 - 2x$ at $(2, 4)$.
+- $\frac{dy}{dx} = 3x^2 - 2 = 10$ at $x = 2$. Tangent: $y - 4 = 10(x - 2)$, i.e. $y = 10x - 16$.
+
+### Worked example 2: the normal
+Find the normal to $y = x^2 - 4x + 5$ at $(3, 2)$.
+1. $\frac{dy}{dx} = 2x - 4 = 2$ at $x = 3$.
+2. Normal gradient $-\frac12$: $y - 2 = -\frac12(x - 3)$, so $x + 2y - 7 = 0$.
+
+**The trap:** using the derivative $2x - 4$ itself (instead of its **value**, $2$) as the gradient, or forgetting to flip **and** change the sign for the normal.
+
+### Watch out
+- If you're only given $x$, find $y$ from the curve's equation first.
+`,
+questions: [
+Q('P12.6-1', 1, R`Find the gradient of $y = x^2$ at the point $(3, 9)$. [[1]]`,
+  [R`$\frac{dy}{dx} = 2x$.`, R`Substitute $x = 3$.`],
+  [R`|B1|$6$`], R`$6$`,
+  R`$\frac{dy}{dx} = 2x$, so at $x = 3$ the gradient is $6$.`),
+Q('P12.6-2', 1, R`Find the equation of the tangent to $y = x^2$ at $(3, 9)$. [[2]]`,
+  [R`Gradient $6$.`, R`$y - 9 = 6(x - 3)$.`],
+  [R`|M1|$y - 9 = 6(x - 3)$`, R`|A1|$y = 6x - 9$`], R`$y = 6x - 9$`,
+  R`The gradient at $(3, 9)$ is $6$, so $y - 9 = 6(x - 3)$, giving $y = 6x - 9$.`),
+Q('P12.6-3', 1, R`The tangent to a curve at a point has gradient $4$. Write down the gradient of the normal there. [[1]]`,
+  [R`Perpendicular gradients multiply to $-1$.`, R`Flip and change the sign.`],
+  [R`|B1|$-\frac14$`], R`$-\frac14$`,
+  R`$4 \times \left(-\frac14\right) = -1$.`),
+Q('P12.6-4', 2, R`Find the equation of the tangent to $y = x^3 - 2x$ at $(2, 4)$. [[3]]`,
+  [R`$\frac{dy}{dx} = 3x^2 - 2$.`, R`At $x = 2$: $10$.`],
+  [R`|M1|$3x^2 - 2$`, R`|A1|Gradient $10$`, R`|A1|$y = 10x - 16$`], R`$y = 10x - 16$`,
+  R`$y - 4 = 10(x - 2)$.`),
+Q('P12.6-5', 2, R`Find the equation of the normal to $y = x^2 - 4x + 5$ at $(3, 2)$, in the form $ax + by + c = 0$. [[3]]`,
+  [R`Tangent gradient $2$.`, R`Normal gradient $-\frac12$.`],
+  [R`|M1|Tangent gradient $2$`, R`|M1|$y - 2 = -\frac12(x - 3)$`, R`|A1|$x + 2y - 7 = 0$`], R`$x + 2y - 7 = 0$`,
+  R`$\frac{dy}{dx} = 2x - 4 = 2$ at $x = 3$, so the normal has gradient $-\frac12$: $y - 2 = -\frac12(x - 3)$, i.e. $2y - 4 = -x + 3$, so $x + 2y - 7 = 0$.`, { solFig: FIGS['P12.6-tn'] }),
+Q('P12.6-6', 2, R`Find the equation of the tangent to $y = \dfrac1x$ at $(1, 1)$. [[3]]`,
+  [R`$\frac{dy}{dx} = -x^{-2}$.`, R`Gradient $-1$ at $x = 1$.`],
+  [R`|M1|$-x^{-2}$`, R`|A1|$-1$`, R`|A1|$y = -x + 2$`], R`$y = -x + 2$`,
+  R`$\frac{dy}{dx} = -\frac{1}{x^2} = -1$ at $x = 1$, so $y - 1 = -(x - 1)$, i.e. $y = -x + 2$.`),
+Q('P12.6-7', 2, R`Find the equation of the tangent to $y = \sqrt x$ at $(4, 2)$. [[3]]`,
+  [R`$\frac12 x^{-\frac12}$.`, R`At $x = 4$: $\frac14$.`],
+  [R`|M1|$\frac12 x^{-\frac12}$`, R`|A1|$\frac14$`, R`|A1|$y = \frac14 x + 1$`], R`$y = \frac14 x + 1$`,
+  R`$y - 2 = \frac14(x - 4)$.`),
+Q('P12.6-8', 3, R`Find the equation of the normal to $y = 2x^2 - 3x$ at the point where $x = 1$. [[3]]`,
+  [R`At $x = 1$, $y = -1$.`, R`Tangent gradient $4x - 3 = 1$.`],
+  [R`|B1|$(1, -1)$`, R`|M1|Normal gradient $-1$`, R`|A1|$y = -x$`], R`$y = -x$`,
+  R`$y + 1 = -(x - 1)$, so $y = -x$.`),
+Q('P12.6-9', 3, R`The tangent to $y = x^3$ at $x = 1$ meets the curve again at $P$. Find $P$. [[4]]`,
+  [R`Tangent: $y = 3x - 2$.`, R`$x^3 - 3x + 2 = (x - 1)^2(x + 2)$.`],
+  [R`|M1|Tangent $y = 3x - 2$`, R`|M1|$x^3 = 3x - 2$`, R`|M1|$(x - 1)^2(x + 2) = 0$`, R`|A1|$P(-2, -8)$`], R`$(-2, -8)$`,
+  R`The double root at $x = 1$ is the point of contact; the other root is $x = -2$.`),
+Q('P12.6-10', 3, R`Find the points on $y = x^3 - 3x$ where the tangent is parallel to $y = 9x$. [[3]]`,
+  [R`$3x^2 - 3 = 9$.`, R`$x^2 = 4$.`],
+  [R`|M1|$3x^2 - 3 = 9$`, R`|A1|$x = \pm2$`, R`|A1|$(2, 2)$ and $(-2, -2)$`], R`$(2, 2)$, $(-2, -2)$`,
+  R`$y(2) = 8 - 6 = 2$; $y(-2) = -2$.`),
+Q('P12.6-11', 3, R`The normal to $y = x^2$ at $(1, 1)$ meets the curve again at $Q$. Find $Q$. [[4]]`,
+  [R`Normal gradient $-\frac12$: $y = -\frac12 x + \frac32$.`, R`$2x^2 + x - 3 = 0$.`],
+  [R`|M1|Normal equation`, R`|M1|$x^2 = -\frac12 x + \frac32$`, R`|M1|$(2x + 3)(x - 1) = 0$`, R`|A1|$Q\left(-\frac32, \frac94\right)$`], R`$\left(-\frac32, \frac94\right)$`,
+  R`$x = -\frac32$, $y = \frac94$.`),
+Q('P12.6-12', 4, R`The tangent to $y = \dfrac4x$ at $(2, 2)$ meets the $x$-axis at $A$ and the $y$-axis at $B$. Find the area of triangle $OAB$. [[4]]`,
+  [R`$\frac{dy}{dx} = -4x^{-2} = -1$ at $x = 2$.`, R`Tangent $y = -x + 4$.`],
+  [R`|M1|Gradient $-1$`, R`|A1|$y = -x + 4$`, R`|A1|$A(4, 0)$, $B(0, 4)$`, R`|A1|$8$`], R`$8$`,
+  R`$\frac12 \times 4 \times 4 = 8$.`),
+Q('P12.6-13', 4, R`The line $y = 4x - 5$ is a tangent to the curve $y = x^2 + c$. Find $c$ and the point of contact. [[3]]`,
+  [R`At the point of contact the gradients match: $2x = 4$.`, R`Then the $y$-values match.`],
+  [R`|M1|$2x = 4$`, R`|A1|$(2, 3)$`, R`|A1|$c = -1$`], R`$c = -1$; $(2, 3)$`,
+  R`At $x = 2$ the line gives $y = 3$, so $4 + c = 3$.`),
+Q('P12.6-14', 4, R`Find where the normal to $y = x^3 - 4x$ at the point where $x = 1$ crosses the $x$-axis. [[3]]`,
+  [R`$(1, -3)$; gradient $3x^2 - 4 = -1$.`, R`Normal gradient $1$.`],
+  [R`|M1|Tangent gradient $-1$`, R`|A1|Normal $y = x - 4$`, R`|A1|$(4, 0)$`], R`$(4, 0)$`,
+  R`At $x = 1$, $y = 1 - 4 = -3$ and $\frac{dy}{dx} = 3 - 4 = -1$, so the normal has gradient $1$: $y + 3 = x - 1$, i.e. $y = x - 4$, which meets the $x$-axis at $(4, 0)$.`),
+Q('P12.6-15', 5, R`The curve $C$ has equation $y = x^2 - 2x + 3$, and $P(2, 3)$ lies on $C$.
+
+**(a)** Find the equation of the tangent to $C$ at $P$. [[3]]
+
+**(b)** Find the equation of the normal to $C$ at $P$. [[2]]
+
+**(c)** Find the area of the triangle formed by the tangent, the normal and the $y$-axis. [[3]]`,
+  [R`$\frac{dy}{dx} = 2x - 2 = 2$ at $P$.`, R`Each line meets the $y$-axis at its intercept; the height is the $x$-coordinate of $P$.`],
+  [R`(a)|M1|$2x - 2$`, R`(a)|A1|Gradient $2$`, R`(a)|A1|$y = 2x - 1$`, R`(b)|M1|Gradient $-\frac12$`, R`(b)|A1|$y = -\frac12 x + 4$`, R`(c)|M1|Intercepts $-1$ and $4$`, R`(c)|M1|$\frac12 \times 5 \times 2$`, R`(c)|A1|$5$`],
+  R`(a) $y = 2x - 1$ (b) $y = -\frac12 x + 4$ (c) $5$`,
+  R`(c) The base on the $y$-axis runs from $-1$ to $4$, length $5$; the perpendicular height to $P$ is $2$.`)
+]};
+
+/* Pure Mathematics Year 1 · Chapter 12 Differentiation (sections 12.7 to 12.11) */
+{
+  const pt = (x, y, label, dx, dy) => ({ x, y, label, dx, dy });
+  // f (blue) and its gradient function f' (red, dashed) on one set of axes.
+  const pair = (label, f, d, box, pts, lf, ld, more = {}) => Fig.graph(Object.assign({ label, x0: box[0], x1: box[1], y0: box[2], y1: box[3],
+    fns: [{ f }, { f: d, col: 'var(--pen)', dash: true }], points: pts.map(p => pt(...p)),
+    texts: [{ x: lf[0], y: lf[1], label: 'y = f(x)', col: 'var(--accent)' }, { x: ld[0], y: ld[1], label: 'y = f′(x)', col: 'var(--pen)' }] }, more));
+  FIGS['P12.9-stat'] = Fig.graph({ label: 'y = x³ − 3x² − 9x + 5 with a maximum at (−1, 10) and a minimum at (3, −22); the gradient is zero at both',
+    x0: -3, x1: 5, y0: -28, y1: 16, fns: [{ f: x => x ** 3 - 3 * x * x - 9 * x + 5 }], hlines: [],
+    points: [pt(-1, 10, 'max (−1, 10)', 0, -12), pt(3, -22, 'min (3, −22)', 0, 18)] });
+  FIGS['P12.9-x4'] = Fig.graph({ label: 'y = x⁴: the second derivative is 0 at the origin, but the gradient changes from negative to positive, so it is a minimum',
+    x0: -1.6, x1: 1.6, y0: -0.6, y1: 4, fns: [{ f: x => x ** 4 }], points: [pt(0, 0, 'min (0, 0)', 0, 16)] });
+  FIGS['P12.10-pair'] = pair("A cubic f with a maximum at x = −1 and a minimum at x = 3 (solid), and its gradient function f′, a positive quadratic crossing the x-axis at −1 and 3 (dashed)",
+    x => (x ** 3) / 3 - x * x - 3 * x, x => x * x - 2 * x - 3, [-3, 5, -10, 10], [[-1, 0, '−1', -10, 14], [3, 0, '3', 10, 14]], [4.1, -7.6], [2.4, 8.6]);
+  {
+    const sq = (x1, y1, x2, y2) => [{ x1, y1, x2, y2: y1, col: 'var(--ink)', w: 2 }, { x1: x2, y1, x2, y2, col: 'var(--ink)', w: 2 }, { x1: x2, y1: y2, x2: x1, y2, col: 'var(--ink)', w: 2 }, { x1, y1: y2, x2: x1, y2: y1, col: 'var(--ink)', w: 2 }];
+    const cut = (x1, y1) => [{ x1, y1, x2: x1 + 2, y2: y1, col: 'var(--pen)' }, { x1: x1 + 2, y1, x2: x1 + 2, y2: y1 + 2, col: 'var(--pen)' }, { x1: x1 + 2, y1: y1 + 2, x2: x1, y2: y1 + 2, col: 'var(--pen)' }, { x1, y1: y1 + 2, x2: x1, y2: y1, col: 'var(--pen)' }];
+    FIGS['P12.11-box'] = Fig.graph({ label: 'A 12 cm square card with a square of side x cut from each corner (red); folding along the dashed lines makes an open box with base 12 − 2x and height x',
+      x0: -1.5, x1: 13.5, y0: -1.5, y1: 13.5, equal: true, xlab: '', ylab: '', w: 300,
+      segs: [...sq(0, 0, 12, 12), ...cut(0, 0), ...cut(10, 0), ...cut(10, 10), ...cut(0, 10),
+        { x1: 2, y1: 2, x2: 10, y2: 2, dash: true }, { x1: 10, y1: 2, x2: 10, y2: 10, dash: true }, { x1: 10, y1: 10, x2: 2, y2: 10, dash: true }, { x1: 2, y1: 10, x2: 2, y2: 2, dash: true }],
+      texts: [{ x: 1, y: 1, label: 'x', col: 'var(--pen)' }, { x: 11, y: 11, label: 'x', col: 'var(--pen)' }, { x: 6, y: 6, label: '12 − 2x' }, { x: 6, y: -0.8, label: '12 cm' }] });
+  }
+  FIGS['P12.10-4'] = pair('f(x) = x² (solid) and f′(x) = 2x (dashed), a straight line through the origin', x => x * x, x => 2 * x, [-3, 3, -6, 9], [], [-1.9, 7.6], [2.3, 2.6]);
+  FIGS['P12.10-5'] = pair('f(x) = (x − 1)(x − 5) (solid) and f′(x) = 2x − 6 (dashed), crossing the x-axis at 3, below the vertex', x => (x - 1) * (x - 5), x => 2 * x - 6, [-0.5, 6.5, -6, 8], [[3, 0, '3', 0, -12]], [1.4, 6.4], [5.4, 1.8]);
+  FIGS['P12.10-7'] = pair('f(x) = x³ (solid) and f′(x) = 3x² (dashed), which touches the x-axis at the origin', x => x ** 3, x => 3 * x * x, [-2, 2, -6, 8], [], [1.3, -3.4], [0, 7]);
+  FIGS['P12.10-8'] = pair('f(x) = 1/x (solid) and f′(x) = −1/x² (dashed): always negative, with the axes as asymptotes', x => 1 / x, x => -1 / (x * x), [-4, 4, -5, 5], [], [2.4, 1.6], [-2.4, -2.4]);
+  FIGS['P12.10-12'] = Fig.graph({ label: "f′ for a quartic with minima at x = −2 and 2 and a maximum at x = 0: a positive cubic crossing the x-axis at −2, 0 and 2",
+    x0: -3, x1: 3, y0: -8, y1: 8, fns: [{ f: x => x * (x - 2) * (x + 2), col: 'var(--pen)', dash: true, label: "y = f′(x)", lx: 2.9, ly: 7 }], points: [pt(-2, 0, '−2', -10, 14), pt(0, 0, 'O', 10, 14), pt(2, 0, '2', 10, -12)] });
+  FIGS['P12.10-14'] = pair('f(x) = x + 1/x (solid) and f′(x) = 1 − 1/x² (dashed): f′ crosses at ±1 and approaches 1 as |x| grows', x => x + 1 / x, x => 1 - 1 / (x * x), [-4, 4, -5, 5], [[1, 0, '1', 6, 14], [-1, 0, '−1', -6, 14]], [2.4, 4.5], [-2.4, 1.9], { hlines: [{ y: 1, label: 'y = 1' }] });
+  FIGS['P12.10-15'] = pair('f(x) = x³ − 3x² (solid), with a maximum at (0, 0) and a minimum at (2, −4), and f′(x) = 3x² − 6x (dashed), crossing at 0 and 2 with its minimum at (1, −3)', x => x ** 3 - 3 * x * x, x => 3 * x * x - 6 * x, [-1.5, 3.6, -6, 6], [[2, -4, '(2, −4)', 0, 16], [1, -3, '(1, −3)', 0, 16]], [-0.6, -4.8], [1.1, 3]);
+}
+
+CONTENT['P12.7'] = {
+notes: R`
+### Increasing and decreasing
+- $f$ is **increasing** on an interval if $f'(x) \ge 0$ there.
+- $f$ is **decreasing** if $f'(x) \le 0$ there.
+
+To find the intervals, solve the inequality $f'(x) > 0$ (or $< 0$).
+
+::: booklet
+**Not in the formula booklet:** these definitions.
+:::
+
+### Worked example 1
+Find the interval on which $f(x) = x^2 - 4x$ is increasing.
+- $f'(x) = 2x - 4 \ge 0$ when $x \ge 2$.
+
+### Worked example 2: increasing everywhere
+Show that $f(x) = x^3 + 3x$ is increasing for all $x$.
+- $f'(x) = 3x^2 + 3$. Since $x^2 \ge 0$, $f'(x) \ge 3 > 0$ for every $x$.
+
+**The trap:** checking a few values of $x$ and saying "it's always positive". You need an argument for **every** $x$: a square is never negative, or complete the square.
+
+### Watch out
+- Solving $f'(x) > 0$ for a quadratic $f'$ is a quadratic inequality: sketch it.
+`,
+questions: [
+Q('P12.7-1', 1, R`Find the set of values of $x$ for which $f(x) = x^2 - 6x$ is increasing. [[2]]`,
+  [R`$f'(x) = 2x - 6$.`, R`$2x - 6 \ge 0$.`],
+  [R`|M1|$f'(x) = 2x - 6$`, R`|A1|$x \ge 3$`], R`$x \ge 3$`,
+  R`$2x - 6 \ge 0$ when $x \ge 3$.`),
+Q('P12.7-2', 1, R`Show that $f(x) = 5 - 2x$ is decreasing for all $x$. [[1]]`,
+  [R`Find $f'(x)$.`, R`It's a negative constant.`],
+  [R`|B1|$f'(x) = -2 < 0$ for all $x$`], R`$f'(x) = -2 < 0$`,
+  R`A straight line with negative gradient always decreases.`),
+Q('P12.7-3', 1, R`Find the set of values of $x$ for which $f(x) = x^2 + 4x$ is decreasing. [[2]]`,
+  [R`$f'(x) = 2x + 4$.`, R`$2x + 4 \le 0$.`],
+  [R`|M1|$f'(x) = 2x + 4$`, R`|A1|$x \le -2$`], R`$x \le -2$`,
+  R`The vertex is at $x = -2$; the curve falls to the left of it.`),
+Q('P12.7-4', 2, R`Show that $f(x) = x^3 + 3x$ is increasing for all $x$. [[2]]`,
+  [R`$f'(x) = 3x^2 + 3$.`, R`$x^2 \ge 0$.`],
+  [R`|M1|$3x^2 + 3$`, R`|A1|$3x^2 \ge 0$, so $f'(x) \ge 3 > 0$`], R`$f'(x) = 3x^2 + 3 > 0$`,
+  R`The gradient is never less than $3$.`),
+Q('P12.7-5', 2, R`Find the set of values of $x$ for which $f(x) = 4x - x^2$ is increasing. [[2]]`,
+  [R`$f'(x) = 4 - 2x$.`, R`$4 - 2x \ge 0$.`],
+  [R`|M1|$4 - 2x$`, R`|A1|$x \le 2$`], R`$x \le 2$`,
+  R`The $\cap$-shaped curve rises up to its vertex at $x = 2$.`),
+Q('P12.7-6', 2, R`Find the interval on which $f(x) = x^3 - 12x$ is decreasing. [[3]]`,
+  [R`$f'(x) = 3x^2 - 12$.`, R`$3(x - 2)(x + 2) \le 0$.`],
+  [R`|M1|$3x^2 - 12$`, R`|M1|Critical values $\pm2$`, R`|A1|$-2 \le x \le 2$`], R`$-2 \le x \le 2$`,
+  R`$f'(x) = 3x^2 - 12 = 3(x - 2)(x + 2) \le 0$ between the roots, so $f$ is decreasing for $-2 \le x \le 2$.`),
+Q('P12.7-7', 2, R`Show that $f(x) = \dfrac1x$ is decreasing for $x > 0$. [[2]]`,
+  [R`$f'(x) = -x^{-2}$.`, R`$x^2 > 0$.`],
+  [R`|M1|$f'(x) = -\frac{1}{x^2}$`, R`|A1|$< 0$ for all $x > 0$`], R`$f'(x) = -\frac{1}{x^2} < 0$`,
+  R`The square is positive, so the gradient is negative.`),
+Q('P12.7-8', 3, R`Find the set of values of $x$ for which $f(x) = x^3 - 6x^2 + 9x$ is increasing. [[4]]`,
+  [R`$f'(x) = 3x^2 - 12x + 9 = 3(x - 1)(x - 3)$.`, R`Positive outside the roots.`],
+  [R`|M1|$f'(x)$`, R`|M1|Factorises`, R`|A1|Critical values $1$, $3$`, R`|A1|$x \le 1$ or $x \ge 3$`], R`$x \le 1$ or $x \ge 3$`,
+  R`A positive quadratic is non-negative outside its roots.`),
+Q('P12.7-9', 3, R`Find the interval on which $f(x) = 2x^3 + 3x^2 - 12x$ is decreasing. [[4]]`,
+  [R`$f'(x) = 6x^2 + 6x - 12 = 6(x + 2)(x - 1)$.`, R`Negative between the roots.`],
+  [R`|M1|$f'(x)$`, R`|M1|Factorises`, R`|A1|Critical values $-2$, $1$`, R`|A1|$-2 \le x \le 1$`], R`$-2 \le x \le 1$`,
+  R`$6(x + 2)(x - 1) \le 0$ between $-2$ and $1$.`),
+Q('P12.7-10', 3, R`Find the set of values of $x$ for which $f(x) = x + \dfrac4x$ is increasing. [[3]]`,
+  [R`$f'(x) = 1 - 4x^{-2}$.`, R`$1 - \frac{4}{x^2} \ge 0$ means $x^2 \ge 4$.`],
+  [R`|M1|$f'(x) = 1 - \frac{4}{x^2}$`, R`|M1|$x^2 \ge 4$`, R`|A1|$x \le -2$ or $x \ge 2$`], R`$x \le -2$ or $x \ge 2$`,
+  R`Multiply by $x^2 > 0$: $x^2 - 4 \ge 0$.`),
+Q('P12.7-11', 3, R`Show that $f(x) = x^3 - 3x^2 + 3x - 5$ is increasing for all $x$. [[3]]`,
+  [R`$f'(x) = 3x^2 - 6x + 3$.`, R`$= 3(x - 1)^2$.`],
+  [R`|M1|$3x^2 - 6x + 3$`, R`|M1|$3(x - 1)^2$`, R`|A1|$\ge 0$ for all $x$`], R`$f'(x) = 3(x - 1)^2 \ge 0$`,
+  R`The gradient is never negative (it's $0$ only at $x = 1$).`),
+Q('P12.7-12', 4, R`Find the set of values of $x$ for which $f(x) = \sqrt x - x$, $x > 0$, is decreasing. [[3]]`,
+  [R`$f'(x) = \frac12 x^{-\frac12} - 1$.`, R`$\frac{1}{2\sqrt x} \le 1$ when $\sqrt x \ge \frac12$.`],
+  [R`|M1|$f'(x)$`, R`|M1|$\frac{1}{2\sqrt x} \le 1$`, R`|A1|$x \ge \frac14$`], R`$x \ge \frac14$`,
+  R`$\sqrt x \ge \frac12$ gives $x \ge \frac14$.`),
+Q('P12.7-13', 4, R`$f(x) = x^3 + kx$. Find the set of values of $k$ for which $f$ is increasing for all $x$. [[3]]`,
+  [R`$f'(x) = 3x^2 + k$.`, R`The smallest value of $3x^2$ is $0$.`],
+  [R`|M1|$3x^2 + k$`, R`|M1|Needs $3x^2 + k \ge 0$ for all $x$`, R`|A1|$k \ge 0$`], R`$k \ge 0$`,
+  R`If $k < 0$, $f'(0) = k < 0$, so $f$ decreases near $0$.`),
+Q('P12.7-14', 4, R`Find the intervals on which $f(x) = x^4 - 8x^2$ is decreasing. [[4]]`,
+  [R`$f'(x) = 4x^3 - 16x = 4x(x - 2)(x + 2)$.`, R`Sketch this positive cubic.`],
+  [R`|M1|$f'(x)$`, R`|M1|Factorises`, R`|A1|$x \le -2$`, R`|A1|$0 \le x \le 2$`], R`$x \le -2$ or $0 \le x \le 2$`,
+  R`The cubic $4x(x - 2)(x + 2)$ is negative for $x < -2$ and for $0 < x < 2$.`),
+Q('P12.7-15', 5, R`$f(x) = x^3 - 3x^2 - 9x + 2$.
+
+**(a)** Find $f'(x)$. [[1]]
+
+**(b)** Find the intervals on which $f$ is increasing. [[3]]
+
+**(c)** Find the set of values of $k$ for which $f(x) = k$ has three real solutions. [[4]]`,
+  [R`$f'(x) = 3(x - 3)(x + 1)$.`, R`For (c), find $f$ at the turning points $x = -1$ and $x = 3$.`],
+  [R`(a)|B1|$3x^2 - 6x - 9$`, R`(b)|M1|$3(x - 3)(x + 1)$`, R`(b)|A1|Critical values $-1$, $3$`, R`(b)|A1|$x \le -1$ or $x \ge 3$`, R`(c)|M1|$f(-1) = 7$`, R`(c)|M1|$f(3) = -25$`, R`(c)|M1|The line $y = k$ must lie between them`, R`(c)|A1|$-25 < k < 7$`],
+  R`(a) $3x^2 - 6x - 9$ (b) $x \le -1$ or $x \ge 3$ (c) $-25 < k < 7$`,
+  R`(c) $f$ rises to $7$ at $x = -1$, falls to $-25$ at $x = 3$, then rises. A horizontal line crosses three times only strictly between these values.`)
+]};
+
+CONTENT['P12.8'] = {
+notes: R`
+### The second derivative
+Differentiate twice: $\dfrac{d^2y}{dx^2}$ or $f''(x)$. It measures how fast the **gradient** is changing.
+
+::: booklet
+**Not in the formula booklet:** this notation.
+:::
+
+### Worked example 1
+$y = x^4 - 3x^2$. Find $\frac{dy}{dx}$ and $\frac{d^2y}{dx^2}$.
+- $\frac{dy}{dx} = 4x^3 - 6x$; $\frac{d^2y}{dx^2} = 12x^2 - 6$.
+
+### Worked example 2: fractional powers
+$y = \sqrt x$. Find $\frac{d^2y}{dx^2}$.
+- $\frac{dy}{dx} = \frac12 x^{-\frac12}$, so $\frac{d^2y}{dx^2} = \frac12 \times \left(-\frac12\right)x^{-\frac32} = -\frac14 x^{-\frac32}$.
+
+**The trap:** forgetting to multiply by the **new** power the second time, or subtracting $2$ from the power in one go without the coefficients.
+
+### Watch out
+- $\frac{d^2y}{dx^2}$ is not $\left(\frac{dy}{dx}\right)^2$.
+`,
+questions: [
+Q('P12.8-1', 1, R`$y = x^3$. Find $\dfrac{d^2y}{dx^2}$. [[1]]`,
+  [R`$\frac{dy}{dx} = 3x^2$.`, R`Differentiate again.`],
+  [R`|B1|$6x$`], R`$6x$`,
+  R`$\frac{dy}{dx} = 3x^2$, and differentiating again gives $\frac{d^2y}{dx^2} = 6x$.`),
+Q('P12.8-2', 1, R`$y = 5x^2 - 3x$. Find $\dfrac{d^2y}{dx^2}$. [[1]]`,
+  [R`$\frac{dy}{dx} = 10x - 3$.`, R`Again.`],
+  [R`|B1|$10$`], R`$10$`,
+  R`$\frac{dy}{dx} = 10x - 3$, and differentiating again gives $\frac{d^2y}{dx^2} = 10$.`),
+Q('P12.8-3', 1, R`$f(x) = x^4 - 2x$. Find $f''(x)$. [[2]]`,
+  [R`$f'(x) = 4x^3 - 2$.`, R`Differentiate again.`],
+  [R`|M1|$f'(x) = 4x^3 - 2$`, R`|A1|$12x^2$`], R`$12x^2$`,
+  R`The constant $-2$ disappears.`),
+Q('P12.8-4', 2, R`$y = x^4 - 3x^2$. Find $\dfrac{dy}{dx}$ and $\dfrac{d^2y}{dx^2}$. [[2]]`,
+  [R`$4x^3 - 6x$.`, R`$12x^2 - 6$.`],
+  [R`|B1|$4x^3 - 6x$`, R`|B1|$12x^2 - 6$`], R`$4x^3 - 6x$; $12x^2 - 6$`,
+  R`Differentiate term by term, twice.`),
+Q('P12.8-5', 2, R`$f(x) = \dfrac1x$. Find $f''(x)$. [[2]]`,
+  [R`$f'(x) = -x^{-2}$.`, R`$-x^{-2} \to 2x^{-3}$.`],
+  [R`|M1|$-x^{-2}$`, R`|A1|$2x^{-3}$`], R`$\frac{2}{x^3}$`,
+  R`$(-1)(-2)x^{-3} = 2x^{-3}$.`),
+Q('P12.8-6', 2, R`$y = \sqrt x$. Find $\dfrac{d^2y}{dx^2}$. [[2]]`,
+  [R`$\frac12 x^{-\frac12}$.`, R`$\frac12 \times \left(-\frac12\right)$.`],
+  [R`|M1|$\frac12 x^{-\frac12}$`, R`|A1|$-\frac14 x^{-\frac32}$`], R`$-\frac14 x^{-\frac32}$`,
+  R`$-\frac{1}{4x\sqrt x}$.`),
+Q('P12.8-7', 2, R`$f(x) = 2x^3 - 6x^2 + x$. Find $f''(1)$. [[2]]`,
+  [R`$f'(x) = 6x^2 - 12x + 1$.`, R`$f''(x) = 12x - 12$.`],
+  [R`|M1|$f''(x) = 12x - 12$`, R`|A1|$0$`], R`$0$`,
+  R`$f'(x) = 6x^2 - 12x + 1$ and $f''(x) = 12x - 12$, so $f''(1) = 0$.`),
+Q('P12.8-8', 3, R`$f(x) = x^3 + ax^2$. Given that $f''(2) = 0$, find $a$. [[3]]`,
+  [R`$f''(x) = 6x + 2a$.`, R`$12 + 2a = 0$.`],
+  [R`|M1|$f'(x) = 3x^2 + 2ax$`, R`|M1|$f''(x) = 6x + 2a$`, R`|A1|$a = -6$`], R`$a = -6$`,
+  R`$f'(x) = 3x^2 + 2ax$ and $f''(x) = 6x + 2a$. Then $f''(2) = 12 + 2a = 0$, so $a = -6$.`),
+Q('P12.8-9', 3, R`$y = 3x^{-2} + x$. Find $\dfrac{d^2y}{dx^2}$ and its value at $x = 1$. [[2]]`,
+  [R`$\frac{dy}{dx} = -6x^{-3} + 1$.`, R`$18x^{-4}$.`],
+  [R`|B1|$18x^{-4}$`, R`|B1|$18$`], R`$18x^{-4}$; $18$`,
+  R`$\frac{dy}{dx} = -6x^{-3} + 1$, so $\frac{d^2y}{dx^2} = 18x^{-4}$, which is $18$ at $x = 1$.`),
+Q('P12.8-10', 3, R`$y = x^2 + \dfrac1x$. Show that $\dfrac{d^2y}{dx^2} > 0$ for $x > 0$. [[3]]`,
+  [R`$\frac{dy}{dx} = 2x - x^{-2}$.`, R`$\frac{d^2y}{dx^2} = 2 + 2x^{-3}$.`],
+  [R`|M1|$2x - x^{-2}$`, R`|A1|$2 + \frac{2}{x^3}$`, R`|A1|Both terms positive for $x > 0$`], R`$2 + \frac{2}{x^3} > 0$`,
+  R`For $x > 0$, $\frac{2}{x^3} > 0$, so the sum is more than $2$.`),
+Q('P12.8-11', 3, R`$f(x) = x^{\frac52}$. Find $f''(4)$. [[2]]`,
+  [R`$f'(x) = \frac52 x^{\frac32}$.`, R`$f''(x) = \frac{15}{4}x^{\frac12}$.`],
+  [R`|M1|$\frac{15}{4}x^{\frac12}$`, R`|A1|$7.5$`], R`$7.5$`,
+  R`$\frac{15}{4} \times 2 = 7.5$.`),
+Q('P12.8-12', 4, R`$y = ax^3 + bx^2$. At $x = 1$, $\dfrac{dy}{dx} = 0$ and $\dfrac{d^2y}{dx^2} = 6$. Find $a$ and $b$. [[4]]`,
+  [R`$\frac{dy}{dx} = 3ax^2 + 2bx$, $\frac{d^2y}{dx^2} = 6ax + 2b$.`, R`$3a + 2b = 0$ and $6a + 2b = 6$.`],
+  [R`|M1|Both derivatives`, R`|M1|Two equations`, R`|A1|$a = 2$`, R`|A1|$b = -3$`], R`$a = 2$, $b = -3$`,
+  R`Subtracting: $3a = 6$.`),
+Q('P12.8-13', 4, R`$f(x) = x^4 - 6x^2$. Find the values of $x$ for which $f''(x) = 0$. [[2]]`,
+  [R`$f''(x) = 12x^2 - 12$.`, R`$x^2 = 1$.`],
+  [R`|M1|$12x^2 - 12$`, R`|A1|$x = \pm1$`], R`$x = \pm1$`,
+  R`$f'(x) = 4x^3 - 12x$.`),
+Q('P12.8-14', 4, R`$y = x^3 - 3x$. Find the set of values of $x$ for which $\dfrac{dy}{dx}$ and $\dfrac{d^2y}{dx^2}$ are both negative. [[3]]`,
+  [R`$\frac{dy}{dx} = 3x^2 - 3 < 0$ for $-1 < x < 1$.`, R`$\frac{d^2y}{dx^2} = 6x < 0$ for $x < 0$.`],
+  [R`|M1|$-1 < x < 1$`, R`|M1|$x < 0$`, R`|A1|$-1 < x < 0$`], R`$-1 < x < 0$`,
+  R`Both conditions hold together on $-1 < x < 0$.`),
+Q('P12.8-15', 5, R`$f(x) = x^3 - 6x^2 + 9x + 1$.
+
+**(a)** Find $f'(x)$ and $f''(x)$. [[2]]
+
+**(b)** Find the value of $x$ for which $f''(x) = 0$. [[1]]
+
+**(c)** By writing $f'(x)$ in the form $3(x - p)^2 + q$, show that the least value of $f'(x)$ is $-3$. [[3]]
+
+**(d)** Find the equation of the tangent to $y = f(x)$ at the point where $x = 2$. [[2]]`,
+  [R`$f'(x) = 3x^2 - 12x + 9$.`, R`$3(x^2 - 4x) + 9 = 3(x - 2)^2 - 3$.`],
+  [R`(a)|B1|$3x^2 - 12x + 9$`, R`(a)|B1|$6x - 12$`, R`(b)|B1|$x = 2$`, R`(c)|M1|Completes the square`, R`(c)|A1|$3(x - 2)^2 - 3$`, R`(c)|A1|Least value $-3$ at $x = 2$`, R`(d)|M1|$f(2) = 3$, gradient $-3$`, R`(d)|A1|$y = -3x + 9$`],
+  R`(a) $3x^2 - 12x + 9$; $6x - 12$ (b) $2$ (d) $y = -3x + 9$`,
+  R`(c) $(x - 2)^2 \ge 0$, so $f'(x) \ge -3$, with equality at $x = 2$ (where $f''(x) = 0$).
+
+(d) $f(2) = 8 - 24 + 18 + 1 = 3$, so $y - 3 = -3(x - 2)$.`)
+]};
+
+CONTENT['P12.9'] = {
+notes: R`
+### Stationary points
+A **stationary point** is where $\frac{dy}{dx} = 0$. To classify it:
+- $\frac{d^2y}{dx^2} > 0$: **minimum**
+- $\frac{d^2y}{dx^2} < 0$: **maximum**
+- $\frac{d^2y}{dx^2} = 0$: inconclusive. Check the sign of $\frac{dy}{dx}$ just either side.
+
+If the gradient has the **same** sign on both sides, it's a **point of inflection**.
+
+::: booklet
+**Not in the formula booklet:** these tests.
+:::
+
+### Worked example 1
+Find and classify the stationary points of $y = x^3 - 3x^2 - 9x + 5$.
+1. $\frac{dy}{dx} = 3x^2 - 6x - 9 = 3(x - 3)(x + 1) = 0$, so $x = 3$ or $x = -1$.
+2. $\frac{d^2y}{dx^2} = 6x - 6$: at $x = 3$ it's $12 > 0$ (minimum, $y = -22$); at $x = -1$ it's $-12 < 0$ (maximum, $y = 10$).
+
+[[fig:P12.9-stat]]
+
+### Worked example 2: when the second derivative is zero
+Classify the stationary point of $y = x^4$.
+- $\frac{dy}{dx} = 4x^3 = 0$ at $x = 0$, and $\frac{d^2y}{dx^2} = 12x^2 = 0$ there.
+- At $x = -0.1$, $\frac{dy}{dx} < 0$; at $x = 0.1$, $\frac{dy}{dx} > 0$. So $(0, 0)$ is a **minimum**.
+
+[[fig:P12.9-x4]]
+
+**The trap:** concluding "$\frac{d^2y}{dx^2} = 0$, so it's a point of inflection". Zero tells you nothing; test the gradient either side.
+
+### Watch out
+- Give both coordinates of each stationary point.
+`,
+questions: [
+Q('P12.9-1', 1, R`Find the coordinates of the stationary point of $y = x^2 - 8x + 3$. [[2]]`,
+  [R`$2x - 8 = 0$.`, R`Then find $y$.`],
+  [R`|M1|$2x - 8 = 0$`, R`|A1|$(4, -13)$`], R`$(4, -13)$`,
+  R`$x = 4$, $y = 16 - 32 + 3 = -13$.`),
+Q('P12.9-2', 1, R`Use the second derivative to show that the stationary point of $y = x^2 - 8x + 3$ is a minimum. [[1]]`,
+  [R`$\frac{d^2y}{dx^2} = 2$.`, R`Positive means minimum.`],
+  [R`|B1|$\frac{d^2y}{dx^2} = 2 > 0$, so minimum`], R`$\frac{d^2y}{dx^2} = 2 > 0$`,
+  R`A positive second derivative means the gradient is increasing through zero.`),
+Q('P12.9-3', 1, R`Find the stationary point of $y = 6x - x^2$ and state its nature. [[2]]`,
+  [R`$6 - 2x = 0$.`, R`$\frac{d^2y}{dx^2} = -2$.`],
+  [R`|M1|$x = 3$`, R`|A1|$(3, 9)$, maximum`], R`$(3, 9)$, maximum`,
+  R`$y = 18 - 9 = 9$; $\frac{d^2y}{dx^2} < 0$.`),
+Q('P12.9-4', 2, R`Find and classify the stationary points of $y = x^3 - 12x$. [[4]]`,
+  [R`$3x^2 - 12 = 0$.`, R`$\frac{d^2y}{dx^2} = 6x$.`],
+  [R`|M1|$3x^2 - 12 = 0$`, R`|A1|$x = \pm2$`, R`|A1|$(2, -16)$ minimum`, R`|A1|$(-2, 16)$ maximum`], R`$(2, -16)$ min; $(-2, 16)$ max`,
+  R`At $x = 2$: $\frac{d^2y}{dx^2} = 12 > 0$; at $x = -2$: $-12 < 0$.`),
+Q('P12.9-5', 2, R`Find and classify the stationary points of $y = 2x^3 - 3x^2$. [[4]]`,
+  [R`$6x^2 - 6x = 6x(x - 1)$.`, R`$\frac{d^2y}{dx^2} = 12x - 6$.`],
+  [R`|M1|$6x(x - 1) = 0$`, R`|A1|$x = 0$, $1$`, R`|A1|$(0, 0)$ maximum`, R`|A1|$(1, -1)$ minimum`], R`$(0, 0)$ max; $(1, -1)$ min`,
+  R`At $x = 0$: $-6 < 0$; at $x = 1$: $6 > 0$.`),
+Q('P12.9-6', 2, R`Find and classify the stationary points of $y = x + \dfrac9x$. [[4]]`,
+  [R`$1 - 9x^{-2} = 0$.`, R`$\frac{d^2y}{dx^2} = 18x^{-3}$.`],
+  [R`|M1|$1 - \frac{9}{x^2} = 0$`, R`|A1|$x = \pm3$`, R`|A1|$(3, 6)$ minimum`, R`|A1|$(-3, -6)$ maximum`], R`$(3, 6)$ min; $(-3, -6)$ max`,
+  R`At $x = 3$: $\frac{18}{27} > 0$; at $x = -3$: $< 0$. (The maximum is lower than the minimum because the branches are separate.)`),
+Q('P12.9-7', 2, R`Find and classify the stationary points of $y = x^3 + 3x^2 - 24x$. [[4]]`,
+  [R`$3x^2 + 6x - 24 = 3(x + 4)(x - 2)$.`, R`$\frac{d^2y}{dx^2} = 6x + 6$.`],
+  [R`|M1|$3(x + 4)(x - 2) = 0$`, R`|A1|$x = 2$, $-4$`, R`|A1|$(2, -28)$ minimum`, R`|A1|$(-4, 80)$ maximum`], R`$(2, -28)$ min; $(-4, 80)$ max`,
+  R`$y(2) = 8 + 12 - 48 = -28$; $y(-4) = -64 + 48 + 96 = 80$.`),
+Q('P12.9-8', 3, R`Find and classify the stationary points of $y = x^4 - 2x^2$. [[5]]`,
+  [R`$4x^3 - 4x = 4x(x - 1)(x + 1)$.`, R`$\frac{d^2y}{dx^2} = 12x^2 - 4$.`],
+  [R`|M1|$4x(x^2 - 1) = 0$`, R`|A1|$x = 0$, $\pm1$`, R`|M1|Second derivative test`, R`|A1|$(0, 0)$ maximum`, R`|A1|$(1, -1)$ and $(-1, -1)$ minima`], R`$(0, 0)$ max; $(\pm1, -1)$ min`,
+  R`At $x = 0$: $-4 < 0$; at $x = \pm1$: $8 > 0$.`),
+Q('P12.9-9', 3, R`Find the stationary point of $y = 4\sqrt x - x$, $x > 0$, and show that it is a maximum. [[4]]`,
+  [R`$2x^{-\frac12} - 1 = 0$.`, R`$\frac{d^2y}{dx^2} = -x^{-\frac32}$.`],
+  [R`|M1|$2x^{-\frac12} - 1 = 0$`, R`|A1|$x = 4$`, R`|A1|$(4, 4)$`, R`|A1|$\frac{d^2y}{dx^2} = -\frac18 < 0$, so maximum`], R`$(4, 4)$, maximum`,
+  R`$\sqrt x = 2$; $y = 8 - 4 = 4$.`),
+Q('P12.9-10', 3, R`Show that $y = x^3$ has a stationary point at the origin, and determine its nature. [[3]]`,
+  [R`$3x^2 = 0$ at $x = 0$.`, R`$\frac{d^2y}{dx^2} = 0$ there, so check the gradient either side.`],
+  [R`|B1|$\frac{dy}{dx} = 0$ at $x = 0$`, R`|M1|$\frac{dy}{dx} > 0$ either side`, R`|A1|Point of inflection`], R`Point of inflection`,
+  R`$3x^2 > 0$ for $x \ne 0$: the gradient is positive on both sides, so it's not a turning point.`),
+Q('P12.9-11', 3, R`The curve $y = x^3 + ax$ has a stationary point where $x = 2$. Find $a$. [[2]]`,
+  [R`$3x^2 + a = 0$ at $x = 2$.`, R`$12 + a = 0$.`],
+  [R`|M1|$12 + a = 0$`, R`|A1|$a = -12$`], R`$a = -12$`,
+  R`$\frac{dy}{dx} = 3x^2 + a$ must be $0$ at $x = 2$.`),
+Q('P12.9-12', 4, R`Find and classify the stationary points of $y = x^4 - 4x^3$. [[5]]`,
+  [R`$4x^3 - 12x^2 = 4x^2(x - 3)$.`, R`At $x = 0$ the second derivative is $0$: check either side.`],
+  [R`|M1|$4x^2(x - 3) = 0$`, R`|A1|$x = 0$, $3$`, R`|A1|$(3, -27)$ minimum`, R`|M1|Gradient negative both sides of $x = 0$`, R`|A1|$(0, 0)$ point of inflection`], R`$(3, -27)$ min; $(0, 0)$ inflection`,
+  R`$\frac{d^2y}{dx^2} = 12x^2 - 24x$: $36 > 0$ at $x = 3$, $0$ at $x = 0$. Near $x = 0$, $4x^2(x - 3) < 0$ on both sides.`),
+Q('P12.9-13', 4, R`The curve $y = ax^2 + bx + c$ has a maximum at $(2, 7)$ and passes through $(0, 3)$. Find $a$, $b$ and $c$. [[4]]`,
+  [R`$c = 3$.`, R`$4a + b = 0$ and $4a + 2b + 3 = 7$.`],
+  [R`|B1|$c = 3$`, R`|M1|$\frac{dy}{dx} = 0$ at $x = 2$: $4a + b = 0$`, R`|M1|$4a + 2b = 4$`, R`|A1|$a = -1$, $b = 4$`], R`$a = -1$, $b = 4$, $c = 3$`,
+  R`Subtracting: $b = 4$, then $a = -1$. It is a maximum since $a < 0$.`),
+Q('P12.9-14', 4, R`Find the minimum value of $x^2 + \dfrac{16}{x}$ for $x > 0$, justifying that it is a minimum. [[4]]`,
+  [R`$2x - 16x^{-2} = 0$.`, R`$x^3 = 8$.`],
+  [R`|M1|$2x - \frac{16}{x^2} = 0$`, R`|A1|$x = 2$`, R`|A1|Minimum value $12$`, R`|B1|$\frac{d^2y}{dx^2} = 2 + \frac{32}{x^3} = 6 > 0$`], R`$12$`,
+  R`$\frac{dy}{dx} = 2x - \frac{16}{x^2} = 0$ gives $x^3 = 8$, so $x = 2$ and the value is $4 + 8 = 12$. $\frac{d^2y}{dx^2} = 2 + \frac{32}{x^3} = 6 > 0$, so it is a minimum.`),
+Q('P12.9-15', 5, R`$f(x) = x^3 - 6x^2 + 9x - 4$.
+
+**(a)** Find the coordinates of the stationary points of $y = f(x)$. [[4]]
+
+**(b)** Determine their nature. [[2]]
+
+**(c)** Hence state the number of distinct real roots of $f(x) = 0$, explaining your answer, and find them. [[2]]`,
+  [R`$f'(x) = 3(x - 1)(x - 3)$.`, R`The maximum value is $0$.`],
+  [R`(a)|M1|$3x^2 - 12x + 9 = 0$`, R`(a)|A1|$x = 1$, $3$`, R`(a)|A1|$(1, 0)$`, R`(a)|A1|$(3, -4)$`, R`(b)|B1|$(1, 0)$ maximum ($f''(1) = -6$)`, R`(b)|B1|$(3, -4)$ minimum ($f''(3) = 6$)`, R`(c)|M1|The curve touches the axis at the maximum and crosses once more`, R`(c)|A1|Two: $x = 1$ and $x = 4$`],
+  R`(a) $(1, 0)$, $(3, -4)$ (b) max, min (c) two roots: $1$ and $4$`,
+  R`(c) The maximum is on the $x$-axis, so the curve touches it at $x = 1$, falls to $-4$ and rises again to cross once more. In fact $f(x) = (x - 1)^2(x - 4)$.`)
+]};
+
+CONTENT['P12.10'] = {
+notes: R`
+### From $y = f(x)$ to $y = f'(x)$
+| On $y = f(x)$ | On $y = f'(x)$ |
+|---|---|
+| stationary point | crosses (or touches) the $x$-axis |
+| increasing | above the $x$-axis |
+| decreasing | below the $x$-axis |
+| vertical asymptote | vertical asymptote |
+| horizontal asymptote | $f' \to 0$ |
+
+[[fig:P12.10-pair]]
+
+::: booklet
+**Not in the formula booklet:** these links.
+:::
+
+### Worked example 1
+$f$ is a positive cubic with a maximum at $x = -1$ and a minimum at $x = 3$. Describe $y = f'(x)$.
+- $f'(x) = 0$ at $x = -1$ and $3$; positive outside, negative between: a $\cup$-shaped parabola crossing at $-1$ and $3$.
+
+### Worked example 2: up and down shifts
+Explain why $y = x^2 + 5$ and $y = x^2 - 2$ have the same gradient function.
+- Moving a curve up or down doesn't change its steepness anywhere, so both have $f'(x) = 2x$.
+
+**The trap:** copying the shape of $f$ for $f'$. The gradient function shows **steepness**, not height: a maximum on $f$ becomes a zero on $f'$.
+
+### Watch out
+- A point of inflection on $f$ where the gradient is zero becomes a point where $f'$ **touches** the axis.
+`,
+questions: [
+Q('P12.10-1', 1, R`The only stationary point of $y = f(x)$ is a maximum at $x = 2$. Write down $f'(2)$. [[1]]`,
+  [R`What is the gradient at a maximum?`, R`It's a stationary point.`],
+  [R`|B1|$0$`], R`$0$`,
+  R`At any stationary point the gradient is zero.`),
+Q('P12.10-2', 1, R`$f$ is increasing for $x > 1$. What can you say about the graph of $y = f'(x)$ for $x > 1$? [[1]]`,
+  [R`Increasing means positive gradient.`, R`Where is $f'$ positive?`],
+  [R`|B1|It's above the $x$-axis`], R`Above the $x$-axis`,
+  R`$f'(x) > 0$ wherever $f$ increases.`),
+Q('P12.10-3', 1, R`Describe the graph of the gradient function of $y = 3x - 1$. [[1]]`,
+  [R`The gradient is the same everywhere.`, R`$f'(x) = 3$.`],
+  [R`|B1|A horizontal line $y = 3$`], R`The line $y = 3$`,
+  R`A straight line has constant gradient.`),
+Q('P12.10-4', 2, R`Sketch the gradient function of $f(x) = x^2$. [[2]]`,
+  [R`$f$ decreases for $x < 0$ and increases for $x > 0$.`, R`$f'(x) = 2x$.`],
+  [R`|B1|Straight line through the origin`, R`|B1|Gradient $2$ (negative for $x < 0$, positive for $x > 0$)`], R`The line $y = 2x$`,
+  R`The steepness grows steadily from negative to positive, crossing zero at the vertex.`, { solFig: FIGS['P12.10-4'] }),
+Q('P12.10-5', 2, R`$f(x) = (x - 1)(x - 5)$. Find where the graph of $y = f'(x)$ crosses the $x$-axis, and sketch it. [[2]]`,
+  [R`$f$ has its vertex halfway between the roots.`, R`$f'(x) = 2x - 6$.`],
+  [R`|B1|$x = 3$`, R`|B1|Straight line with positive gradient through $(3, 0)$`], R`At $x = 3$; $y = 2x - 6$`,
+  R`$f(x) = x^2 - 6x + 5$, so $f'(x) = 2x - 6$.`, { solFig: FIGS['P12.10-5'] }),
+Q('P12.10-6', 2, R`$y = f(x)$ is a positive cubic with a maximum at $(-1, 4)$ and a minimum at $(3, -2)$. Sketch $y = f'(x)$. [[3]]`,
+  [R`$f'$ is zero at $x = -1$ and $x = 3$.`, R`$f$ increases, then decreases, then increases.`],
+  [R`|B1|$\cup$-shaped curve`, R`|B1|Crosses the $x$-axis at $-1$ and $3$`, R`|B1|Negative between them`], R`$\cup$-shaped, crossing at $-1$ and $3$`,
+  R`The heights $4$ and $-2$ don't appear on $f'$; only the $x$-coordinates of the turning points matter.`, { solFig: FIGS['P12.10-pair'] }),
+Q('P12.10-7', 2, R`Sketch the gradient function of $f(x) = x^3$. [[2]]`,
+  [R`$f'(x) = 3x^2$.`, R`The gradient is zero only at the origin.`],
+  [R`|B1|$\cup$-shape`, R`|B1|Touches the $x$-axis at the origin`], R`$y = 3x^2$, touching at $O$`,
+  R`$x^3$ is increasing everywhere, so $f'$ is never negative.`, { solFig: FIGS['P12.10-7'] }),
+Q('P12.10-8', 3, R`Sketch the gradient function of $f(x) = \dfrac1x$, giving its asymptotes. [[3]]`,
+  [R`$f'(x) = -x^{-2}$.`, R`It's always negative.`],
+  [R`|B1|Both branches below the $x$-axis`, R`|B1|Asymptote $x = 0$`, R`|B1|Asymptote $y = 0$`], R`$y = -\frac{1}{x^2}$; asymptotes $x = 0$, $y = 0$`,
+  R`$\frac1x$ decreases on both branches, more and more gently as $|x|$ grows.`, { solFig: FIGS['P12.10-8'] }),
+Q('P12.10-9', 3, R`Explain why $y = x^2 + 5$ and $y = x^2 - 2$ have the same gradient function. [[2]]`,
+  [R`Differentiate both.`, R`What does a vertical translation do to steepness?`],
+  [R`|B1|Both give $2x$ (constants differentiate to $0$)`, R`|B1|A vertical shift doesn't change the gradient at any $x$`], R`Both are $2x$`,
+  R`One curve is the other moved up $7$; the steepness at each $x$ is unchanged.`),
+Q('P12.10-10', 3, R`$f'(x) = (x + 1)(x - 2)$. Find the $x$-coordinates of the stationary points of $f$ and state their nature. [[3]]`,
+  [R`$f'(x) = 0$ at $-1$ and $2$.`, R`Look at how the sign of $f'$ changes.`],
+  [R`|B1|$x = -1$, $2$`, R`|B1|$x = -1$: $f'$ goes $+$ to $-$, maximum`, R`|B1|$x = 2$: $f'$ goes $-$ to $+$, minimum`], R`Maximum at $x = -1$, minimum at $x = 2$`,
+  R`$f'$ is a positive quadratic: positive, negative, positive.`),
+Q('P12.10-11', 3, R`$f'(x)$ is positive for $x < 1$ and negative for $x > 1$. Describe the graph of $y = f(x)$ near $x = 1$. [[2]]`,
+  [R`Increasing then decreasing.`, R`What happens at $x = 1$?`],
+  [R`|B1|$f$ increases then decreases`, R`|B1|Maximum at $x = 1$`], R`A maximum at $x = 1$`,
+  R`The gradient changes from positive to negative, so the curve peaks at $x = 1$.`),
+Q('P12.10-12', 4, R`A quartic $y = f(x)$ has minima at $x = -2$ and $x = 2$ and a maximum at $x = 0$. Sketch $y = f'(x)$. [[3]]`,
+  [R`$f'$ is a cubic with roots $-2$, $0$, $2$.`, R`$f$ decreases for $x < -2$, so $f'$ starts negative.`],
+  [R`|B1|Cubic shape`, R`|B1|Crosses at $-2$, $0$, $2$`, R`|B1|Positive cubic (negative for $x < -2$)`], R`A positive cubic crossing at $-2$, $0$, $2$`,
+  R`$f$: down, up, down, up, so $f'$: negative, positive, negative, positive.`, { solFig: FIGS['P12.10-12'] }),
+Q('P12.10-13', 4, R`$f'(x) = x^2(x - 3)$. Find the $x$-coordinates of the stationary points of $f$ and determine their nature. [[3]]`,
+  [R`$f'(x) = 0$ at $x = 0$ and $x = 3$.`, R`Near $0$, $x^2 \ge 0$ and $x - 3 < 0$.`],
+  [R`|B1|$x = 0$, $3$`, R`|B1|$x = 0$: $f'$ negative on both sides, point of inflection`, R`|B1|$x = 3$: $f'$ goes $-$ to $+$, minimum`], R`Inflection at $x = 0$; minimum at $x = 3$`,
+  R`$f'$ touches the axis at $0$ without changing sign.`),
+Q('P12.10-14', 4, R`$f(x) = x + \dfrac1x$. Sketch $y = f'(x)$, giving its asymptotes and where it crosses the $x$-axis. [[3]]`,
+  [R`$f'(x) = 1 - x^{-2}$.`, R`$f'(x) = 0$ at $x = \pm1$.`],
+  [R`|B1|$f'(x) = 1 - \frac{1}{x^2}$`, R`|B1|Asymptotes $x = 0$ and $y = 1$`, R`|B1|Crosses at $(\pm1, 0)$`], R`Crosses at $\pm1$; asymptotes $x = 0$, $y = 1$`,
+  R`As $|x|$ grows, $\frac{1}{x^2} \to 0$ and $f' \to 1$; near $0$, $f' \to -\infty$.`, { solFig: FIGS['P12.10-14'] }),
+Q('P12.10-15', 5, R`$f(x) = x^3 - 3x^2$.
+
+**(a)** Find $f'(x)$. [[1]]
+
+**(b)** Sketch $y = f(x)$ and $y = f'(x)$ on the same axes, showing the turning points of each. [[4]]
+
+**(c)** Explain, using $f'$, why $f$ has a minimum at $x = 2$. [[1]]
+
+**(d)** Find the least value of $f'(x)$. [[2]]`,
+  [R`$f'(x) = 3x^2 - 6x = 3x(x - 2)$.`, R`$f'(x) = 3(x - 1)^2 - 3$.`],
+  [R`(a)|B1|$3x^2 - 6x$`, R`(b)|B1|$f$: max $(0, 0)$, min $(2, -4)$`, R`(b)|B1|$f$ crosses at $(3, 0)$`, R`(b)|B1|$f'$: crosses at $0$ and $2$`, R`(b)|B1|$f'$: minimum $(1, -3)$`, R`(c)|B1|$f'$ changes from negative to positive at $x = 2$`, R`(d)|M1|Completes the square or uses $f''(x) = 0$`, R`(d)|A1|$-3$`],
+  R`(a) $3x^2 - 6x$ (d) $-3$`,
+  R`(d) $f'(x) = 3(x - 1)^2 - 3 \ge -3$. On $f$, $x = 1$ is where the curve is steepest going down.`, { solFig: FIGS['P12.10-15'] })
+]};
+
+CONTENT['P12.11'] = {
+notes: R`
+### Rates of change
+$\frac{dy}{dx}$ is the rate of change of $y$ with respect to $x$. In context: velocity $= \frac{ds}{dt}$, marginal cost $= \frac{dC}{dx}$, and so on.
+
+### Optimisation
+To find a maximum or minimum of a quantity:
+1. Write it as a function of **one** variable (use any constraint to eliminate the others).
+2. Differentiate and set the derivative to $0$.
+3. Check with the second derivative, and that the answer makes sense.
+
+::: booklet
+**Not in the formula booklet:** these methods.
+:::
+
+### Worked example 1
+The volume of a sphere is $V = \frac43\pi r^3$. Find $\frac{dV}{dr}$ when $r = 3$ cm.
+- $\frac{dV}{dr} = 4\pi r^2 = 36\pi$ cm³ per cm.
+
+### Worked example 2: a box
+Squares of side $x$ cm are cut from the corners of a $12$ cm square card, and the sides are folded up into an open box.
+
+[[fig:P12.11-box]]
+
+1. $V = x(12 - 2x)^2 = 144x - 48x^2 + 4x^3$.
+2. $\frac{dV}{dx} = 144 - 96x + 12x^2 = 12(x - 2)(x - 6) = 0$, so $x = 2$ or $6$.
+3. $x = 6$ uses the whole card ($V = 0$). At $x = 2$: $\frac{d^2V}{dx^2} = -96 + 48 = -48 < 0$, a maximum, $V = 2 \times 8^2 = 128$ cm³.
+
+**The trap:** giving $x = 6$ as an answer without checking it. Reject values that don't make physical sense.
+
+### Watch out
+- Give units, and answer the question asked (the maximum **volume**, not just $x$).
+`,
+questions: [
+Q('P12.11-1', 1, R`The area of a circle is $A = \pi r^2$. Find $\dfrac{dA}{dr}$. [[1]]`,
+  [R`Differentiate with respect to $r$.`, R`$\pi$ is a constant.`],
+  [R`|B1|$2\pi r$`], R`$2\pi r$`,
+  R`$\frac{dA}{dr} = 2\pi r$ (the circumference).`),
+Q('P12.11-2', 1, R`A stone falls $s = 5t^2$ metres in $t$ seconds. Find its speed when $t = 3$. [[2]]`,
+  [R`Speed $= \frac{ds}{dt}$.`, R`$10t$.`],
+  [R`|M1|$\frac{ds}{dt} = 10t$`, R`|A1|$30$ m s⁻¹`], R`$30$ m s⁻¹`,
+  R`Speed is $\frac{ds}{dt} = 10t$, so at $t = 3$ it is $30$ m s⁻¹.`),
+Q('P12.11-3', 1, R`The cost of making $x$ items is $C = 0.5x^2 + 20x$. Find $\dfrac{dC}{dx}$ when $x = 10$. [[1]]`,
+  [R`$\frac{dC}{dx} = x + 20$.`, R`Substitute.`],
+  [R`|B1|$30$`], R`$30$ (pounds per item)`,
+  R`$10 + 20 = 30$: each extra item costs about £$30$ at this level.`),
+Q('P12.11-4', 2, R`A ball's height is $h = 20t - 5t^2$ metres after $t$ seconds. Find its velocity at $t = 1$ and its maximum height. [[3]]`,
+  [R`$\frac{dh}{dt} = 20 - 10t$.`, R`Maximum when $\frac{dh}{dt} = 0$.`],
+  [R`|B1|$10$ m s⁻¹`, R`|M1|$20 - 10t = 0$, $t = 2$`, R`|A1|$20$ m`], R`$10$ m s⁻¹; $20$ m`,
+  R`$h(2) = 40 - 20 = 20$.`),
+Q('P12.11-5', 2, R`A rectangle has perimeter $40$ cm. Find the dimensions that give the largest area, and that area. [[3]]`,
+  [R`Sides $x$ and $20 - x$: $A = 20x - x^2$.`, R`$\frac{dA}{dx} = 20 - 2x$.`],
+  [R`|M1|$A = x(20 - x)$`, R`|M1|$20 - 2x = 0$`, R`|A1|$10$ cm by $10$ cm; $100$ cm²`], R`$10 \times 10$; $100$ cm²`,
+  R`The best rectangle is a square.`),
+Q('P12.11-6', 2, R`A cube has side $x$ cm. Find the rate of change of its volume with respect to $x$ when $x = 4$. [[2]]`,
+  [R`$V = x^3$.`, R`$\frac{dV}{dx} = 3x^2$.`],
+  [R`|M1|$3x^2$`, R`|A1|$48$ cm³ per cm`], R`$48$`,
+  R`$V = x^3$, so $\frac{dV}{dx} = 3x^2 = 48$ cm³ per cm when $x = 4$.`),
+Q('P12.11-7', 2, R`A firm's profit is $P = 40x - x^2 - 100$, where $x$ is the number of items sold. Find the maximum profit. [[3]]`,
+  [R`$\frac{dP}{dx} = 40 - 2x$.`, R`$x = 20$.`],
+  [R`|M1|$40 - 2x = 0$`, R`|A1|$x = 20$`, R`|A1|$300$`], R`$300$ at $x = 20$`,
+  R`$800 - 400 - 100 = 300$. $\frac{d^2P}{dx^2} = -2 < 0$ confirms a maximum.`),
+Q('P12.11-8', 3, R`Squares of side $x$ cm are cut from each corner of a $12$ cm square card, and the sides folded up to make an open box. Find the maximum volume. [[5]]`,
+  [R`$V = x(12 - 2x)^2$.`, R`$\frac{dV}{dx} = 12(x - 2)(x - 6)$.`],
+  [R`|M1|$V = x(12 - 2x)^2$`, R`|M1|Expands and differentiates`, R`|A1|$x = 2$ or $6$`, R`|M1|Rejects $x = 6$ / second derivative test`, R`|A1|$128$ cm³`], R`$128$ cm³`,
+  R`$V = 144x - 48x^2 + 4x^3$. At $x = 2$, $\frac{d^2V}{dx^2} = -48 < 0$; $V = 2 \times 64 = 128$.`, { fig: FIGS['P12.11-box'] }),
+Q('P12.11-9', 3, R`A rectangular garden is fenced on three sides using $60$ m of fencing; the fourth side is a wall. Find the largest possible area. [[4]]`,
+  [R`Two sides of $x$, one of $60 - 2x$.`, R`$A = 60x - 2x^2$.`],
+  [R`|M1|$A = x(60 - 2x)$`, R`|M1|$60 - 4x = 0$`, R`|A1|$x = 15$`, R`|A1|$450$ m²`], R`$450$ m²`,
+  R`The side parallel to the wall is $30$ m; $15 \times 30 = 450$.`),
+Q('P12.11-10', 3, R`The temperature of a cooling liquid is $T = 80 - 4t + 0.1t^2$ °C for $0 \le t \le 20$ minutes. Find $\dfrac{dT}{dt}$ when $t = 10$ and interpret it. [[2]]`,
+  [R`$\frac{dT}{dt} = -4 + 0.2t$.`, R`At $t = 10$: $-2$.`],
+  [R`|B1|$-2$`, R`|B1|Falling at $2$ °C per minute`], R`$-2$ °C/min`,
+  R`The negative sign means the temperature is decreasing.`),
+Q('P12.11-11', 3, R`The fuel cost per hour of a boat at speed $v$ is modelled by $C = 4v + \dfrac{400}{v}$. Find the speed that minimises $C$ and the minimum cost. [[4]]`,
+  [R`$\frac{dC}{dv} = 4 - 400v^{-2}$.`, R`$v^2 = 100$.`],
+  [R`|M1|$4 - \frac{400}{v^2} = 0$`, R`|A1|$v = 10$`, R`|A1|$C = 80$`, R`|B1|$\frac{d^2C}{dv^2} = \frac{800}{v^3} > 0$, minimum`], R`$v = 10$; $80$`,
+  R`$\frac{dC}{dv} = 4 - \frac{400}{v^2} = 0$ gives $v^2 = 100$, so $v = 10$ and $C = 40 + 40 = 80$. $\frac{d^2C}{dv^2} = \frac{800}{v^3} > 0$, so this is a minimum.`),
+Q('P12.11-12', 4, R`A closed cylinder has volume $250\pi$ cm³. Show that its surface area is $S = 2\pi r^2 + \dfrac{500\pi}{r}$, and find the minimum surface area. [[5]]`,
+  [R`$\pi r^2 h = 250\pi$, so $h = \frac{250}{r^2}$.`, R`$\frac{dS}{dr} = 4\pi r - 500\pi r^{-2}$.`],
+  [R`|M1|$h = \frac{250}{r^2}$`, R`|A1|$S = 2\pi r^2 + \frac{500\pi}{r}$`, R`|M1|$4\pi r - \frac{500\pi}{r^2} = 0$`, R`|A1|$r = 5$`, R`|A1|$150\pi$ cm²`], R`$150\pi$ cm²`,
+  R`$r^3 = 125$; $S = 50\pi + 100\pi$. $\frac{d^2S}{dr^2} = 4\pi + \frac{1000\pi}{r^3} > 0$, so a minimum.`),
+Q('P12.11-13', 4, R`An open box has a square base of side $x$ cm and volume $32$ cm³. Find the dimensions that minimise the surface area. [[5]]`,
+  [R`$x^2h = 32$, so $h = \frac{32}{x^2}$.`, R`$S = x^2 + 4xh = x^2 + \frac{128}{x}$.`],
+  [R`|M1|$S = x^2 + \frac{128}{x}$`, R`|M1|$2x - \frac{128}{x^2} = 0$`, R`|A1|$x = 4$`, R`|A1|$h = 2$`, R`|B1|Second derivative positive, so minimum ($S = 48$)`], R`Base $4 \times 4$, height $2$ ($S = 48$ cm²)`,
+  R`$x^3 = 64$; $S = 16 + 32 = 48$.`),
+Q('P12.11-14', 4, R`A particle moves so that $s = t^3 - 6t^2 + 9t$ metres after $t$ seconds. Find when it is momentarily at rest, and its displacement then. [[4]]`,
+  [R`At rest: $\frac{ds}{dt} = 0$.`, R`$3t^2 - 12t + 9 = 3(t - 1)(t - 3)$.`],
+  [R`|M1|$\frac{ds}{dt} = 3t^2 - 12t + 9$`, R`|A1|$t = 1$ and $t = 3$`, R`|A1|$s = 4$ m at $t = 1$`, R`|A1|$s = 0$ m at $t = 3$`], R`$t = 1$ ($4$ m) and $t = 3$ ($0$ m)`,
+  R`$s(1) = 1 - 6 + 9 = 4$; $s(3) = 27 - 54 + 27 = 0$.`),
+Q('P12.11-15', 5, R`A rectangle is drawn under the curve $y = 12 - x^2$ with its base on the $x$-axis and its top corners on the curve at $(\pm x, 12 - x^2)$.
+
+**(a)** Show that the area is $A = 24x - 2x^3$. [[2]]
+
+**(b)** Find the value of $x$ that maximises $A$. [[3]]
+
+**(c)** Find the maximum area, justifying that it is a maximum. [[3]]`,
+  [R`Width $2x$, height $12 - x^2$.`, R`$\frac{dA}{dx} = 24 - 6x^2$.`],
+  [R`(a)|M1|$2x(12 - x^2)$`, R`(a)|A1|$24x - 2x^3$`, R`(b)|M1|$24 - 6x^2 = 0$`, R`(b)|M1|$x^2 = 4$`, R`(b)|A1|$x = 2$ ($x > 0$)`, R`(c)|M1|$\frac{d^2A}{dx^2} = -12x$`, R`(c)|A1|$-24 < 0$, maximum`, R`(c)|A1|$A = 32$`],
+  R`(b) $x = 2$ (c) $32$`,
+  R`(c) $A = 48 - 16 = 32$: a $4$ by $8$ rectangle.`)
 ]};
 
 /* 7.1 Addition formulae */
